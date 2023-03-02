@@ -19,7 +19,7 @@
         </StackPanel>
         <StackPanel x:Name="stkPanChangeDetails" Visibility="Hidden" Orientation="Vertical" HorizontalAlignment="Left" Height="301" Margin="10,10,0,0" VerticalAlignment="Top" Width="190">
             <Label x:Name="lblPhone" Content="Phone Number" Height="28" Width="178"/>
-            <TextBox x:Name="txtBoxChangePhone" Height="24" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangePhone_TextChanged"/>
+            <TextBox x:Name="txtBoxChangePhone" Height="24" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangePhone_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
             <Label x:Name="lblEmail" Content="Email Address" Height="28" Width="178"/>
             <TextBox x:Name="txtBoxChangeEmail" Height="24" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangeEmail_TextChanged"/>
             <Label x:Name="lblAddress" Content="Address" Height="28" Width="178"/>

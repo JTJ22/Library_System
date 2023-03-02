@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library_System"
         mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStyle="SingleBorderWindow"
         Title="MemberLoginWindow" Height="450" Width="800">
     <Grid>
         <StackPanel x:Name="stkPanMember" Orientation="Vertical" HorizontalAlignment="Left" Height="207" Margin="10,10,0,0" VerticalAlignment="Top" Width="102">
@@ -21,6 +23,6 @@
                 <TextBlock x:Name="txtblkUserInfo"  TextAlignment="Right" HorizontalAlignment="Center" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="391"/>
             </StatusBarItem>
         </StatusBar>
-        <Frame x:Name="frmMemberFrame"  HorizontalAlignment="Left" Height="393" Margin="139,10,0,0" VerticalAlignment="Top" Width="651" Navigated="frmMemberFrame_Navigated"/>
+        <Frame x:Name="frmMemberFrame"  HorizontalAlignment="Left" Height="378" Margin="131,10,0,0" VerticalAlignment="Top" Width="651" Navigated="frmMemberFrame_Navigated" Source="MemberDetailPage.xaml"/>
     </Grid>
 </Window>
