@@ -19,26 +19,19 @@ namespace Library_System
     public class User_Data
     {
         public string User_id { get; set; }
+        public string password { get; set; }
         public string First_name { get; set; }
         public string Last_name { get; set;  }
         public string Phone_number { get; set; }
         public string Email_address { get; set; }
         public string Librarian_Permisions { get; set;  }
+        public string HomeAddress { get; set; }
 
-        
-        public User_Data(string userID, string firstName, string lastName, string phoneNumber, string emailAddress, string librarianPermissions)
-        {  
-            this.User_id = userID;
-            this.First_name = firstName;
-            this.Last_name = lastName;
-            this.Phone_number = phoneNumber;
-            this.Email_address = emailAddress;
-            this.Librarian_Permisions = librarianPermissions;
-        }
-
+        public static User_Data currentUser = new User_Data();
         public void Log_Out(User_Data user)
         {
             user.First_name = null;
+            user.password = null;
             user.Last_name = null;
             user.User_id = null;
             user.Phone_number = null;
@@ -46,5 +39,52 @@ namespace Library_System
             user.Librarian_Permisions = null;
             (Application.Current.MainWindow as MainWindow).Visibility = Visibility.Visible;
         }
+
+        public User_Data Logging_In(string inputUserid, string inputPassword)
+        {
+            XmlDocument logins = new XmlDocument();
+            logins.Load("LibraryLogins.xml");
+            foreach (XmlNode member in logins.SelectNodes("/Logins/member"))
+            {
+                currentUser.User_id = member.SelectSingleNode("UserID").InnerText;
+                currentUser.password = member.SelectSingleNode("Password").InnerText;
+                currentUser.First_name = member.SelectSingleNode("FirstName").InnerText;
+                currentUser.Last_name = member.SelectSingleNode("Surname").InnerText;
+                currentUser.Phone_number = member.SelectSingleNode("PhoneNumber").InnerText;
+                currentUser.Email_address = member.SelectSingleNode("EmailAddress").InnerText;
+                currentUser.Librarian_Permisions = member.SelectSingleNode("LibrarianPerms")?.InnerText;
+                currentUser.HomeAddress = member.SelectSingleNode("Address").InnerText;
+
+                if (currentUser.User_id == inputUserid && currentUser.password == inputPassword)
+                {
+
+                    if (currentUser.Librarian_Permisions == "Yes")
+                    {
+                        /* MessageBox.Show("You have logged in!");
+                         Window1 window2 = new Window1();
+                         Visibility = Visibility.Hidden;
+                         window2.Show();*/
+                    }
+                    Login_Action();
+                    return currentUser;
+                }
+                else
+                {
+                    MessageBox.Show("Incorrect Details");
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        public void Login_Action()
+        {
+            MessageBox.Show("You have logged in!");
+            Logging.Logger("User ID: " + currentUser.User_id + " Name: " + currentUser.First_name + " " + currentUser.Last_name);
+            MemberLoginWindow memberLoggedIn = new MemberLoginWindow();
+            (Application.Current.MainWindow as MainWindow).Visibility = Visibility.Hidden;
+            memberLoggedIn.Show();
+        }
     }
 }
+

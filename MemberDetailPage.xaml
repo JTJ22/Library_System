@@ -1,0 +1,31 @@
+﻿<Page x:Class="Library_System.MemberDetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Library_System"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MemberDetailPage">
+
+    <Grid>
+        <StackPanel x:Name="stkPanUserDetails" Visibility="Visible" Orientation="Vertical" HorizontalAlignment="Left" Height="267" Margin="10,10,0,0" VerticalAlignment="Top" Width="190">
+            <TextBlock x:Name="txtblkUserID" Height="38" TextWrapping="Wrap" Width="185" FontSize="12" Text=""/>
+            <TextBlock x:Name="txtblkName" Height="46" TextWrapping="Wrap" Text="" FontSize="12" Width="185"/>
+            <TextBlock x:Name="txtblkPhone" Height="46" TextWrapping="Wrap" Text="" FontSize="12" Width="185"/>
+            <TextBlock x:Name="txtblkEmail" Height="46" TextWrapping="Wrap" Text="" FontSize="12" Width="185"/>
+            <TextBlock x:Name="txtblkAddress" Height="46" TextWrapping="Wrap" Text="" FontSize="12" Width="185"/>
+            <Button x:Name="btnEditDetails" Content="Edit" Height="34" Width="136" Click="btnEditDetails_Click"/>
+        </StackPanel>
+        <StackPanel x:Name="stkPanChangeDetails" Visibility="Hidden" Orientation="Vertical" HorizontalAlignment="Left" Height="301" Margin="10,10,0,0" VerticalAlignment="Top" Width="190">
+            <Label x:Name="lblPhone" Content="Phone Number" Height="28" Width="178"/>
+            <TextBox x:Name="txtBoxChangePhone" Height="24" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangePhone_TextChanged"/>
+            <Label x:Name="lblEmail" Content="Email Address" Height="28" Width="178"/>
+            <TextBox x:Name="txtBoxChangeEmail" Height="24" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangeEmail_TextChanged"/>
+            <Label x:Name="lblAddress" Content="Address" Height="28" Width="178"/>
+            <TextBox x:Name="txtBoxChangeAddress" Height="24" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangeAddress_TextChanged"/>
+            <Button x:Name="btnChangeDetails" Content="Change" Height="34" Width="136" Margin="25" Click="btnChangeDetails_Click"/>
+            <Button x:Name="btnCancel" Content="Cancel" Height="34" Width="136" Click="btnCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
