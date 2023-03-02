@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace Library_System
 {
@@ -48,7 +49,9 @@ namespace Library_System
             {
                 stkPanUserDetails.Visibility = Visibility.Hidden;
                 stkPanChangeDetails.Visibility = Visibility.Visible;
-            } else
+
+            }
+            else
             {
                 stkPanUserDetails.Visibility = Visibility.Visible;
                 stkPanChangeDetails.Visibility = Visibility.Hidden;
@@ -74,12 +77,20 @@ namespace Library_System
 
         private void btnChangeDetails_Click(object sender, RoutedEventArgs e)
         {
-            Changing_Details.Change_Details(txtBoxChangeAddress.Text);
+            Changing_Details.Change_Details(txtBoxChangeAddress.Text, txtBoxChangeEmail.Text, txtBoxChangePhone.Text);
+            Allow_Edit();
+            NavigationService.Refresh();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Allow_Edit();
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Library_System
         public void Log_Out_Event(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("You have logged out");
-            this.Close();
+            Close();
             User_Data.currentUser.Log_Out(User_Data.currentUser);
         }
 
@@ -48,13 +48,13 @@ namespace Library_System
 
         private void btnHistoryMember_Click(object sender, RoutedEventArgs e)
         {
-
+            frmMemberFrame.Source = new Uri("MemberHistory.xaml", UriKind.Relative);
         }
         private void Time_Updater()
         {
             DispatcherTimer timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, (object s, EventArgs ev) =>
             {
-                this.txtblkDateTime.Text = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
+                this.txtblkDateTime.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
             }, this.Dispatcher);
             this.txtblkUserInfo.Text = "User ID: " + User_Data.currentUser.User_id + " Name: " + User_Data.currentUser.First_name + " " + User_Data.currentUser.Last_name;
             timer.Start();

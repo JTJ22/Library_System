@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MemberHistory.xaml.cs">
+      <DependentUpon>MemberHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XmlManager.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="MemberDetailPage.xaml.cs">
@@ -77,6 +80,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MemberDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MemberHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

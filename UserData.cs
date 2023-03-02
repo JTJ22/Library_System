@@ -55,25 +55,24 @@ namespace Library_System
                 currentUser.Librarian_Permisions = member.SelectSingleNode("LibrarianPerms")?.InnerText;
                 currentUser.HomeAddress = member.SelectSingleNode("Address").InnerText;
 
-                if (currentUser.User_id == inputUserid && currentUser.password == inputPassword)
+                if (currentUser.User_id != null)
                 {
-
-                    if (currentUser.Librarian_Permisions == "Yes")
+                    if (currentUser.User_id == inputUserid && currentUser.password == inputPassword)
                     {
-                        /* MessageBox.Show("You have logged in!");
-                         Window1 window2 = new Window1();
-                         Visibility = Visibility.Hidden;
-                         window2.Show();*/
+
+                        if (currentUser.Librarian_Permisions == "Yes")
+                        {
+                            /* MessageBox.Show("You have logged in!");
+                             Window1 window2 = new Window1();
+                             Visibility = Visibility.Hidden;
+                             window2.Show();*/
+                        }
+                        Login_Action();
+                        return currentUser;
                     }
-                    Login_Action();
-                    return currentUser;
-                }
-                else
-                {
-                    MessageBox.Show("Incorrect Details");
-                    return null;
                 }
             }
+            MessageBox.Show("Wrong Details");
             return null;
         }
 
