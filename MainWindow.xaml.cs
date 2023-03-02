@@ -17,9 +17,7 @@ using System.Windows.Threading;
 namespace Library_System
 {
     public partial class MainWindow : Window
-    {
-        public User_Data user = new User_Data("", "", "", "", "", "");
-       
+    { 
         public MainWindow()
         {
             InitializeComponent();
@@ -28,55 +26,15 @@ namespace Library_System
         
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            Login_Checker();
+         
+            User_Data.currentUser.Logging_In(TxtUsername.Text, PsdBoxPassword.Password);
+            TxtUsername.Text = null;
+            PsdBoxPassword.Password = null;
         }
 
         private void TxtUsername_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-        }
-
-        private void Login_Checker()
-        {
-            XmlDocument logins = new XmlDocument();
-            logins.Load("LibraryLogins.xml");
-            foreach (XmlNode member in logins.SelectNodes("/Logins/member"))
-            {
-                user.User_id = member.SelectSingleNode("UserID").InnerText;
-                string password = member.SelectSingleNode("Password").InnerText;
-                user.First_name = member.SelectSingleNode("FirstName").InnerText;
-                user.Last_name = member.SelectSingleNode("Surname").InnerText;
-                user.Phone_number = member.SelectSingleNode("PhoneNumber").InnerText;
-                user.Email_address = member.SelectSingleNode("EmailAddress").InnerText;
-                user.Librarian_Permisions = member.SelectSingleNode("LibrarianPerms")?.InnerText;
-                if (user.User_id == TxtUsername.Text && password == PsdBoxPassword.Password)
-                {
-                       
-                    if (user.Librarian_Permisions == "Yes")
-                    {
-                        /* MessageBox.Show("You have logged in!");
-                         Window1 window2 = new Window1();
-                         Visibility = Visibility.Hidden;
-                         window2.Show();*/
-                    }
-                    Login_Action();
-                    Logging.Logger(user.User_id + ", " + user.First_name + " " + user.Last_name);
-                }
-                else
-                {
-                    lblFailLogin.Content = "Incorrect details";
-                }
-
-            }
-        }
-        public void Login_Action()
-        {
-            MessageBox.Show("You have logged in!");
-            MemberLoginWindow memberLoggedIn = new MemberLoginWindow();
-            Visibility = Visibility.Hidden;
-            TxtUsername.Clear();
-            PsdBoxPassword.Clear();
-            memberLoggedIn.Show();
         }
 
         private void Time_Updater()

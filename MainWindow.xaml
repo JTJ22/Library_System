@@ -5,23 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library_System"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowState="Maximized"
+        WindowStyle="SingleBorderWindow">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="469*"/>
+            <ColumnDefinition Width="331*"/>
+        </Grid.ColumnDefinitions>
         <Grid.Background>
             <ImageBrush/>
         </Grid.Background>
-        <Label x:Name="LblLoginWelcome" Content="Welcome to Library Bookings Co." Height="32" Margin="200,50,200,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="20" FontWeight="Normal"/>
-        <TextBox x:Name="TxtUsername" Height="25" Margin="296,134,296,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="TxtUsername_TextChanged" HorizontalContentAlignment="Center"/>
-        <Label x:Name="LblUsername" Content="UserID" Margin="368,103,368,0" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
-        <PasswordBox x:Name="PsdBoxPassword" Height="25" Margin="296,192,296,0" VerticalAlignment="Top"/>
-        <Label x:Name="LblPassword" Content="Password" Margin="339,166,339,0" VerticalAlignment="Top" RenderTransformOrigin="0.163,0.53" HorizontalContentAlignment="Center"/>
-        <Button x:Name="BtnLogin" Content="Login" Height="35" Margin="342,242,342,0" VerticalAlignment="Top" Click="BtnLogin_Click"/>
-        <Label x:Name="lblFailLogin" Content="" HorizontalAlignment="Center" Height="63" Margin="0,303,0,0" VerticalAlignment="Top" Width="208" HorizontalContentAlignment="Center"/>
-        <StatusBar Name="sbar" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
+        <StatusBar Name="sbar" Grid.Column="0" Grid.ColumnSpan="2" 
                    VerticalAlignment="Bottom" Background="Beige" >
             <StatusBarItem x:Name="sbarDateTimeUpdate">
                 <TextBlock x:Name="txtblkDateTime" FontStyle="Italic" Width="358"></TextBlock>
             </StatusBarItem>
         </StatusBar>
+        <StackPanel x:Name="stkPanLoginPage" Height="320" VerticalAlignment="Center" Margin="107,0,107,0" Grid.ColumnSpan="2">
+            <Label x:Name="LblLoginWelcome" Content="Welcome to Library Bookings Co." Height="32" FontFamily="Arial Black" FontSize="20" FontWeight="Normal" Width="400" Margin="100,0,100,50"/>
+            <Label x:Name="LblUsername" Content="UserID" HorizontalContentAlignment="Center" Width="64"/>
+            <TextBox x:Name="TxtUsername" ToolTip="Enter your ID" Height="25" TextWrapping="Wrap" Text="" TextChanged="TxtUsername_TextChanged" HorizontalContentAlignment="Center" Width="208"/>
+            <Label x:Name="LblPassword" Content="Password" RenderTransformOrigin="0.163,0.53" HorizontalContentAlignment="Center" Width="122" Margin="100,5,100,0"/>
+            <PasswordBox x:Name="PsdBoxPassword" Height="25" Width="208" Margin="20,0,20,20" />
+            <Button x:Name="BtnLogin" Content="Login" Height="35" Click="BtnLogin_Click" Width="116" Margin="50,20,50,100"/>
+        </StackPanel>
     </Grid>
 </Window>
