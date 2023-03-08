@@ -92,6 +92,31 @@ namespace Library_System
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+        private void btnChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            stkPanChangePassword.Visibility = Visibility.Visible;
+            stkPanChangeDetails.Visibility= Visibility.Hidden;
+        }
+
+        private void btnPasswordChanged_Click(object sender, RoutedEventArgs e)
+        {
+            if (psdBoxNew.Password == psdBoxConfirm.Password)
+            {
+                Changing_Details.Change_Password(psdBoxCurrent.Password, psdBoxNew.Password);
+                btnCancelPassword_Click(sender, e);
+            }
+            else
+            {
+                MessageBox.Show("Passwords Do Not Match");
+            }
+        }
+
+        private void btnCancelPassword_Click(object sender, RoutedEventArgs e)
+        {
+            stkPanChangePassword.Visibility= Visibility.Hidden;
+            stkPanChangeDetails.Visibility = Visibility.Visible;
+        }
     }
 }
 

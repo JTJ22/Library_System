@@ -54,13 +54,32 @@ namespace Library_System
             logins.Save("LibraryLogins.xml");
             MessageBox.Show("Details Changed");
         }
-
+        
+        public static void Change_Password(string currentPass, string newPass)
+        {
+            XmlDocument password = new XmlDocument();
+            password.Load("LibraryLogins.xml");
+            foreach (XmlNode member in password.SelectNodes("/Logins/member"))
+            {
+                if(member.SelectSingleNode("UserID").InnerText == User_Data.currentUser.User_id && currentPass == member.SelectSingleNode("Password").InnerText)
+                {
+                    XmlNode passwordChanged = password.SelectSingleNode("/Logins/member/Password");
+                    currentPass = newPass;
+                    passwordChanged.InnerText = newPass;
+                    User_Data.currentUser.password = newPass;
+                    password.Save("LibraryLogins.xml");
+                    MessageBox.Show("Password Changed");
+                }
+            }
+        }
         public void Member_History()
         {
             XmlDocument history = new XmlDocument();
             history.Load("LibraryHistory.xml");
         }
     }
+
+
 
 
 
