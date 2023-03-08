@@ -9,7 +9,7 @@
       Title="MemberDetailPage">
 
     <Grid>
-        <StackPanel x:Name="stkPanUserDetails" Visibility="Visible" Orientation="Vertical" HorizontalAlignment="Left" Height="267" Margin="10,10,0,0" VerticalAlignment="Top" Width="190">
+        <StackPanel x:Name="stkPanUserDetails" Visibility="Visible" Orientation="Vertical" HorizontalAlignment="Center" Height="266" VerticalAlignment="Top" Width="190" Margin="0,10,0,0">
             <TextBlock x:Name="txtblkUserID" Height="38" TextWrapping="Wrap" Width="185" FontSize="12" Text=""/>
             <TextBlock x:Name="txtblkName" Height="46" TextWrapping="Wrap" Text="" FontSize="12" Width="185"/>
             <TextBlock x:Name="txtblkPhone" Height="46" TextWrapping="Wrap" Text="" FontSize="12" Width="185"/>
@@ -17,15 +17,27 @@
             <TextBlock x:Name="txtblkAddress" Height="46" TextWrapping="Wrap" Text="" FontSize="12" Width="185"/>
             <Button x:Name="btnEditDetails" Content="Edit" Height="34" Width="136" Click="btnEditDetails_Click"/>
         </StackPanel>
-        <StackPanel x:Name="stkPanChangeDetails" Visibility="Hidden" Orientation="Vertical" HorizontalAlignment="Left" Height="301" Margin="10,10,0,0" VerticalAlignment="Top" Width="190">
-            <Label x:Name="lblPhone" Content="Phone Number" Height="28" Width="178"/>
-            <TextBox x:Name="txtBoxChangePhone" Height="24" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangePhone_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
-            <Label x:Name="lblEmail" Content="Email Address" Height="28" Width="178"/>
-            <TextBox x:Name="txtBoxChangeEmail" Height="24" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangeEmail_TextChanged"/>
-            <Label x:Name="lblAddress" Content="Address" Height="28" Width="178"/>
-            <TextBox x:Name="txtBoxChangeAddress" Height="24" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangeAddress_TextChanged"/>
-            <Button x:Name="btnChangeDetails" Content="Change" Height="34" Width="136" Margin="25" Click="btnChangeDetails_Click"/>
-            <Button x:Name="btnCancel" Content="Cancel" Height="34" Width="136" Click="btnCancel_Click"/>
+        <StackPanel x:Name="stkPanChangeDetails" Visibility="Hidden" Orientation="Vertical" HorizontalAlignment="Center" Height="374" VerticalAlignment="Top" Width="190" Margin="0,10,0,0">
+            <Label x:Name="lblPhone" Content="Phone Number" HorizontalContentAlignment="Center" Height="28" Width="178"/>
+            <TextBox x:Name="txtBoxChangePhone" Height="24" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangePhone_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
+            <Label x:Name="lblEmail" Content="Email Address" HorizontalContentAlignment="Center" Height="28" Width="178"/>
+            <TextBox x:Name="txtBoxChangeEmail" Height="24" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangeEmail_TextChanged"/>
+            <Label x:Name="lblAddress" Content="Address" HorizontalContentAlignment="Center" Height="28" Width="178"/>
+            <TextBox x:Name="txtBoxChangeAddress" Height="24" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangeAddress_TextChanged"/>
+            <Button x:Name="btnChangeDetails" Content="Change" Height="34" Width="136" Margin="10" Click="btnChangeDetails_Click"/>
+            <Button x:Name="btnChangePassword" Content="Change Password" Height="34" VerticalAlignment="Top" Width="136" Click="btnChangePassword_Click"/>
+            <Button x:Name="btnCancel" Content="Cancel" Height="34" Width="136" Margin="0,10,0,0" Click="btnCancel_Click"/>
         </StackPanel>
+        <StackPanel x:Name="stkPanChangePassword" HorizontalAlignment="Center" Visibility="Hidden" Height="267" VerticalAlignment="Top" Width="208" Margin="0,10,0,0">
+            <Label x:Name="lblCurrent" Content="Current Password" HorizontalContentAlignment="Center" Height="27" Width="104"/>
+            <PasswordBox x:Name="psdBoxCurrent" HorizontalContentAlignment="Center" Height="24" Width="177" Margin="10,0,10,10"/>
+            <Label x:Name="lblNew" HorizontalContentAlignment="Center" Content="New Password" Height="24" Width="88" Margin="0,0,10,0"/>
+            <PasswordBox x:Name="psdBoxNew" HorizontalContentAlignment="Center" Height="24" Width="177" Margin="10,0,10,10"/>
+            <Label x:Name="lblConfirm" HorizontalContentAlignment="Center" Content="Confirm Password" Height="24" Width="104" />
+            <PasswordBox x:Name="psdBoxConfirm" HorizontalContentAlignment="Center" Height="24" Width="177" Margin="10,0,10,10"/>
+            <Button x:Name="btnPasswordChanged" Content="Change" Height="31" Width="132" Click="btnPasswordChanged_Click"/>
+            <Button x:Name="btnCancelPassword" Content="Cancel" Height="31" Width="132" Margin="10" Click="btnCancelPassword_Click"/>
+        </StackPanel>
+
     </Grid>
 </Page>
