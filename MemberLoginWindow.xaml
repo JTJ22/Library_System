@@ -7,12 +7,13 @@
         mc:Ignorable="d"
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow"
-        Title="MemberLoginWindow" Height="450" Width="800">
+        Title="MemberLoginWindow" Height="800" Width="1200">
     <Grid>
         <StackPanel x:Name="stkPanMember" Orientation="Vertical" HorizontalAlignment="Left" Height="207" Margin="10,10,0,0" VerticalAlignment="Top" Width="102">
             <Button x:Name="btnLogOut" Content="Log out" Height="33" Width="101" Click="btnLogOut_Click" Margin="0, 10, 0, 10"/>
             <Button x:Name="btnMemberDetails" Content="Details" Height="33" Width="102" Margin="0, 10, 0, 10" Click="btnMemberDetails_Click"/>
             <Button x:Name="btnHistoryMember" Content="History" Height="33" Width="102" Margin="0, 10, 0, 10" Click="btnHistoryMember_Click"/>
+            <Button x:Name="btnSearchBooks" Content="Search" Height="33" Width="102" Margin="0,10,0,10" Click="btnSearchBooks_Click" />
         </StackPanel>
         <StatusBar Name="sbar" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
                    VerticalAlignment="Bottom" Background="Beige" >
@@ -23,6 +24,6 @@
                 <TextBlock x:Name="txtblkUserInfo"  TextAlignment="Right" HorizontalAlignment="Center" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="391"/>
             </StatusBarItem>
         </StatusBar>
-        <Frame x:Name="frmMemberFrame"  HorizontalAlignment="Left" Height="378" Margin="131,10,0,0" VerticalAlignment="Top" Width="651" NavigationUIVisibility="Visible" Navigated="frmMemberFrame_Navigated"/>
+        <Frame x:Name="frmMemberFrame"  HorizontalAlignment="Left" Height="525" Margin="131,10,0,0" VerticalAlignment="Top" Width="861" NavigationUIVisibility="Visible" Navigated="frmMemberFrame_Navigated"/>
     </Grid>
 </Window>

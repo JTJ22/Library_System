@@ -1,0 +1,6 @@
+08/03/2023 16:05:02: User ID: 123456 Name: James Johnson
+08/03/2023 16:06:37: User ID: 123456 Name: James Johnson
+08/03/2023 16:08:24: User ID: 123456 Name: James Johnson
+08/03/2023 16:33:37: User ID: 123456 Name: James Johnson
+08/03/2023 19:43:21: User ID: 123456 Name: James Johnson
+08/03/2023 20:37:42: User ID: 123456 Name: James Johnson
