@@ -56,6 +56,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BookManagement.cs" />
+    <Compile Include="BookSearch.xaml.cs">
+      <DependentUpon>BookSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MemberHistory.xaml.cs">
       <DependentUpon>MemberHistory.xaml</DependentUpon>
     </Compile>
@@ -68,6 +71,10 @@
       <DependentUpon>MemberLoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserData.cs" />
+    <Page Include="BookSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

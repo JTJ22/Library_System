@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using System.Data;
 using System.Windows.Threading;
 
 namespace Library_System
@@ -65,5 +66,11 @@ namespace Library_System
         {
 
         }
+
+        private void btnSearchBooks_Click(object sender, RoutedEventArgs e)
+        {
+            frmMemberFrame.Source = new Uri("BookSearch.xaml", UriKind.Relative);
+        }
+
     }
 }

@@ -29,11 +29,11 @@ namespace Library_System
 
     public class BookHandling
     {
-        public List<SingleBook> DisplayBooks()
+        public static List<SingleBook> DisplayBooks()
         {
             List<SingleBook> books = new List<SingleBook>();
             XmlDocument bookFile = new XmlDocument();
-            bookFile.LoadXml("LibraryBooks.xml");
+            bookFile.Load("LibraryBooks.xml");
 
             foreach (XmlNode node in bookFile.DocumentElement.ChildNodes)
             {
