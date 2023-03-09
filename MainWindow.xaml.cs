@@ -41,7 +41,7 @@ namespace Library_System
         {
             DispatcherTimer timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, (object s, EventArgs ev) =>
             {
-                this.txtblkDateTime.Text = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
+                this.txtblkDateTime.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
             }, this.Dispatcher);
             timer.Start();
 

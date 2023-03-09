@@ -29,30 +29,37 @@ namespace Library_System
                 {
                     if (member.SelectSingleNode("UserID").InnerText == User_Data.currentUser.User_id)
                     {
-                        if (User_Data.currentUser.HomeAddress != address && !string.IsNullOrWhiteSpace(address))
+                        if (!string.IsNullOrWhiteSpace(address) || !string.IsNullOrWhiteSpace(email) || !string.IsNullOrWhiteSpace(phoneNumber))
                         {
-                            XmlNode homeAddress = logins.SelectSingleNode("/Logins/member/Address");
-                            homeAddress.InnerText = address;
-                            User_Data.currentUser.HomeAddress = address;
+                            if (User_Data.currentUser.HomeAddress != address && !string.IsNullOrWhiteSpace(address))
+                            {
+                                XmlNode homeAddress = logins.SelectSingleNode("/Logins/member/Address");
+                                homeAddress.InnerText = address;
+                                User_Data.currentUser.HomeAddress = address;
+                            }
+                            if (User_Data.currentUser.Email_address != email && !string.IsNullOrWhiteSpace(email))
+                            {
+                                XmlNode emailAddress = logins.SelectSingleNode("/Logins/member/EmailAddress");
+                                emailAddress.InnerText = email;
+                                User_Data.currentUser.Email_address = email;
+                            }
+                            if (User_Data.currentUser.Phone_number != phoneNumber && !string.IsNullOrWhiteSpace(phoneNumber))
+                            {
+                                XmlNode phoneNo = logins.SelectSingleNode("/Logins/member/PhoneNumber");
+                                phoneNo.InnerText = phoneNumber;
+                                User_Data.currentUser.Phone_number = phoneNumber;
+                            }
+                            MessageBox.Show("Details Changed");
                         }
-                        if(User_Data.currentUser.Email_address != email && !string.IsNullOrWhiteSpace(email))
+                        else
                         {
-                            XmlNode emailAddress = logins.SelectSingleNode("/Logins/member/EmailAddress");
-                            emailAddress.InnerText = email;
-                            User_Data.currentUser.Email_address = email;
+                            MessageBox.Show("No Details were input");
                         }
-                        if(User_Data.currentUser.Phone_number != phoneNumber && !string.IsNullOrWhiteSpace(phoneNumber))
-                        {
-                            XmlNode phoneNo = logins.SelectSingleNode("/Logins/member/PhoneNumber");
-                            phoneNo.InnerText = phoneNumber;
-                            User_Data.currentUser.Phone_number = phoneNumber;
-                        }
-                       
+
                     }
                 }
             }
             logins.Save("LibraryLogins.xml");
-            MessageBox.Show("Details Changed");
         }
         
         public static void Change_Password(string currentPass, string newPass)

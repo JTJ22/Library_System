@@ -24,7 +24,7 @@ namespace Library_System
         public string Last_name { get; set;  }
         public string Phone_number { get; set; }
         public string Email_address { get; set; }
-        public string Librarian_Permisions { get; set;  }
+        public bool Librarian_Permisions { get; set;  }
         public string HomeAddress { get; set; }
 
         public static User_Data currentUser = new User_Data();
@@ -36,7 +36,7 @@ namespace Library_System
             user.User_id = null;
             user.Phone_number = null;
             user.Email_address = null;
-            user.Librarian_Permisions = null;
+            user.Librarian_Permisions = false;
             (Application.Current.MainWindow as MainWindow).Visibility = Visibility.Visible;
         }
 
@@ -52,7 +52,7 @@ namespace Library_System
                 currentUser.Last_name = member.SelectSingleNode("Surname").InnerText;
                 currentUser.Phone_number = member.SelectSingleNode("PhoneNumber").InnerText;
                 currentUser.Email_address = member.SelectSingleNode("EmailAddress").InnerText;
-                currentUser.Librarian_Permisions = member.SelectSingleNode("LibrarianPerms")?.InnerText;
+                currentUser.Librarian_Permisions = bool.Parse(member.SelectSingleNode("LibrarianPerms").InnerText);
                 currentUser.HomeAddress = member.SelectSingleNode("Address").InnerText;
 
                 if (currentUser.User_id != null)
@@ -60,7 +60,7 @@ namespace Library_System
                     if (currentUser.User_id == inputUserid && currentUser.password == inputPassword)
                     {
 
-                        if (currentUser.Librarian_Permisions == "Yes")
+                        if (currentUser.Librarian_Permisions == true)
                         {
                             /* MessageBox.Show("You have logged in!");
                              Window1 window2 = new Window1();

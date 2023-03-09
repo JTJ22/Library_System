@@ -19,6 +19,7 @@ namespace Library_System
     public class SingleBook
     {
         public string Title { get; set; }
+        public string Unique_ID { get; set; }
         public string Genre { get; set; }
         public string Author { get; set; }
         public string ISBN { get; set; }
@@ -35,21 +36,27 @@ namespace Library_System
             XmlDocument bookFile = new XmlDocument();
             bookFile.Load("LibraryBooks.xml");
 
-            foreach (XmlNode node in bookFile.DocumentElement.ChildNodes)
+            foreach (XmlNode node in bookFile.SelectNodes("/Books/SingleBook"))
             {
                 SingleBook book = new SingleBook
                 {
                     Title = node.SelectSingleNode("Title").InnerText,
+                    Unique_ID = node.SelectSingleNode("UniqueID").InnerText,
                     Genre = node.SelectSingleNode("Genre").InnerText,
                     Author = node.SelectSingleNode("Author").InnerText,
                     ISBN = node.SelectSingleNode("ISBN").InnerText,
                     Date = node.SelectSingleNode("Date").InnerText,
                     Availability = bool.Parse(node.SelectSingleNode("Availabilty").InnerText),
-                    Description = node.SelectSingleNode("Description").InnerText
+                    Description = node.SelectSingleNode("Description").InnerText,
                 };
                 books.Add(book);
             }
             return books;
+        }
+
+        public void WithdrawBook()
+        {
+
         }
     }
 
