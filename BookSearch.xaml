@@ -5,11 +5,22 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Library_System"
       mc:Ignorable="d" 
-      d:DesignHeight="515" d:DesignWidth="825"
+      d:DesignHeight="700" d:DesignWidth="1040"
       Title="BookSearch">
 
     <Grid>
-        <DataGrid x:Name="dgSearchDisplay"  HorizontalAlignment="Center" Height="496" VerticalAlignment="Center" Width="805" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="dgSearchDisplay_SelectionChanged"/>
-
+        <DataGrid x:Name="dgSearchDisplay"  HorizontalAlignment="Center"  Height="631" VerticalAlignment="Center" Width="1020" SelectionChanged="dgSearchDisplay_SelectionChanged" Margin="10,59,10,10" SelectionMode="Extended" SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnWithdraw" Content="Withdraw" Click="btnWithdraw_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+            <TextBox x:Name="txtBoxSearchBox" HorizontalAlignment="Left" Height="44" Margin="633,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" TextChanged="txtBoxSearchBox_TextChanged"/>
+        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="44" Margin="958,10,0,0" FontSize="14" VerticalAlignment="Top" Width="72" Click="btnSearch_Click"/>
     </Grid>
 </Page>

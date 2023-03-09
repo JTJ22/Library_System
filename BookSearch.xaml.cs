@@ -30,13 +30,46 @@ namespace Library_System
 
         private void dgSearchDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+          
         }
 
         private void GridCreator()
         {
             dgSearchDisplay.ItemsSource = BookHandling.DisplayBooks();
+        }
 
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            Searching();
+        }
+
+        private void txtBoxSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        public void Searching()
+        {
+            if (!string.IsNullOrWhiteSpace(txtBoxSearchBox.Text))
+                {
+                DataSet dataSearch = new DataSet();
+                dataSearch.ReadXml(@"LibraryBooks.xml");
+                DataView dataView = new DataView();
+                dataView = dataSearch.Tables[0].DefaultView;
+                dataView.RowFilter = $"Title='{txtBoxSearchBox.Text.ToLower()}'";
+                this.dgSearchDisplay.ItemsSource = dataView;
+                }
+            else
+            {
+                GridCreator();
+            }
+
+        }
+
+        private void btnWithdraw_Click(object sender, RoutedEventArgs e)
+        {
+            var row_list = (SingleBook)dgSearchDisplay.SelectedItem;
+            
         }
     }
 }

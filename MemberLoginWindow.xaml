@@ -24,6 +24,6 @@
                 <TextBlock x:Name="txtblkUserInfo"  TextAlignment="Right" HorizontalAlignment="Center" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="391"/>
             </StatusBarItem>
         </StatusBar>
-        <Frame x:Name="frmMemberFrame"  HorizontalAlignment="Left" Height="525" Margin="131,10,0,0" VerticalAlignment="Top" Width="861" NavigationUIVisibility="Visible" Navigated="frmMemberFrame_Navigated"/>
+        <Frame x:Name="frmMemberFrame"  HorizontalAlignment="Left" Height="728" Margin="131,10,0,0" VerticalAlignment="Top" Width="1051" NavigationUIVisibility="Visible" Navigated="frmMemberFrame_Navigated"/>
     </Grid>
 </Window>
