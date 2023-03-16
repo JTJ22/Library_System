@@ -1,0 +1,18 @@
+﻿<Page x:Class="Library_System.WithdrawPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Library_System"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="WithdrawPage">
+
+    <Grid>
+        <StackPanel x:Name="stkPanWithdrawDets" HorizontalAlignment="Left" Height="369" Margin="10,10,0,0" VerticalAlignment="Top" Width="377">
+            <TextBlock x:Name="txtBlkBookName" Height="219" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBlock x:Name="txtBlkExptReturn" HorizontalAlignment="Left" Height="54" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
+            <Button x:Name="btnCompleteWithdraw" Content="Withdraw" HorizontalAlignment="Center" Height="41" VerticalAlignment="Top" Width="137" Click="btnCompleteWithdraw_Click" Margin="118,0,122,0"/>
+        </StackPanel>
+    </Grid>
+</Page>
