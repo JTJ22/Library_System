@@ -56,7 +56,13 @@ namespace Library_System
                 dataSearch.ReadXml(@"LibraryBooks.xml");
                 DataView dataView = new DataView();
                 dataView = dataSearch.Tables[0].DefaultView;
-                dataView.RowFilter = $"Title='{txtBoxSearchBox.Text.ToLower()}'";
+                StringBuilder search = new StringBuilder();
+                foreach(DataColumn column in dataView.Table.Columns)
+                    {
+                    search.AppendFormat("[{0}] Like '%{1}%' OR", column.ColumnName, txtBoxSearchBox.Text.ToLower());
+                    }
+                search.Remove(search.Length - 3, 3);
+                dataView.RowFilter = search.ToString();
                 this.dgSearchDisplay.ItemsSource = dataView;
                 }
             else
@@ -68,8 +74,27 @@ namespace Library_System
 
         private void btnWithdraw_Click(object sender, RoutedEventArgs e)
         {
-            var row_list = (SingleBook)dgSearchDisplay.SelectedItem;
-            
+            BookToWithdraw(); 
+        }
+
+        public SingleBook BookToWithdraw()
+        {
+            SingleBook bookWithdrawn = (SingleBook)dgSearchDisplay.SelectedItem;
+            if(bookWithdrawn != null)
+            {
+                WithdrawPage withdraw = new WithdrawPage(bookWithdrawn);
+                frmWithdrawDisplay.NavigationService.Navigate(withdraw, bookWithdrawn);
+                return bookWithdrawn;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private void frmWithdrawDisplay_Navigated(object sender, NavigationEventArgs e)
+        {
+
         }
     }
 }

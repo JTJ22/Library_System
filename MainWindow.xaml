@@ -25,7 +25,7 @@
         <StackPanel x:Name="stkPanLoginPage" Height="320" VerticalAlignment="Center" Margin="107,0,107,0" Grid.ColumnSpan="2">
             <Label x:Name="LblLoginWelcome" Content="Welcome to Library Bookings Co." Height="32" HorizontalContentAlignment="Center" FontFamily="Arial Black" FontSize="20" FontWeight="Normal" Width="400" Margin="100,0,100,50"/>
             <Label x:Name="LblUsername" Content="UserID" HorizontalContentAlignment="Center" Width="64"/>
-            <TextBox x:Name="TxtUsername" ToolTip="Enter your ID" Height="25" TextWrapping="Wrap" HorizontalContentAlignment="Center" Text="" TextChanged="TxtUsername_TextChanged" Width="208"/>
+            <TextBox x:Name="TxtUsername" ToolTip="Enter your ID" Height="25" TextWrapping="Wrap" HorizontalContentAlignment="Center" Text="" Width="208" PreviewTextInput="TxtUsername_TextInput"/>
             <Label x:Name="LblPassword" Content="Password" RenderTransformOrigin="0.163,0.53" HorizontalContentAlignment="Center" Width="122" Margin="100,5,100,0"/>
             <PasswordBox x:Name="PsdBoxPassword" Height="25" Width="208" Margin="20,0,20,20" HorizontalContentAlignment="Center" />
             <Button x:Name="BtnLogin" Content="Login" Height="35" Click="BtnLogin_Click" Width="116" Margin="50,20,50,100"/>

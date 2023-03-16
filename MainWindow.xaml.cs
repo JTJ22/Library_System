@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 using System.Windows.Threading;
+using System.Text.RegularExpressions;
 namespace Library_System
 {
     public partial class MainWindow : Window
@@ -36,7 +37,6 @@ namespace Library_System
         {
 
         }
-
         private void Time_Updater()
         {
             DispatcherTimer timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, (object s, EventArgs ev) =>
@@ -45,6 +45,12 @@ namespace Library_System
             }, this.Dispatcher);
             timer.Start();
 
+        }
+
+        private void TxtUsername_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

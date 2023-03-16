@@ -9,7 +9,7 @@
       Title="BookSearch">
 
     <Grid>
-        <DataGrid x:Name="dgSearchDisplay"  HorizontalAlignment="Center"  Height="631" VerticalAlignment="Center" Width="1020" SelectionChanged="dgSearchDisplay_SelectionChanged" Margin="10,59,10,10" SelectionMode="Extended" SelectionUnit="FullRow">
+        <DataGrid x:Name="dgSearchDisplay" CanUserAddRows="False"  HorizontalAlignment="Center"  Height="631" VerticalAlignment="Center" Width="568" SelectionChanged="dgSearchDisplay_SelectionChanged" Margin="10,59,462,10" SelectionMode="Extended" SelectionUnit="FullRow">
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
@@ -20,7 +20,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-            <TextBox x:Name="txtBoxSearchBox" HorizontalAlignment="Left" Height="44" Margin="633,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" TextChanged="txtBoxSearchBox_TextChanged"/>
-        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="44" Margin="958,10,0,0" FontSize="14" VerticalAlignment="Top" Width="72" Click="btnSearch_Click"/>
+        <TextBox x:Name="txtBoxSearchBox" HorizontalAlignment="Left" Height="21" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" TextChanged="txtBoxSearchBox_TextChanged"/>
+        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="21" Margin="335,33,0,0" FontSize="14" VerticalAlignment="Top" Width="72" Click="btnSearch_Click"/>
+        <Frame x:Name="frmWithdrawDisplay" Content="" HorizontalAlignment="Left" Height="389" Margin="601,59,0,0" VerticalAlignment="Top" Width="429" Navigated="frmWithdrawDisplay_Navigated"/>
     </Grid>
 </Page>

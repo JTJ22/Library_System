@@ -42,5 +42,23 @@ namespace Library_System
             this.dgMemberHistory.ItemsSource = historyView;
             
         }
+
+        private void btnReturn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BookReturned()
+        {
+        
+            if (bookReturned != null)
+            {
+                
+            }
+            else
+            {
+               
+            }
+        }
     }
 }
