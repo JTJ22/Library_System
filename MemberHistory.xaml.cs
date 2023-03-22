@@ -34,30 +34,51 @@ namespace Library_System
 
         public void gridCreator()
         {
-            DataSet dataHistory = new DataSet();
-            dataHistory.ReadXml(@"LibraryHistory.xml");
-            DataView historyView = new DataView();
-            historyView = dataHistory.Tables[0].DefaultView;
-            historyView.RowFilter = $"UserID='{User_Data.currentUser.User_id}'";
-            this.dgMemberHistory.ItemsSource = historyView;
-            
+            dgMemberHistory.ItemsSource = User_Record.DisplayRecord();   
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
+            BookReturned((User_Record)dgMemberHistory.SelectedItem);
+        }
+
+        private void BookReturned(User_Record selectItem)
+        {
+            User_Record bookReturned = selectItem;
+            if (bookReturned != null)
+            {
+                if (bookReturned.Is_Returned != true)
+                {
+                    if (Convert.ToDateTime(bookReturned.Return_Expected) > DateTime.Now.Date)
+                    {
+                        ChangeBookFile(bookReturned.Unique_Id);
+                        User_Record.RecordAdjust(bookReturned);
+                        MessageBox.Show("Book Returned Within Due Date");
+                        gridCreator();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Already Returned");
+                }
+            }
+
+
 
         }
 
-        private void BookReturned()
+        private void ChangeBookFile(string UniqueID)
         {
-        
-            if (bookReturned != null)
+            XmlDocument books = new XmlDocument();
+            books.Load("LibraryBooks.xml");
+            foreach (XmlNode node in books.SelectNodes("/Books/SingleBook"))
             {
-                
-            }
-            else
-            {
-               
+                if(UniqueID == node.SelectSingleNode("UniqueID").InnerText)
+                {
+                    XmlNode availabilty = node.SelectSingleNode($"/Books/SingleBook[UniqueID='{UniqueID}']/Availabilty");
+                    availabilty.InnerText = "true";
+                    books.Save("LibraryBooks.xml");
+                }
             }
         }
     }

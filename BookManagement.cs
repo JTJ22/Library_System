@@ -18,6 +18,7 @@ namespace Library_System
 {
     public class SingleBook
     {
+        //creating a class for "SingleBook" This will allow books to be objects within my code, making it much easier to handle data grids and editing data
         public string Title { get; set; }
         public string Unique_ID { get; set; }
         public string Genre { get; set; }
@@ -26,12 +27,15 @@ namespace Library_System
         public string Date { get; set; }
         public bool Availability { get; set; }
         public string Description { get; set; }
+        public bool IsReserved { get; set; }
     }
 
     public class BookHandling
     {
+
         public static List<SingleBook> DisplayBooks()
         {
+            //Creating a list of book, the XML file is read and each "SingleBook" node is added to the list, this made it much easier to create data grids
             List<SingleBook> books = new List<SingleBook>();
             XmlDocument bookFile = new XmlDocument();
             bookFile.Load("LibraryBooks.xml");
@@ -48,16 +52,14 @@ namespace Library_System
                     Date = node.SelectSingleNode("Date").InnerText,
                     Availability = bool.Parse(node.SelectSingleNode("Availabilty").InnerText),
                     Description = node.SelectSingleNode("Description").InnerText,
+                    IsReserved =  bool.Parse(node.SelectSingleNode("IsReserved").InnerText)
                 };
                 books.Add(book);
             }
             return books;
+            //Lastly the list "books" is returned, this made is so the list is easily accessible elsewhere in the code (Same reason it is public static)
         }
 
-        public void WithdrawBook()
-        {
-
-        }
     }
 
 }
