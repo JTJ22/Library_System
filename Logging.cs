@@ -27,6 +27,7 @@ namespace Library_System
                 {
                     dir.Create();
                 }
+                // Creates a directory for logging if a path is not found
             }
             catch { }
         }
@@ -43,6 +44,7 @@ namespace Library_System
                 file.Close();
             }
             catch (Exception) { }
+            //A method where i can pass any information in to be logged
         }
     }
 }

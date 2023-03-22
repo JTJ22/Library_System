@@ -31,6 +31,7 @@ namespace Library_System
             User_Data.currentUser.Logging_In(TxtUsername.Text, PsdBoxPassword.Password);
             TxtUsername.Text = null;
             PsdBoxPassword.Password = null;
+            //Logs the user in if the details are correct. Clears the input boxes, this is incase they fail attempts
         }
 
         private void TxtUsername_TextChanged(object sender, TextChangedEventArgs e)
@@ -44,13 +45,14 @@ namespace Library_System
                 this.txtblkDateTime.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
             }, this.Dispatcher);
             timer.Start();
-
+            //I used this to show the data and time, it will update once a second. 
         }
 
         private void TxtUsername_TextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+            //Using Regex, this is because all ID's are purely numeric in my system. This makes the text box check the input key, if it's not an accepted key it simply won't be input
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Library_System
         {
             InitializeComponent();
             Show_User_Details();
+            //After the window has been opened the users details are shown within the stack panel
         }
 
         public void Show_User_Details()
@@ -36,11 +37,13 @@ namespace Library_System
             txtblkPhone.Text = "Phone Number: " + User_Data.currentUser.Phone_number;
             txtblkEmail.Text = "Email Address: " + User_Data.currentUser.Email_address;
             txtblkAddress.Text = "Address: " + User_Data.currentUser.HomeAddress;
+            //Assigning the text blocks to contains the users details.
         }
 
         private void btnEditDetails_Click(object sender, RoutedEventArgs e)
         {
             Allow_Edit();
+            //In my program I played with the Visibility property. This was to avoid creating lots of pages.
         }
 
         private void Allow_Edit()
@@ -57,7 +60,7 @@ namespace Library_System
                 stkPanChangeDetails.Visibility = Visibility.Hidden;
             }
 
-
+            //A method that checks the property of visibilty on the stack panels. This was to avoid using lots of pages and windows.
         }
 
         private void txtBoxChangePhone_TextChanged(object sender, TextChangedEventArgs e)
@@ -78,8 +81,12 @@ namespace Library_System
         private void btnChangeDetails_Click(object sender, RoutedEventArgs e)
         {
             Changing_Details.Change_Details(txtBoxChangeAddress.Text, txtBoxChangeEmail.Text, txtBoxChangePhone.Text);
+            //If details are changed the first method passes the data to another class, this is to change the information on the xml file and currentUser
             Allow_Edit();
+            //Takes the user back to the first stack panel after changing the details
             NavigationService.Refresh();
+            //Lastly updates the page so the information displayed reflects what the user input
+            
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -91,12 +98,14 @@ namespace Library_System
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+            //Another case of regex, this was so the mobile number could only recieve numerical values. 
         }
 
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)
         {
             stkPanChangePassword.Visibility = Visibility.Visible;
             stkPanChangeDetails.Visibility= Visibility.Hidden;
+            //Similar to AllowEdit, hides the previous panel
         }
 
         private void btnPasswordChanged_Click(object sender, RoutedEventArgs e)
@@ -105,7 +114,8 @@ namespace Library_System
             {
                 Changing_Details.Change_Password(psdBoxCurrent.Password, psdBoxNew.Password);
                 btnCancelPassword_Click(sender, e);
-            }
+                //If user cancels returns them to the previous page
+            }//Confirms that the 2 passwords match. 
             else
             {
                 MessageBox.Show("Passwords Do Not Match");
