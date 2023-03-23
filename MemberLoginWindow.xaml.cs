@@ -72,5 +72,9 @@ namespace Library_System
             frmMemberFrame.Source = new Uri("BookSearch.xaml", UriKind.Relative);
         }
 
+        private void btnReservations_Click(object sender, RoutedEventArgs e)
+        {
+            frmMemberFrame.Source = new Uri("Reservations.xaml", UriKind.Relative);
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace Library_System
 
         public void gridCreator()
         {
-            dgMemberHistory.ItemsSource = User_Record.DisplayRecord();   
+            dgMemberHistory.ItemsSource = User_Record.DisplayRecord();
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)

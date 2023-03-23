@@ -81,7 +81,7 @@ namespace Library_System
         private void btnWithdraw_Click(object sender, RoutedEventArgs e)
         {
             BookToWithdraw();
-            
+            dgSearchDisplay.Items.Refresh();
             //Returns the book which is in the row of the button clicked
         }
 
@@ -92,6 +92,7 @@ namespace Library_System
             {
                 WithdrawPage withdraw = new WithdrawPage(bookWithdrawn);
                 frmWithdrawDisplay.NavigationService.Navigate(withdraw, bookWithdrawn);
+              
                 return bookWithdrawn;
 
                 //Creates a new page where the user can withdraw the chosen book. Using frame navigation I can pass the book into the new page
@@ -105,6 +106,21 @@ namespace Library_System
         private void frmWithdrawDisplay_Navigated(object sender, NavigationEventArgs e)
         {
 
+        }
+
+        private void btnReserve_Click(object sender, RoutedEventArgs e)
+        {
+            Reserve();
+            dgSearchDisplay.Items.Refresh();
+        }
+
+        private void Reserve()
+        {
+            SingleBook reservedBook = (SingleBook)dgSearchDisplay.SelectedItem;
+            if (reservedBook != null)
+            {
+                Reserving.Reserved(reservedBook);
+            }
         }
     }
 }
