@@ -139,6 +139,131 @@ namespace Library_System
         }
     }
 
+    public class Reserving
+    {
+        public string User_ID { get; set; }
+        public string Book_Name { get; set; }
+        public string Unique_Id { get; set; }
+        public string Time_Reserved { get; set; }
+        public string Expiration { get; set; }
+        public bool Reserve_Complete { get; set; }
+        public static void Reserved(SingleBook reservedBook)
+        {
+            if (reservedBook.Availability == false)
+            {
+                if (reservedBook.IsReserved == false)
+                {
+                    XmlDocument reservations = new XmlDocument();
+                    reservations.Load("LibraryReservations.xml");
+                    XmlNode Root = reservations.SelectSingleNode("/Reservations");
+                    XmlNode Record = reservations.CreateElement("Record");
+                    XmlNode UserID = reservations.CreateElement("UserID");
+                    XmlNode Book = reservations.CreateElement("Book");
+                    XmlNode Unique_ID = reservations.CreateElement("UniqueID");
+                    XmlNode Time_Reserved = reservations.CreateElement("TimeReserved");
+                    XmlNode Expiration = reservations.CreateElement("Expires");
+                    XmlNode Reserve_Complete = reservations.CreateElement("ReserveComplete");
+
+                    UserID.InnerText = User_Data.currentUser.User_id;
+                    Book.InnerText = reservedBook.Title;
+                    Unique_ID.InnerText = reservedBook.Unique_ID;
+                    Time_Reserved.InnerText = Convert.ToString(DateTime.Now);
+                    Expiration.InnerText = Convert.ToString(DateTime.Now.AddMonths(1));
+                    Reserve_Complete.InnerText = "false";
+
+                    Record.AppendChild(UserID);
+                    Record.AppendChild(Book);
+                    Record.AppendChild(Unique_ID);
+                    Record.AppendChild(Time_Reserved);
+                    Record.AppendChild(Expiration);
+                    Record.AppendChild(Reserve_Complete);
+                    Root.AppendChild(Record);
+                    Update_Book(reservedBook);
+                    reservations.Save("LibraryReservations.xml");
+                    MessageBox.Show("Book Reserved");
+                }
+                else
+                {
+                    MessageBox.Show("Book is reserved elsewhere");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Book is unavailable");
+            }
+        }
+
+        public static void Update_Book(SingleBook reservedBook)
+        {
+            XmlDocument books = new XmlDocument();
+            books.Load("LibraryBooks.xml");
+            foreach (XmlNode book in books.SelectNodes("/Books/SingleBook"))
+            {
+                if (book.SelectSingleNode("UniqueID").InnerText == reservedBook.Unique_ID && reservedBook.IsReserved == false)
+                {
+                    XmlNode bookReserved = books.SelectSingleNode($"/Books/SingleBook[UniqueID='{reservedBook.Unique_ID}']/IsReserved");
+                    bookReserved.InnerText = "true";
+                    reservedBook.Availability = false;
+                    reservedBook.IsReserved = true;
+                    books.Save("LibraryBooks.xml");
+                }
+            }
+        }
+
+        public static List<Reserving> Display_Reservations()
+        {
+            List<Reserving> reserves = new List<Reserving>();
+            XmlDocument reserveFile = new XmlDocument();
+            reserveFile.Load("LibraryReservations.xml");
+
+            foreach (XmlNode record in reserveFile.SelectNodes("/Reservations/Record"))
+            {
+                if (User_Data.currentUser.User_id == record.SelectSingleNode("UserID").InnerText)
+                {
+                    Reserving reserveRecord = new Reserving
+                    {
+                        User_ID = record.SelectSingleNode("UserID").InnerText,
+                        Book_Name = record.SelectSingleNode("Book").InnerText,
+                        Unique_Id = record.SelectSingleNode("UniqueID").InnerText,
+                        Time_Reserved = record.SelectSingleNode("TimeReserved").InnerText,
+                        Expiration = record.SelectSingleNode("Expires").InnerText,
+                        Reserve_Complete = bool.Parse(record.SelectSingleNode("ReserveComplete").InnerText),
+                    };
+                    reserves.Add(reserveRecord);
+                }
+            }
+            return reserves;
+        }
+
+        public static void Cancel_Reservation(Reserving cancelled)
+        {
+            XmlDocument bookEdit = new XmlDocument();
+            bookEdit.Load("LibraryBooks.xml");
+            foreach (XmlNode book in bookEdit.SelectNodes("/Books/SingleBook"))
+            {
+                if (cancelled.Unique_Id == book.SelectSingleNode("UniqueID").InnerText)
+                {
+                    XmlNode bookEdited = bookEdit.SelectSingleNode($"/Books/SingleBook[UniqueID='{cancelled.Unique_Id}']/IsReserved");
+                    bookEdited.InnerText = "false";
+                    bookEdit.Save("LibraryBooks.xml");
+                }
+            }
+
+            if (cancelled != null)
+            {
+                XmlDocument cancelledDoc = new XmlDocument();
+                cancelledDoc.Load("LibraryReservations.xml");
+                XmlNode removed = cancelledDoc.SelectSingleNode($"/Reservations/Record[UniqueID='{cancelled.Unique_Id}']");
+                removed.ParentNode.RemoveChild(removed);
+                cancelledDoc.Save("LibraryReservations.xml");
+                MessageBox.Show("Reservation Cancelled");
+            }
+
+
+        }
+
+
+    }
 
 
 

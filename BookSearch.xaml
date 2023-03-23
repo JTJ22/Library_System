@@ -18,6 +18,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnReserve" Content="Reserve" Click="btnReserve_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <TextBox x:Name="txtBoxSearchBox" HorizontalAlignment="Left" Height="21" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" TextChanged="txtBoxSearchBox_TextChanged"/>

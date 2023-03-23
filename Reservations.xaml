@@ -1,0 +1,31 @@
+﻿<Page x:Class="Library_System.Reservations"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Library_System"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1040"
+      Title="Reservations">
+
+    <Grid>
+        <DataGrid x:Name="dgReserveDisplay" CanUserAddRows="False"  HorizontalAlignment="Center"  Height="680" VerticalAlignment="Center" Width="1020"  Margin="10" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="dgReserveDisplay_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnWithdrawBook" Content="Withdraw" Click="btnWithdrawBook_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnCancel" Content="Cancel" Click="btnCancel_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

@@ -55,7 +55,7 @@ namespace Library_System
             {
                 if (book.SelectSingleNode("UniqueID").InnerText == bookBeingWithdrawn.Unique_ID)
                 {
-                    if (bookBeingWithdrawn.Availability == true)
+                    if (bookBeingWithdrawn.Availability == true && bookBeingWithdrawn.IsReserved == false)
                     {
                         XmlNode bookTaken = books.SelectSingleNode($"/Books/SingleBook[UniqueID='{bookBeingWithdrawn.Unique_ID}']/Availabilty");
                         bookTaken.InnerText = "false";

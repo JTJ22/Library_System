@@ -62,6 +62,9 @@
     <Compile Include="MemberHistory.xaml.cs">
       <DependentUpon>MemberHistory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reservations.xaml.cs">
+      <DependentUpon>Reservations.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WithdrawPage.xaml.cs">
       <DependentUpon>WithdrawPage.xaml</DependentUpon>
     </Compile>
@@ -99,6 +102,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MemberLoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reservations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
