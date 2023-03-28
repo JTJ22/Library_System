@@ -47,7 +47,7 @@ namespace Library_System
             txtBlkExptReturn.Text = "Maximum Return Date: " + expected.ToString("yyyy-MM-dd");
         }
 
-        private void Withdrawn()
+        public void Withdrawn()
         {
             XmlDocument books = new XmlDocument();
             books.Load("LibraryBooks.xml");
@@ -57,54 +57,23 @@ namespace Library_System
                 {
                     if (bookBeingWithdrawn.Availability == true && bookBeingWithdrawn.IsReserved == false)
                     {
+                        User_Record user_Record = new User_Record();
                         XmlNode bookTaken = books.SelectSingleNode($"/Books/SingleBook[UniqueID='{bookBeingWithdrawn.Unique_ID}']/Availabilty");
                         bookTaken.InnerText = "false";
                         bookBeingWithdrawn.Availability = false;
                         books.Save("LibraryBooks.xml");
-                        Update_History();
+                        user_Record.Update_History(bookBeingWithdrawn);
                         MessageBox.Show("Withdrawn");
                     }
                     else
                     {
-                        MessageBox.Show("Not Available");
+                        MessageBox.Show("Book Cannot be withdrawn");
                     }
+
                 }
             }
             
         }
         
-        private void Update_History()
-        {
-            DateTime expected = DateTime.Now.AddMonths(1);
-            XmlDocument history = new XmlDocument();
-            history.Load("LibraryHistory.xml");
-            XmlNode ROOT = history.SelectSingleNode("/History");
-            XmlNode Record = history.CreateElement("Record");
-            XmlNode UserID = history.CreateElement("UserID");
-            XmlNode Book = history.CreateElement("Book");
-            XmlNode UniqueID = history.CreateElement("UniqueID");
-            XmlNode WithdrawDate = history.CreateElement("WithdrawDate");
-            XmlNode ReturnExpected = history.CreateElement("ReturnExpected");
-            XmlNode ReturnActual = history.CreateElement("ReturnActual");
-            XmlNode IsBookReturned = history.CreateElement("IsBookReturned");
-
-            UserID.InnerText = User_Data.currentUser.User_id;
-            Book.InnerText = bookBeingWithdrawn.Title;
-            UniqueID.InnerText = bookBeingWithdrawn.Unique_ID;
-            WithdrawDate.InnerText = Convert.ToString(DateTime.Now);
-            ReturnExpected.InnerText = expected.ToString("yyyy-MM-dd");
-            ReturnActual.InnerText = "0";
-            IsBookReturned.InnerText = "false";
-
-            Record.AppendChild(UserID);
-            Record.AppendChild(Book);
-            Record.AppendChild(UniqueID);
-            Record.AppendChild(WithdrawDate);
-            Record.AppendChild(ReturnExpected);
-            Record.AppendChild(ReturnActual);
-            Record.AppendChild(IsBookReturned);
-            ROOT.AppendChild(Record);
-            history.Save("LibraryHistory.xml");
-        }
     }
 }

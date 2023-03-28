@@ -37,7 +37,7 @@ namespace Library_System
         {
             MessageBox.Show("You have logged out");
             Close();
-            User_Data.currentUser.Log_Out(User_Data.currentUser);
+            User_Data.currentUser.Log_Out();
         }
 
 

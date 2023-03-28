@@ -116,10 +116,11 @@ namespace Library_System
 
         private void Reserve()
         {
+            Reserving reserve = new Reserving();
             SingleBook reservedBook = (SingleBook)dgSearchDisplay.SelectedItem;
             if (reservedBook != null)
             {
-                Reserving.Reserved(reservedBook);
+                reserve.Reserved(reservedBook);
             }
         }
     }
