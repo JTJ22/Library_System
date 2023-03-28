@@ -28,17 +28,18 @@ namespace Library_System
         public string HomeAddress { get; set; }
 
         public static User_Data currentUser = new User_Data();
-        public void Log_Out(User_Data user)
+        //I decided to use a public static instance of a user. This was so i could access the data much easier. 
+        public void Log_Out()
         {
-            user.First_name = null;
-            user.password = null;
-            user.Last_name = null;
-            user.User_id = null;
-            user.Phone_number = null;
-            user.Email_address = null;
-            user.Librarian_Permisions = false;
+            currentUser.First_name = null;
+            currentUser.password = null;
+            currentUser.Last_name = null;
+            currentUser.User_id = null;
+            currentUser.Phone_number = null;
+            currentUser.Email_address = null;
+            currentUser.Librarian_Permisions = false;
             (Application.Current.MainWindow as MainWindow).Visibility = Visibility.Visible;
-        }
+        } //Sets the current user back to empty. Then returns the application back to the mainwindow
 
         public User_Data Logging_In(string inputUserid, string inputPassword)
         {
@@ -68,6 +69,7 @@ namespace Library_System
                              window2.Show();*/
                         }
                         Login_Action();
+                        User_Record.Late_Check();
                         return currentUser;
                     }
                 }
@@ -78,12 +80,45 @@ namespace Library_System
 
         public void Login_Action()
         {
+            Reservation_Overdue();
             MessageBox.Show("You have logged in!");
-            Logging.Logger("User ID: " + currentUser.User_id + " Name: " + currentUser.First_name + " " + currentUser.Last_name);
+            Logging.Logger($"User ID: '{currentUser.User_id}'  Name: '{currentUser.First_name}''{currentUser.Last_name}'");
             MemberLoginWindow memberLoggedIn = new MemberLoginWindow();
             (Application.Current.MainWindow as MainWindow).Visibility = Visibility.Hidden;
             memberLoggedIn.Show();
-        }
+        }//Upon logging in a new window is opened. The mainwindow is hidden. 
+
+        public void Reservation_Overdue()
+        {
+            XmlDocument reservations = new XmlDocument();
+            reservations.Load("LibraryReservations.xml");
+            foreach (XmlNode record in reservations.SelectNodes("/Reservations/Record"))
+            {
+                DateTime expiration = Convert.ToDateTime(record.SelectSingleNode("Expires").InnerText).Date;
+                if (expiration < DateTime.Now.Date && record.SelectSingleNode("ReserveComplete").InnerText == "false")
+                {
+                    XmlNode removeRes = reservations.SelectSingleNode($"/Reservations/Record[UniqueID='{record.SelectSingleNode("UniqueID").InnerText}'][TimeReserved='{record.SelectSingleNode("TimeReserved").InnerText}']");
+                    MessageBox.Show($"Reservation for '{record.SelectSingleNode("Book").InnerText}' has expired.");
+                    removeRes.ParentNode.RemoveChild(removeRes);
+                    reservations.Save("LibraryReservations.xml");
+
+
+                    XmlDocument bookEdit = new XmlDocument();
+                    bookEdit.Load("LibraryBooks.xml");
+                    foreach (XmlNode book in bookEdit.SelectNodes("/Books/SingleBook"))
+                    {
+                        if (record.SelectSingleNode("UniqueID").InnerText == book.SelectSingleNode("UniqueID").InnerText)
+                        {
+                            XmlNode bookEdited = bookEdit.SelectSingleNode($"/Books/SingleBook[UniqueID='{record.SelectSingleNode("UniqueID").InnerText}']/IsReserved");
+                            bookEdited.InnerText = "false";
+                            bookEdit.Save("LibraryBooks.xml");
+                        }
+                    }
+                }
+            }
+
+
+        }//Upon any user logging in the system checks every reservation. If a book is over it's expiry date the reservation is automatically cancelled.
     }
 }
 

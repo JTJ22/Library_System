@@ -30,7 +30,7 @@ namespace Library_System
 
         private void btnWithdrawBook_Click(object sender, RoutedEventArgs e)
         {
-
+            Updating_Res();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -45,7 +45,46 @@ namespace Library_System
 
         }
 
+        public void Updating_Res()
+        {
+            XmlDocument books = new XmlDocument();
+            books.Load("LibraryBooks.xml");
+            Reserving reservedBook = (Reserving)dgReserveDisplay.SelectedItem;
+            SingleBook bookBeingWithdrawn = GettingBook(reservedBook);
+            if (bookBeingWithdrawn.IsReserved)
+            {
+                foreach (var record in Reserving.Display_Reservations())
+                {
+                    if (User_Data.currentUser.User_id == record.User_ID)
+                    {
+                        User_Record user_Record = new User_Record();
+                        XmlNode bookTaken = books.SelectSingleNode($"/Books/SingleBook[UniqueID='{bookBeingWithdrawn.Unique_ID}']/Availabilty");
+                        XmlNode bookRes = books.SelectSingleNode($"/Books/SingleBook[UniqueID='{bookBeingWithdrawn.Unique_ID}']/IsReserved");
+                        record.Complete_Reservation(record);
+                        bookTaken.InnerText = "false";
+                        bookRes.InnerText = "false";
+                        bookBeingWithdrawn.Availability = false;
+                        bookBeingWithdrawn.IsReserved = false;
+                        books.Save("LibraryBooks.xml");
+                        user_Record.Update_History(bookBeingWithdrawn);
+                        MessageBox.Show("Reservation Withdrawn");
+                    }
+                }
+            }
+        }
 
-           
+        private SingleBook GettingBook(Reserving reservedBook)
+        {
+            foreach (var book in BookHandling.DisplayBooks())
+            {
+                if (reservedBook.Unique_Id == book.Unique_ID)
+                {
+                    SingleBook bookBeingWithdrawn = book;
+                    return bookBeingWithdrawn;
+                }
+            }
+            return null;
+        }
+
     }
 }
