@@ -81,7 +81,6 @@ namespace Library_System
         private void btnWithdraw_Click(object sender, RoutedEventArgs e)
         {
             BookToWithdraw();
-            dgSearchDisplay.Items.Refresh();
             //Returns the book which is in the row of the button clicked
         }
 
@@ -111,7 +110,7 @@ namespace Library_System
         private void btnReserve_Click(object sender, RoutedEventArgs e)
         {
             Reserve();
-            dgSearchDisplay.Items.Refresh();
+            GridCreator();
         }
 
         private void Reserve()

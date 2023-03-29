@@ -9,7 +9,7 @@
       Title="Reservations">
 
     <Grid>
-        <DataGrid x:Name="dgReserveDisplay" CanUserAddRows="False"  HorizontalAlignment="Center"  Height="680" VerticalAlignment="Center" Width="1020"  Margin="10" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="dgReserveDisplay_SelectionChanged">
+        <DataGrid x:Name="dgReserveDisplay" CanUserAddRows="False"  HorizontalAlignment="Left"  Height="604" VerticalAlignment="Top" Width="867" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="dgReserveDisplay_SelectionChanged" Margin="10,0,0,0">
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
@@ -27,5 +27,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Label x:Name="lblMessage" Content="" HorizontalAlignment="Left" Height="51" Margin="10,609,0,0" FontSize="18"  VerticalAlignment="Top" Width="510"/>
     </Grid>
 </Page>

@@ -90,8 +90,11 @@ namespace Library_System
         public string Return_Expected { get; set; }
         public string Return_Actual { get; set; }
         public bool Is_Returned { get; set; }
+        public bool Is_Renewed { get; set; }
 
-        public static List<User_Record> DisplayRecord()
+        public static User_Record UserRecordInstance = new User_Record();
+
+        public List<User_Record> DisplayRecord()
         {
             //Creating a list of records, the XML file is read and each "User_Record" node is added to the list, this made it much easier to create data grids
             List<User_Record> records = new List<User_Record>();
@@ -111,7 +114,7 @@ namespace Library_System
                         Return_Expected = node.SelectSingleNode("ReturnExpected").InnerText,
                         Return_Actual = node.SelectSingleNode("ReturnActual").InnerText,
                         Is_Returned = bool.Parse(node.SelectSingleNode("IsBookReturned").InnerText),
-
+                        Is_Renewed = bool.Parse(node.SelectSingleNode("IsRenewed").InnerText)
                     };
                     records.Add(record);
                 }
@@ -121,7 +124,7 @@ namespace Library_System
 
         }
 
-        public static void RecordAdjust(User_Record bookReturned)
+        public void RecordAdjust(User_Record bookReturned)
         {
             XmlDocument recordFileToChange = new XmlDocument();
             recordFileToChange.Load("LibraryHistory.xml");
@@ -138,14 +141,41 @@ namespace Library_System
             }
         }
 
-        public static void Late_Check()
+        public void Renew_Book(User_Record recordToChange)
+        {
+            XmlDocument recordFileToChange = new XmlDocument();
+            recordFileToChange.Load("LibraryHistory.xml");
+            foreach(XmlNode node in recordFileToChange.SelectNodes("/History/Record"))
+            {
+                if (!recordToChange.Is_Returned)
+                {
+                    if (recordToChange.Is_Renewed == false && recordToChange.User_Id == node.SelectSingleNode("UserID").InnerText && recordToChange.Unique_Id == node.SelectSingleNode("UniqueID").InnerText)
+                    {
+                        XmlNode renewUpdate = recordFileToChange.SelectSingleNode($"/History/Record[UniqueID='{recordToChange.Unique_Id}'][UserID='{recordToChange.User_Id}'][WithdrawDate='{recordToChange.Withdraw_Date}']/IsRenewed");
+                        XmlNode updateDate = recordFileToChange.SelectSingleNode($"/History/Record[UniqueID='{recordToChange.Unique_Id}'][UserID='{recordToChange.User_Id}'][WithdrawDate='{recordToChange.Withdraw_Date}']/ReturnExpected");
+                        DateTime newDate = Convert.ToDateTime(recordToChange.Return_Expected).AddDays(14);
+                        renewUpdate.InnerText = "true";
+                        updateDate.InnerText = Convert.ToString(newDate);
+                        recordFileToChange.Save("LibraryHistory.xml");
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Already Renewed");
+                    }
+                }
+            }
+
+        }
+
+        public void Late_Check()
         {
             double fineCharge = 4.00;
             DateTime timeNow = DateTime.Now.Date; //Creating a varible for the time now. 
             foreach (var record in DisplayRecord())//Using the list returned by this method for my foreach
             {
                 DateTime returnExpectedDate = Convert.ToDateTime(record.Return_Expected).Date; //Creating a variable that holds the expected return date.
-                if (returnExpectedDate < timeNow && record.Is_Returned == false && record.Is_Returned == false)
+                if (returnExpectedDate < timeNow && record.Is_Returned == false)
                 {
                     
                     int daysLate = (timeNow - returnExpectedDate).Days; //If the book is returned AFTER the expected date, this variable holds the difference in days.
@@ -153,10 +183,12 @@ namespace Library_System
                     {
                         int wholeWeeksLate = daysLate / 7;
                         int fineAmount = (wholeWeeksLate + 1) * (int)fineCharge;
-                        Fining.Create_Fine(record.Unique_Id, record.User_Id, record.Book_Name, returnExpectedDate, fineAmount);
-                        /*
-                        MessageBox.Show($"You have been fined: £{fineAmount} for the overdue book {record.Book_Name}");*/
+                        Fining.finingInstance.Create_Fine(record.Unique_Id, record.User_Id, record.Book_Name, returnExpectedDate, fineAmount);
                         //I only charge if it has been more than a week, if that is true the cust is informed of the fine. 
+                    }
+                    else
+                    {
+                        Fining.finingInstance.Create_Fine(record.Unique_Id, record.User_Id, record.Book_Name, returnExpectedDate, 0);
                     }
                 }
             }
@@ -176,6 +208,7 @@ namespace Library_System
             XmlNode ReturnExpected = history.CreateElement("ReturnExpected");
             XmlNode ReturnActual = history.CreateElement("ReturnActual");
             XmlNode IsBookReturned = history.CreateElement("IsBookReturned");
+            XmlNode IsBookRenewed = history.CreateElement("IsRenewed");
 
             UserID.InnerText = User_Data.currentUser.User_id;
             Book.InnerText = bookBeingWithdrawn.Title;
@@ -184,6 +217,7 @@ namespace Library_System
             ReturnExpected.InnerText = expected.ToString();
             ReturnActual.InnerText = "0";
             IsBookReturned.InnerText = "false";
+            IsBookRenewed.InnerText = "false";
 
             Record.AppendChild(UserID);
             Record.AppendChild(Book);
@@ -192,6 +226,7 @@ namespace Library_System
             Record.AppendChild(ReturnExpected);
             Record.AppendChild(ReturnActual);
             Record.AppendChild(IsBookReturned);
+            Record.AppendChild(IsBookRenewed);
             ROOT.AppendChild(Record);
             history.Save("LibraryHistory.xml");
         }
@@ -205,6 +240,8 @@ namespace Library_System
         public string Time_Reserved { get; set; }
         public string Expiration { get; set; }
         public bool Reserve_Complete { get; set; }
+
+        public static Reserving reservingInstance = new Reserving();
         public void Reserved(SingleBook reservedBook)
         {
             if (ResChecker())
@@ -261,16 +298,16 @@ namespace Library_System
 
         private bool ResChecker()
         {
-            foreach (var record in User_Record.DisplayRecord())
+            foreach (var record in User_Record.UserRecordInstance.DisplayRecord())
             {
-                if (record.User_Id == User_Data.currentUser.User_id)
+                if (record.User_Id == User_Data.currentUser.User_id && !record.Is_Returned)
                 {
                     return false;
                 }
             }
             return true;
         }
-        public static void Update_Book(SingleBook reservedBook)
+        public void Update_Book(SingleBook reservedBook)
         {
             XmlDocument books = new XmlDocument();
             books.Load("LibraryBooks.xml");
@@ -287,7 +324,7 @@ namespace Library_System
             }
         }
 
-        public static List<Reserving> Display_Reservations()
+        public List<Reserving> Display_Reservations()
         {
             List<Reserving> reserves = new List<Reserving>();
             XmlDocument reserveFile = new XmlDocument();
@@ -312,7 +349,7 @@ namespace Library_System
             return reserves;
         }
 
-        public static void Cancel_Reservation(Reserving cancelled)
+        public void Cancel_Reservation(Reserving cancelled)
         {
             XmlDocument bookEdit = new XmlDocument();
             bookEdit.Load("LibraryBooks.xml");
@@ -370,7 +407,35 @@ namespace Library_System
         public string Expiration { get; set; }
         public double Fine_Value { get; set; }
         public bool Fine_Paid { get; set; }
-        public static void Create_Fine(string UniqueID, string UserID, string bookName, DateTime returnExpected, int fineCost)
+
+        public static Fining finingInstance = new Fining();
+
+        public List<Fining> Display_Fines()
+        {
+            List<Fining> fines = new List<Fining>();
+            XmlDocument fineFile = new XmlDocument();
+            fineFile.Load("LibraryFines.xml");
+
+            foreach (XmlNode record in fineFile.SelectNodes("/Fines/Record"))
+            {
+                if (User_Data.currentUser.User_id == record.SelectSingleNode("UserID").InnerText)
+                {
+                    Fining finingRecord = new Fining
+                    {
+                        User_ID = record.SelectSingleNode("UserID").InnerText,
+                        Book_Name = record.SelectSingleNode("Book").InnerText,
+                        Unique_Id = record.SelectSingleNode("UniqueID").InnerText,
+                        Expiration = record.SelectSingleNode("Expires").InnerText,
+                        Fine_Value = Convert.ToDouble(record.SelectSingleNode("FineValue").InnerText),
+                        Fine_Paid = bool.Parse(record.SelectSingleNode("FinePaid").InnerText),
+                    };
+                    fines.Add(finingRecord);
+                }
+            }
+            return fines;
+        }
+
+        public void Create_Fine(string UniqueID, string UserID, string bookName, DateTime returnExpected, int fineCost)
         {
             XmlDocument fines = new XmlDocument();
             fines.Load("LibraryFines.xml");
@@ -409,7 +474,7 @@ namespace Library_System
             }
         }
 
-        public static bool Does_Fine_Exist(string UniqueID, string UserID, DateTime returnExpected)
+        public bool Does_Fine_Exist(string UniqueID, string UserID, DateTime returnExpected)
         {
             XmlDocument fines = new XmlDocument();
             fines.Load("LibraryFines.xml");
@@ -427,6 +492,23 @@ namespace Library_System
 
 
 
+        }
+
+        public bool Fine_Locker(User_Data currentUser)
+        {
+            XmlDocument fines = new XmlDocument();
+            fines.Load("LibraryFines.xml");
+
+            foreach (XmlNode fine in fines.SelectNodes("/Fines/Record"))
+            {
+
+                if (fine.SelectSingleNode("UserID").InnerText == currentUser.User_id && fine.SelectSingleNode("FinePaid").InnerText == "false")
+                {
+                    return true;
+                }
+
+            }
+            return false;
         }
 
         }

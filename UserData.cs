@@ -68,8 +68,8 @@ namespace Library_System
                              Visibility = Visibility.Hidden;
                              window2.Show();*/
                         }
-                        Login_Action();
-                        User_Record.Late_Check();
+                        User_Record.UserRecordInstance.Late_Check();
+                        Login_Action(); 
                         return currentUser;
                     }
                 }
