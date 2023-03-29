@@ -25,7 +25,7 @@ namespace Library_System
         public Reservations()
         {
             InitializeComponent();
-            dgReserveDisplay.ItemsSource = Reserving.Display_Reservations();
+            dgReserveDisplay.ItemsSource = Reserving.reservingInstance.Display_Reservations();        
         }
 
         private void btnWithdrawBook_Click(object sender, RoutedEventArgs e)
@@ -36,7 +36,7 @@ namespace Library_System
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Reserving cancelled = (Reserving)dgReserveDisplay.SelectedItem;
-            Reserving.Cancel_Reservation(cancelled);
+            cancelled.Cancel_Reservation(cancelled);
             dgReserveDisplay.Items.Refresh();
         }
 
@@ -53,9 +53,9 @@ namespace Library_System
             SingleBook bookBeingWithdrawn = GettingBook(reservedBook);
             if (bookBeingWithdrawn.IsReserved)
             {
-                foreach (var record in Reserving.Display_Reservations())
+                foreach (var record in reservedBook.Display_Reservations())
                 {
-                    if (User_Data.currentUser.User_id == record.User_ID)
+                    if (User_Data.currentUser.User_id == record.User_ID && bookBeingWithdrawn.Availability)
                     {
                         User_Record user_Record = new User_Record();
                         XmlNode bookTaken = books.SelectSingleNode($"/Books/SingleBook[UniqueID='{bookBeingWithdrawn.Unique_ID}']/Availabilty");
@@ -68,6 +68,10 @@ namespace Library_System
                         books.Save("LibraryBooks.xml");
                         user_Record.Update_History(bookBeingWithdrawn);
                         MessageBox.Show("Reservation Withdrawn");
+                    }
+                    else
+                    {
+                        lblMessage.Content = "This book has not been returned yet";
                     }
                 }
             }

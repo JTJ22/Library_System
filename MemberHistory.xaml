@@ -11,14 +11,21 @@
     <Grid>
         <DataGrid x:Name="dgMemberHistory" CanUserAddRows="False" HorizontalAlignment="Left" Height="680" Margin="10,10,0,0" VerticalAlignment="Top" Width="1020" SelectionChanged="dgMemberHistory_SelectionChanged" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
             <DataGrid.Columns>
-            <DataGridTemplateColumn>
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
                             <Button x:Name="btnReturn" Content="Return" Click="btnReturn_Click"/>
                         </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-        </DataGrid.Columns>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnRenew" Content="Renew" Click="btnRenew_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </Page>

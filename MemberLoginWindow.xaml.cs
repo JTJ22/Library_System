@@ -25,8 +25,17 @@ namespace Library_System
     {
         public MemberLoginWindow()
         {
+
             InitializeComponent();
             Time_Updater();
+            if (Fining.finingInstance.Fine_Locker(User_Data.currentUser))
+            {
+                btnSearchBooks.IsEnabled = false;
+                btnReservations.IsEnabled = false;
+                btnHistoryMember.IsEnabled = false;
+                frmMemberFrame.Visibility = Visibility.Hidden;
+                lblWarning.Visibility = Visibility.Visible;
+            }
         }
         private void btnLogOut_Click(object sender, RoutedEventArgs e)
         {
@@ -75,6 +84,11 @@ namespace Library_System
         private void btnReservations_Click(object sender, RoutedEventArgs e)
         {
             frmMemberFrame.Source = new Uri("Reservations.xaml", UriKind.Relative);
+        }
+
+        private void btnFines_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

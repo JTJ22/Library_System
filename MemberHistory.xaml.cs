@@ -34,14 +34,18 @@ namespace Library_System
 
         public void gridCreator()
         {
-            dgMemberHistory.ItemsSource = User_Record.DisplayRecord();
+            dgMemberHistory.ItemsSource = User_Record.UserRecordInstance.DisplayRecord();
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
             BookReturned((User_Record)dgMemberHistory.SelectedItem);
         }
-
+        private void btnRenew_Click(object sender, RoutedEventArgs e)
+        {
+            User_Record record = (User_Record)dgMemberHistory.SelectedItem;
+            record.Renew_Book(record);
+        }
         private void BookReturned(User_Record selectItem)
         {
             User_Record bookReturned = selectItem;
@@ -52,7 +56,7 @@ namespace Library_System
                     if (Convert.ToDateTime(bookReturned.Return_Expected) > DateTime.Now.Date)
                     {
                         ChangeBookFile(bookReturned.Unique_Id);
-                        User_Record.RecordAdjust(bookReturned);
+                        User_Record.UserRecordInstance.RecordAdjust(bookReturned);
                         MessageBox.Show("Book Returned Within Due Date");
                         gridCreator();
                     }
@@ -81,5 +85,7 @@ namespace Library_System
                 }
             }
         }
+
+
     }
 }
