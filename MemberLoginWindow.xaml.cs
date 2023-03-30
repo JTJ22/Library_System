@@ -28,7 +28,7 @@ namespace Library_System
 
             InitializeComponent();
             Time_Updater();
-            if (Fining.finingInstance.Fine_Locker(User_Data.currentUser))
+            if(Fining.finingInstance.Fine_Locker(User_Data.currentUser) && !User_Data.currentUser.Librarian_Permisions)
             {
                 btnSearchBooks.IsEnabled = false;
                 btnReservations.IsEnabled = false;
@@ -52,8 +52,10 @@ namespace Library_System
 
         private void btnMemberDetails_Click(object sender, RoutedEventArgs e)
         {
-            frmMemberFrame.Source = new Uri("MemberDetailPage.xaml", UriKind.Relative);
-            
+            if (!User_Data.currentUser.Librarian_Permisions)
+            {
+                frmMemberFrame.Source = new Uri("MemberDetailPage.xaml", UriKind.Relative);
+            } 
         }
 
         private void btnHistoryMember_Click(object sender, RoutedEventArgs e)
@@ -88,6 +90,19 @@ namespace Library_System
 
         private void btnFines_Click(object sender, RoutedEventArgs e)
         {
+            frmMemberFrame.Visibility = Visibility.Visible;
+            lblWarning.Visibility = Visibility.Hidden;
+            frmMemberFrame.Source = new Uri("Fines.xaml", UriKind.Relative);
+        }
+
+        public void EnableAccess()
+        {
+
+            btnSearchBooks.IsEnabled = true;
+            btnReservations.IsEnabled = true;
+            btnHistoryMember.IsEnabled = true;
+            frmMemberFrame.Visibility = Visibility.Visible;
+            lblWarning.Visibility = Visibility.Hidden;
 
         }
     }

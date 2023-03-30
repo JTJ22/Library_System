@@ -21,10 +21,10 @@ namespace Library_System
         public string User_id { get; set; }
         public string password { get; set; }
         public string First_name { get; set; }
-        public string Last_name { get; set;  }
+        public string Last_name { get; set; }
         public string Phone_number { get; set; }
         public string Email_address { get; set; }
-        public bool Librarian_Permisions { get; set;  }
+        public bool Librarian_Permisions { get; set; }
         public string HomeAddress { get; set; }
 
         public static User_Data currentUser = new User_Data();
@@ -63,13 +63,10 @@ namespace Library_System
 
                         if (currentUser.Librarian_Permisions == true)
                         {
-                            /* MessageBox.Show("You have logged in!");
-                             Window1 window2 = new Window1();
-                             Visibility = Visibility.Hidden;
-                             window2.Show();*/
+                            Login_Action();
                         }
                         User_Record.UserRecordInstance.Late_Check();
-                        Login_Action(); 
+                        Login_Action();
                         return currentUser;
                     }
                 }
@@ -85,7 +82,9 @@ namespace Library_System
             Logging.Logger($"User ID: '{currentUser.User_id}'  Name: '{currentUser.First_name}''{currentUser.Last_name}'");
             MemberLoginWindow memberLoggedIn = new MemberLoginWindow();
             (Application.Current.MainWindow as MainWindow).Visibility = Visibility.Hidden;
-            memberLoggedIn.Show();
+            (Application.Current.MainWindow as MainWindow).Close();
+            Application.Current.MainWindow = memberLoggedIn;
+            Application.Current.MainWindow.Show();
         }//Upon logging in a new window is opened. The mainwindow is hidden. 
 
         public void Reservation_Overdue()

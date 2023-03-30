@@ -55,7 +55,7 @@ namespace Library_System
                 {
                     if (Convert.ToDateTime(bookReturned.Return_Expected) > DateTime.Now.Date)
                     {
-                        ChangeBookFile(bookReturned.Unique_Id);
+                        User_Record.UserRecordInstance.ChangeBookFile(bookReturned.Unique_Id);
                         User_Record.UserRecordInstance.RecordAdjust(bookReturned);
                         MessageBox.Show("Book Returned Within Due Date");
                         gridCreator();
@@ -67,25 +67,7 @@ namespace Library_System
                 }
             }
 
-
-
         }
-
-        private void ChangeBookFile(string UniqueID)
-        {
-            XmlDocument books = new XmlDocument();
-            books.Load("LibraryBooks.xml");
-            foreach (XmlNode node in books.SelectNodes("/Books/SingleBook"))
-            {
-                if(UniqueID == node.SelectSingleNode("UniqueID").InnerText)
-                {
-                    XmlNode availabilty = node.SelectSingleNode($"/Books/SingleBook[UniqueID='{UniqueID}']/Availabilty");
-                    availabilty.InnerText = "true";
-                    books.Save("LibraryBooks.xml");
-                }
-            }
-        }
-
 
     }
 }
