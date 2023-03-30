@@ -60,6 +60,32 @@ namespace Library_System
             //Lastly the list "books" is returned, this made is so the list is easily accessible elsewhere in the code (Same reason it is public static)
         }
 
+        public static SingleBook GetSingleBook(string UniqueID)
+        {
+            XmlDocument bookToChange= new XmlDocument();
+            bookToChange.Load("LibraryBooks.xml");
+            foreach (XmlNode node in bookToChange.SelectNodes("/Books/SingleBook"))
+            {
+                if (UniqueID == node.SelectSingleNode("UniqueID").InnerText)
+                {
+                    SingleBook book = new SingleBook
+                    {
+                        Title = node.SelectSingleNode("Title").InnerText,
+                        Unique_ID = node.SelectSingleNode("UniqueID").InnerText,
+                        Genre = node.SelectSingleNode("Genre").InnerText,
+                        Author = node.SelectSingleNode("Author").InnerText,
+                        ISBN = node.SelectSingleNode("ISBN").InnerText,
+                        Date = node.SelectSingleNode("Date").InnerText,
+                        Availability = bool.Parse(node.SelectSingleNode("Availabilty").InnerText),
+                        Description = node.SelectSingleNode("Description").InnerText,
+                        IsReserved = bool.Parse(node.SelectSingleNode("IsReserved").InnerText)
+                    };
+                    return book;
+                }
+            }
+            return null;
+        }
+
 
 
 
