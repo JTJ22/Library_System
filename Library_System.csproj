@@ -55,12 +55,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BookManagement.cs" />
+    <Compile Include="AddBooks.xaml.cs">
+      <DependentUpon>AddBooks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CodeFiles\BookManagement.cs" />
     <Compile Include="BookSearch.xaml.cs">
       <DependentUpon>BookSearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CodeFiles\FineManager.cs" />
     <Compile Include="Fines.xaml.cs">
       <DependentUpon>Fines.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CodeFiles\HistoryRecordsManager.cs" />
+    <Compile Include="LibrarianBooks.xaml.cs">
+      <DependentUpon>LibrarianBooks.xaml</DependentUpon>
     </Compile>
     <Compile Include="MemberHistory.xaml.cs">
       <DependentUpon>MemberHistory.xaml</DependentUpon>
@@ -68,18 +76,23 @@
     <Compile Include="Reservations.xaml.cs">
       <DependentUpon>Reservations.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CodeFiles\ReservingManager.cs" />
     <Compile Include="WithdrawPage.xaml.cs">
       <DependentUpon>WithdrawPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="XmlManager.cs" />
-    <Compile Include="Logging.cs" />
+    <Compile Include="CodeFiles\UserDetailsManager.cs" />
+    <Compile Include="CodeFiles\Logging.cs" />
     <Compile Include="MemberDetailPage.xaml.cs">
       <DependentUpon>MemberDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MemberLoginWindow.xaml.cs">
       <DependentUpon>MemberLoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserData.cs" />
+    <Compile Include="CodeFiles\UserData.cs" />
+    <Page Include="AddBooks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BookSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -87,6 +100,10 @@
     <Page Include="Fines.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LibrarianBooks.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -147,5 +164,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,7 +13,7 @@
             <Button x:Name="btnLogOut" Content="Log out" Height="33" Width="101" Click="btnLogOut_Click" Margin="0, 10, 0, 10"/>
             <Button x:Name="btnMemberDetails" Content="Details" Height="33" Width="102" Margin="0, 10, 0, 10" Click="btnMemberDetails_Click"/>
             <Button x:Name="btnHistoryMember" Content="History" Height="33" Width="102" Margin="0, 10, 0, 10" Click="btnHistoryMember_Click"/>
-            <Button x:Name="btnSearchBooks" Content="Search" Height="33" Width="102" Margin="0,10,0,10" Click="btnSearchBooks_Click" />
+            <Button x:Name="btnSearchBooks" Content="View Books" Height="33" Width="102" Margin="0,10,0,10" Click="btnSearchBooks_Click" />
             <Button x:Name="btnReservations" Content="Reservations" Height="33" Width="102" Margin="0,10,0,10" Click="btnReservations_Click"/>
             <Button x:Name="btnFines" Content="Fines" Height="33" Width="102" Margin="0,10,0,10" Click="btnFines_Click" />
         </StackPanel>

@@ -39,34 +39,13 @@ namespace Library_System
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
-            BookReturned((User_Record)dgMemberHistory.SelectedItem);
+            User_Record.UserRecordInstance.BookReturned((User_Record)dgMemberHistory.SelectedItem);
+            gridCreator();
         }
         private void btnRenew_Click(object sender, RoutedEventArgs e)
         {
             User_Record record = (User_Record)dgMemberHistory.SelectedItem;
             record.Renew_Book(record);
-        }
-        private void BookReturned(User_Record selectItem)
-        {
-            User_Record bookReturned = selectItem;
-            if (bookReturned != null)
-            {
-                if (bookReturned.Is_Returned != true)
-                {
-                    if (Convert.ToDateTime(bookReturned.Return_Expected) > DateTime.Now.Date)
-                    {
-                        User_Record.UserRecordInstance.ChangeBookFile(bookReturned.Unique_Id);
-                        User_Record.UserRecordInstance.RecordAdjust(bookReturned);
-                        MessageBox.Show("Book Returned Within Due Date");
-                        gridCreator();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Already Returned");
-                }
-            }
-
         }
 
     }

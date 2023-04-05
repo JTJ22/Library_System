@@ -24,10 +24,12 @@ namespace Library_System
     public partial class WithdrawPage : Page
     {
         SingleBook bookBeingWithdrawn = new SingleBook();
+
         public WithdrawPage()
         {
             InitializeComponent();
         }
+
 
         public WithdrawPage(SingleBook bookWithdrawn):this()
         {
@@ -37,7 +39,7 @@ namespace Library_System
 
         private void btnCompleteWithdraw_Click(object sender, RoutedEventArgs e)
         {
-            Withdrawn();
+          BookHandling.handler.Withdrawn(bookBeingWithdrawn);
         }
 
         private void DisplayInfo(object sender, RoutedEventArgs e)
@@ -46,34 +48,5 @@ namespace Library_System
             txtBlkBookName.Text = bookBeingWithdrawn.Title + "\n" + bookBeingWithdrawn.Author + "\n" + bookBeingWithdrawn.Description + "\n" + bookBeingWithdrawn.ISBN;
             txtBlkExptReturn.Text = "Maximum Return Date: " + expected.ToString("yyyy-MM-dd");
         }
-
-        public void Withdrawn()
-        {
-            XmlDocument books = new XmlDocument();
-            books.Load("LibraryBooks.xml");
-            foreach (XmlNode book in books.SelectNodes("/Books/SingleBook"))
-            {
-                if (book.SelectSingleNode("UniqueID").InnerText == bookBeingWithdrawn.Unique_ID)
-                {
-                    if (bookBeingWithdrawn.Availability == true && bookBeingWithdrawn.IsReserved == false)
-                    {
-                        User_Record user_Record = new User_Record();
-                        XmlNode bookTaken = books.SelectSingleNode($"/Books/SingleBook[UniqueID='{bookBeingWithdrawn.Unique_ID}']/Availabilty");
-                        bookTaken.InnerText = "false";
-                        bookBeingWithdrawn.Availability = false;
-                        books.Save("LibraryBooks.xml");
-                        user_Record.Update_History(bookBeingWithdrawn);
-                        MessageBox.Show("Withdrawn");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Book Cannot be withdrawn");
-                    }
-
-                }
-            }
-            
-        }
-        
     }
 }
