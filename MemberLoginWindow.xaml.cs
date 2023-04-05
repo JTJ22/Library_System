@@ -80,7 +80,15 @@ namespace Library_System
 
         private void btnSearchBooks_Click(object sender, RoutedEventArgs e)
         {
-            frmMemberFrame.Source = new Uri("BookSearch.xaml", UriKind.Relative);
+            if (!User_Data.currentUser.Librarian_Permisions)
+            {
+                frmMemberFrame.Source = new Uri("BookSearch.xaml", UriKind.Relative);
+            }
+            else
+            {
+                AddBooks addBook = new AddBooks();
+                addBook.Show();
+            }
         }
 
         private void btnReservations_Click(object sender, RoutedEventArgs e)

@@ -25,8 +25,8 @@ namespace Library_System
         public BookSearch()
         {
             InitializeComponent();
-            GridCreator();
-            //Adding and displaying the data grid for book results, in its base state it will show all books
+            GridCreator();          
+        //Adding and displaying the data grid for book results, in its base state it will show all books
         }
 
         private void dgSearchDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -36,7 +36,8 @@ namespace Library_System
 
         private void GridCreator()
         {
-            dgSearchDisplay.ItemsSource = BookHandling.DisplayBooks();
+
+            dgSearchDisplay.ItemsSource = BookHandling.handler.Display_Books();
             //Using my method which returns the list, this sets the datagrids source to the list
         }
 
@@ -89,11 +90,23 @@ namespace Library_System
             SingleBook bookWithdrawn = (SingleBook)dgSearchDisplay.SelectedItem;
             if(bookWithdrawn != null)
             {
-                WithdrawPage withdraw = new WithdrawPage(bookWithdrawn);
-                frmWithdrawDisplay.NavigationService.Navigate(withdraw, bookWithdrawn);
-              
-                return bookWithdrawn;
+                if (!User_Data.currentUser.Librarian_Permisions)
+                {
+                    WithdrawPage withdraw = new WithdrawPage(bookWithdrawn);
+                    frmWithdrawDisplay.NavigationService.Navigate(withdraw, bookWithdrawn);
 
+                    return bookWithdrawn;
+                }
+                else if(User_Data.currentUser.Librarian_Permisions)
+                {
+                    LibrarianBooks withdraw = new LibrarianBooks(bookWithdrawn);
+                    frmWithdrawDisplay.NavigationService.Navigate(withdraw, bookWithdrawn);
+                    return bookWithdrawn;
+                }
+                else
+                {
+                    return null;
+                }
                 //Creates a new page where the user can withdraw the chosen book. Using frame navigation I can pass the book into the new page
             }
             else
@@ -121,6 +134,7 @@ namespace Library_System
             {
                 reserve.Reserved(reservedBook);
             }
+            
         }
     }
 }

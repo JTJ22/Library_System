@@ -14,7 +14,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnWithdraw" Content="Withdraw" Click="btnWithdraw_Click"/>
+                            <Button x:Name="btnWithdraw" Content="Select" Click="btnWithdraw_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -29,6 +29,6 @@
         </DataGrid>
         <TextBox x:Name="txtBoxSearchBox" HorizontalAlignment="Left" Height="21" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" TextChanged="txtBoxSearchBox_TextChanged"/>
         <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="21" Margin="335,33,0,0" FontSize="14" VerticalAlignment="Top" Width="72" Click="btnSearch_Click"/>
-        <Frame x:Name="frmWithdrawDisplay" Content="" HorizontalAlignment="Left" Height="473" Margin="931,59,0,0" VerticalAlignment="Top" Width="359" Navigated="frmWithdrawDisplay_Navigated"/>
+        <Frame x:Name="frmWithdrawDisplay" Content="" HorizontalAlignment="Left" Height="631" Margin="931,59,0,0" VerticalAlignment="Top" Width="359" Navigated="frmWithdrawDisplay_Navigated"/>
     </Grid>
 </Page>

@@ -9,9 +9,9 @@
       Title="WithdrawPage">
 
     <Grid>
-        <StackPanel x:Name="stkPanWithdrawDets" HorizontalAlignment="Left" Height="369" Margin="10,10,0,0" VerticalAlignment="Top" Width="377">
-            <TextBlock x:Name="txtBlkBookName" Height="219" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <TextBlock x:Name="txtBlkExptReturn" HorizontalAlignment="Left" Height="54" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
+        <StackPanel x:Name="stkPanWithdrawDets" HorizontalAlignment="Left" Height="430" Margin="10,0,0,0" VerticalAlignment="Center" Width="377">
+            <TextBlock x:Name="txtBlkBookName" FontSize="16" Height="219" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBlock x:Name="txtBlkExptReturn" FontSize="16" HorizontalAlignment="Left" Height="54" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
             <Button x:Name="btnCompleteWithdraw" Content="Withdraw" HorizontalAlignment="Center" Height="41" VerticalAlignment="Top" Width="137" Click="btnCompleteWithdraw_Click" Margin="118,0,122,0"/>
         </StackPanel>
     </Grid>

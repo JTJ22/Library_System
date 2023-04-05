@@ -39,7 +39,6 @@ namespace Library_System
         {
             Return_Fine((Fining)dgFineGrid.SelectedItem);
             Grid_Creator();
-
         }
 
         private void Return_Fine(Fining fineReturned)
