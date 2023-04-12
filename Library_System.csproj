@@ -8,12 +8,13 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Library_System</RootNamespace>
     <AssemblyName>Library_System</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,6 +38,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,18 +60,24 @@
     <Compile Include="AddBooks.xaml.cs">
       <DependentUpon>AddBooks.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddMember.xaml.cs">
+      <DependentUpon>AddMember.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeMemberDeets.xaml.cs">
+      <DependentUpon>ChangeMemberDeets.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CodeFiles\BookManagement.cs" />
     <Compile Include="BookSearch.xaml.cs">
       <DependentUpon>BookSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="CodeFiles\FineManager.cs" />
+    <Compile Include="EditAUser.xaml.cs">
+      <DependentUpon>EditAUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Fines.xaml.cs">
       <DependentUpon>Fines.xaml</DependentUpon>
     </Compile>
     <Compile Include="CodeFiles\HistoryRecordsManager.cs" />
-    <Compile Include="LibrarianBooks.xaml.cs">
-      <DependentUpon>LibrarianBooks.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MemberHistory.xaml.cs">
       <DependentUpon>MemberHistory.xaml</DependentUpon>
     </Compile>
@@ -93,17 +101,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AddMember.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BookSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChangeMemberDeets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditAUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Fines.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LibrarianBooks.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

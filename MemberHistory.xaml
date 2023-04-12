@@ -4,21 +4,36 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Library_System"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1040"
       Title="MemberHistory">
 
     <Grid>
-        <DataGrid x:Name="dgMemberHistory" CanUserAddRows="False" HorizontalAlignment="Left" Height="680" Margin="10,10,0,0" VerticalAlignment="Top" Width="1020" SelectionChanged="dgMemberHistory_SelectionChanged" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+        <DataGrid x:Name="dgMemberHistory" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="680" Margin="10,10,0,0" VerticalAlignment="Top" Width="1020" SelectionChanged="dgMemberHistory_SelectionChanged" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
             <DataGrid.Columns>
-                <DataGridTemplateColumn>
+                <DataGridTextColumn Header="User ID" Binding="{Binding User_Id}"/>
+                <DataGridTextColumn Header="Book" Binding="{Binding Book_Name}"/>
+                <DataGridTemplateColumn x:Name="txtIDHist" Header="Unique ID" Width="65" SortMemberPath="...">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Unique_Id}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Withdrawn Date" Binding="{Binding Withdraw_Date}"/>
+                <DataGridTextColumn Header="Return By" Binding="{Binding Return_Expected}"/>
+                <DataGridTextColumn Header="Date Returned" Binding="{Binding Return_Actual}"/>
+                <DataGridCheckBoxColumn Header="Returned?" Binding="{Binding Is_Returned}"/>
+                <DataGridCheckBoxColumn Header="Renewed?" Binding="{Binding Is_Renewed}"/>
+                <DataGridTemplateColumn Header="Return">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btnReturn" Content="Return" Click="btnReturn_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Renew">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btnRenew" Content="Renew" Click="btnRenew_Click"/>

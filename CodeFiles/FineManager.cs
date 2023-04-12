@@ -74,7 +74,19 @@ namespace Library_System
         {
             XDocument fines;
             fines = XDocument.Load("LibraryFines.xml");
-            if (!Does_Fine_Exist(UniqueID, UserID, returnExpected))
+            XElement fineToEdit = fines.Descendants("Record")
+                                        .SingleOrDefault(fine => (Guid)fine.Attribute("UniqueID") == UniqueID
+                                        && (string)fine.Element("UserID") == UserID
+                                        && (string)fine.Element("Book") == bookName
+                                        && (bool)fine.Element("FinePaid") == false);
+
+            if (fineToEdit != null)
+            {
+                fineToEdit.SetElementValue("Expires", returnExpected.ToString());
+                fineToEdit.SetElementValue("FineValue", string.Format("{0:C}", fineCost));
+                fines.Save("LibraryFines.xml");
+            }
+            else
             {
                 XElement newRecord = new XElement("Record",
                 new XElement("UserID", UserID),
@@ -85,31 +97,8 @@ namespace Library_System
                 new XElement("FinePaid", "false"));
                 fines.Root.Add(newRecord);
                 fines.Save("LibraryFines.xml");
-            }//If a fine doesn't exist and a book is overdue one is created.
-            else
-            {
-                XElement fineToEdit = fines.Descendants("Record")
-               .SingleOrDefault(fine => (Guid)fine.Attribute("UniqueID") == UniqueID
-                                        && (string)fine.Element("UserID") == UserID
-                                        && (string)fine.Element("Book") == bookName
-                                        && (bool)fines.Element("FinePaid") == false);
-                fineToEdit.SetElementValue("FineValue", string.Format("{0:C}", fineCost));
-                fines.Save("LibraryFines.xml");
             }//Otherwise the fine value on an existing fine is increased
         }
-
-        public bool Does_Fine_Exist(Guid UniqueID, string UserID, DateTime returnExpected)
-        {
-            foreach (Fining fine in Display_Fines())
-            {
-                if (fine.User_ID == UserID && fine.Fine_Paid && UniqueID == fine.Unique_Id && returnExpected == Convert.ToDateTime(fine.Expiration))
-                {
-                    return true;
-                }
-            }
-            return false;
-        } //Checks to see if a fine already exists for this user against a specific book
-
         public bool Fine_Locker(User_Data currentUser)
         {
             foreach (Fining fine in Display_Fines())
@@ -142,10 +131,18 @@ namespace Library_System
                 && (string)fine.Element("Expires") == finePaid.Expiration);
             if ((bool)fineToPay.Element("FinePaid") == false)
             {
-                fineToPay.SetElementValue("FinePaid", "true");
-                MessageBox.Show("Fine Paid");
-                User_Record.UserRecordInstance.BookReturned(recordToChange);
-                fineToPay.Save("LibraryFines.xml");
+                MessageBoxResult confirm = MessageBox.Show($"You will be charged {finePaid.Fine_Value}", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    fineToPay.SetElementValue("FinePaid", "true");
+                    MessageBox.Show("Fine Paid");
+                    User_Record.UserRecordInstance.BookReturned(recordToChange);
+                    fines.Save("LibraryFines.xml");
+                }
+                else
+                {
+                    return;
+                }// Save the entire XML file, not just the fineToPay element
             }
             else
             {

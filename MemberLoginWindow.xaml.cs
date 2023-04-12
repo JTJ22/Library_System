@@ -15,14 +15,16 @@ using System.Windows.Shapes;
 using System.Xml;
 using System.Data;
 using System.Windows.Threading;
-
+using System.ComponentModel;
 namespace Library_System
 {
     /// <summary>
     /// Interaction logic for MemberLoginWindow.xaml
     /// </summary>
+    
     public partial class MemberLoginWindow : Window
     {
+        
         public MemberLoginWindow()
         {
 
@@ -36,6 +38,24 @@ namespace Library_System
                 frmMemberFrame.Visibility = Visibility.Hidden;
                 lblWarning.Visibility = Visibility.Visible;
             }
+            EditAUser.ChangePage += (o, _) =>
+            {
+                AddMember member = new AddMember();
+                frmMemberFrame.Navigate(member);
+            };
+            Fines.RefreshFine += (o, _) =>
+            {
+                btnSearchBooks.IsEnabled = true;
+                btnReservations.IsEnabled = true;
+                btnHistoryMember.IsEnabled = true;
+                frmMemberFrame.Visibility = Visibility.Visible;
+            };
+
+        }
+
+        private void MemberLoginWindow_Closed(object sender, EventArgs e)
+        {
+            App.Current.Shutdown();
         }
         private void btnLogOut_Click(object sender, RoutedEventArgs e)
         {
@@ -45,7 +65,6 @@ namespace Library_System
         public void Log_Out_Event(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("You have logged out");
-            Close();
             User_Data.currentUser.Log_Out();
         }
 
@@ -55,7 +74,12 @@ namespace Library_System
             if (!User_Data.currentUser.Librarian_Permisions)
             {
                 frmMemberFrame.Source = new Uri("MemberDetailPage.xaml", UriKind.Relative);
-            } 
+            }
+            else 
+            {
+                EditAUser page = new EditAUser();
+                frmMemberFrame.NavigationService.Navigate(page);
+            }
         }
 
         private void btnHistoryMember_Click(object sender, RoutedEventArgs e)

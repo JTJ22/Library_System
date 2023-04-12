@@ -9,8 +9,20 @@
       Title="Reservations">
 
     <Grid>
-        <DataGrid x:Name="dgReserveDisplay" CanUserAddRows="False"  HorizontalAlignment="Left"  Height="604" VerticalAlignment="Top" Width="867" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="dgReserveDisplay_SelectionChanged" Margin="10,0,0,0">
+        <DataGrid x:Name="dgReserveDisplay" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left"  Height="604" VerticalAlignment="Top" Width="867" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="dgReserveDisplay_SelectionChanged" Margin="10,0,0,0">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="User ID" Binding="{Binding User_ID}"/>
+                <DataGridTextColumn Header="Book" Binding="{Binding Book_Name}"/>
+                <DataGridTemplateColumn x:Name="txtIDHiddens" Header="Unique ID" Width="65" SortMemberPath="...">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Unique_Id }" PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Reserve Date" Binding="{Binding Time_Reserved}"/>
+                <DataGridTextColumn Header="Expires" Binding="{Binding Expiration}"/>
+                <DataGridCheckBoxColumn Header="Complete?" Binding="{Binding Reserve_Complete}"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
