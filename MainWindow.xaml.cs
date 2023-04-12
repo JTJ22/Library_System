@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Xml;
 using System.Windows.Threading;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
 namespace Library_System
 {
     public partial class MainWindow : Window
@@ -24,8 +25,8 @@ namespace Library_System
         {
             InitializeComponent();
             Time_Updater();
+
         }
-        
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
          

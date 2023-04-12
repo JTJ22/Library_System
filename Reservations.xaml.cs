@@ -46,5 +46,11 @@ namespace Library_System
 
         }
 
+        private void TextBlock_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            MessageBox.Show(textBlock.Text, "Unique ID", MessageBoxButton.OK, MessageBoxImage.Information);
+            e.Handled = true;
+        }
     }
 }

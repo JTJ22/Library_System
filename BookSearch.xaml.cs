@@ -25,8 +25,12 @@ namespace Library_System
         public BookSearch()
         {
             InitializeComponent();
-            GridCreator();          
-        //Adding and displaying the data grid for book results, in its base state it will show all books
+            GridCreator();
+            //Adding and displaying the data grid for book results, in its base state it will show all books
+            WithdrawPage.OnRefresh += (o, _) =>
+            {
+                GridCreator();
+            };
         }
 
         private void dgSearchDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -93,14 +97,9 @@ namespace Library_System
                 if (!User_Data.currentUser.Librarian_Permisions)
                 {
                     WithdrawPage withdraw = new WithdrawPage(bookWithdrawn);
+
                     frmWithdrawDisplay.NavigationService.Navigate(withdraw, bookWithdrawn);
 
-                    return bookWithdrawn;
-                }
-                else if(User_Data.currentUser.Librarian_Permisions)
-                {
-                    LibrarianBooks withdraw = new LibrarianBooks(bookWithdrawn);
-                    frmWithdrawDisplay.NavigationService.Navigate(withdraw, bookWithdrawn);
                     return bookWithdrawn;
                 }
                 else
@@ -135,6 +134,20 @@ namespace Library_System
                 reserve.Reserved(reservedBook);
             }
             
+        }
+
+        private void TextBlock_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            MessageBox.Show(textBlock.Text, "Description", MessageBoxButton.OK, MessageBoxImage.Information);
+            e.Handled = true;
+        }
+
+        private void TextBlock_PreviewMouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            MessageBox.Show(textBlock.Text, "Unique ID", MessageBoxButton.OK, MessageBoxImage.Information);
+            e.Handled = true;
         }
     }
 }

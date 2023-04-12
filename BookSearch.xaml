@@ -5,12 +5,33 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Library_System"
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="1300"
+      d:DesignHeight="700" d:DesignWidth="1400"
       Title="BookSearch">
 
     <Grid>
-        <DataGrid x:Name="dgSearchDisplay" CanUserAddRows="False"  HorizontalAlignment="Left"  Height="631" VerticalAlignment="Top" Width="916" SelectionChanged="dgSearchDisplay_SelectionChanged" Margin="10,59,0,0" SelectionMode="Extended" SelectionUnit="FullRow">
+        <DataGrid x:Name="dgSearchDisplay" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="631" VerticalAlignment="Top" Width="916" SelectionChanged="dgSearchDisplay_SelectionChanged" Margin="10,59,0,0" SelectionMode="Extended" SelectionUnit="FullRow">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                <DataGridTemplateColumn x:Name="txtShowID" Header="Unique ID" Width="65" SortMemberPath="...">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Unique_ID}" PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown_1"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Genre" Binding="{Binding Genre}"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Author}"/>
+                <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                <DataGridCheckBoxColumn Header="Availability" Binding="{Binding Availability}"/>
+                <DataGridTemplateColumn  Header="Description" Width="150" SortMemberPath="...">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Description}" PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridCheckBoxColumn Header="Reserved" Binding="{Binding IsReserved}"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -29,6 +50,6 @@
         </DataGrid>
         <TextBox x:Name="txtBoxSearchBox" HorizontalAlignment="Left" Height="21" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" TextChanged="txtBoxSearchBox_TextChanged"/>
         <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="21" Margin="335,33,0,0" FontSize="14" VerticalAlignment="Top" Width="72" Click="btnSearch_Click"/>
-        <Frame x:Name="frmWithdrawDisplay" Content="" HorizontalAlignment="Left" Height="631" Margin="931,59,0,0" VerticalAlignment="Top" Width="359" Navigated="frmWithdrawDisplay_Navigated"/>
+        <Frame x:Name="frmWithdrawDisplay" Content="" HorizontalAlignment="Left" Height="631" Margin="931,59,0,0" VerticalAlignment="Top" Width="459" Navigated="frmWithdrawDisplay_Navigated"/>
     </Grid>
 </Page>

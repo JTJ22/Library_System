@@ -15,8 +15,18 @@ using System.Windows.Shapes;
 using System.Xml;
 using System.Net.Mail;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 namespace Library_System
 {
+    public class BookDetailsUpdate
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Genre { get; set; }
+        public string Description { get; set; }
+        public bool Available { get; set; }
+
+    }
     public class SingleBook
     {
         public string Title { get; set; }
@@ -29,43 +39,75 @@ namespace Library_System
         public string Description { get; set; }
         public bool IsReserved { get; set; }
 
-        public void Change_Book_Details((SingleBook, string, string, string, string, string) bookTuple)
+        public void Change_Book_Details(SingleBook book, BookDetailsUpdate update)
         {
-            XDocument books = XDocument.Load("LibraryBooks.xml");
-            foreach (XElement book in books.Descendants("SingleBook"))
+            if (!IsValidBookDetails(update))
             {
-                if (book.Element("Title") != null)
+                MessageBox.Show("Invalid book details input.");
+            }
+
+            XDocument books = XDocument.Load("LibraryBooks.xml");
+
+            foreach (XElement bookElement in books.Descendants("SingleBook"))
+            {
+                if ((Guid)bookElement.Attribute("UniqueID") == book.Unique_ID)
                 {
-                    if (book.Element("UniqueID").Value == bookTuple.Item1.Unique_ID.ToString())
+                    UpdateBookDetails(bookElement, update);
+                    MessageBox.Show("Details Changed");
+                    break;
+                }
+            }
+
+            books.Save("LibraryBooks.xml");
+        }
+
+        private bool IsValidBookDetails(BookDetailsUpdate update)
+        {
+            return !string.IsNullOrWhiteSpace(update.Title) &&
+                   !string.IsNullOrWhiteSpace(update.Genre) &&
+                   !string.IsNullOrWhiteSpace(update.Author) &&
+                   !string.IsNullOrWhiteSpace(update.Description);
+        }
+
+        private void UpdateBookDetails(XElement bookElement, BookDetailsUpdate update)
+        {
+            if (!string.IsNullOrWhiteSpace(update.Title))
+            {
+                bookElement.Element("Title").Value = update.Title;
+            }
+
+            if (!string.IsNullOrWhiteSpace(update.Author))
+            {
+                bookElement.Element("Author").Value = update.Author;
+            }
+
+            if (!string.IsNullOrWhiteSpace(update.Genre))
+            {
+                ;
+                bookElement.Element("Genre").Value = update.Genre;
+            }
+
+            if (!string.IsNullOrWhiteSpace(update.Description))
+            {
+                bookElement.Element("Description").Value = update.Description;
+            }
+            if (update.Available != (bool)bookElement.Element("Availability"))
+            {
+                if (!(bool)bookElement.Element("Availability"))
+                {
+                    MessageBoxResult bookWithdrawn = MessageBox.Show("This book is currently withdrawn. Changing the availabily will adjust the active record, confirm?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (bookWithdrawn != MessageBoxResult.Yes)
                     {
-                        if (!string.IsNullOrWhiteSpace(bookTuple.Item2) || !string.IsNullOrWhiteSpace(bookTuple.Item3) || !string.IsNullOrWhiteSpace(bookTuple.Item4) || !string.IsNullOrWhiteSpace(bookTuple.Item5))
-                        {
-                            if (bookTuple.Item1.Title != bookTuple.Item2 && !string.IsNullOrWhiteSpace(bookTuple.Item2))
-                            {
-                                book.Element("Title").Value = bookTuple.Item2;
-                            }
-                            if (bookTuple.Item1.Genre != bookTuple.Item3 && !string.IsNullOrWhiteSpace(bookTuple.Item3))
-                            {
-                                book.Element("Genre").Value = bookTuple.Item3;
-                            }
-                            if (bookTuple.Item1.Author != bookTuple.Item4 && !string.IsNullOrWhiteSpace(bookTuple.Item4))
-                            {
-                                book.Element("Author").Value = bookTuple.Item4;
-                            }
-                            if (bookTuple.Item1.Description != bookTuple.Item5 && !string.IsNullOrWhiteSpace(bookTuple.Item5))
-                            {
-                                book.Element("Description").Value = bookTuple.Item5;
-                            }
-                            MessageBox.Show("Details Changed");
-                        }
-                        else
-                        {
-                            MessageBox.Show("No Details were input");
-                        }
+                        User_Record newRecord = User_Record.UserRecordInstance.Record_Finder((Guid)bookElement.Element("UniqueID"));
+                        newRecord.RecordAdjust(newRecord);
+                        bookElement.Element("Availability").Value = update.Available.ToString();
                     }
                 }
             }
-            books.Save("LibraryBooks.xml");
+            else
+            {
+                bookElement.Element("Availability").Value = update.Available.ToString();
+            }
         }
     }
 
@@ -97,39 +139,39 @@ namespace Library_System
 
         private bool Null_Check(SingleBook book)
         {
-                if (string.IsNullOrEmpty(book.Title))
-                {
+            if (string.IsNullOrEmpty(book.Title))
+            {
                 MessageBox.Show("Book title cannot be blank");
                 return false;
-                }
-                if (string.IsNullOrEmpty(book.Genre))
-                {
-                    MessageBox.Show("Book genre cannot be blank");
-                    return false;
-                }
-                if (string.IsNullOrEmpty(book.Author))
-                {
-                    MessageBox.Show("Book author cannot be blank");
-                    return false;
-                }
-                if (string.IsNullOrEmpty(book.ISBN))
-                {
-                    MessageBox.Show("Book ISBN cannot be blank");
-                    return false;
-                }
-                if (string.IsNullOrEmpty(book.Date))
-                {
-                    MessageBox.Show("Book date cannot be blank");
-                    return false;
-                }
-                if (string.IsNullOrEmpty(book.Description))
-                {
-                    MessageBox.Show("Book description cannot be blank");
-                    return false;
-                }
+            }
+            if (string.IsNullOrEmpty(book.Genre))
+            {
+                MessageBox.Show("Book genre cannot be blank");
+                return false;
+            }
+            if (string.IsNullOrEmpty(book.Author))
+            {
+                MessageBox.Show("Book author cannot be blank");
+                return false;
+            }
+            if (string.IsNullOrEmpty(book.ISBN))
+            {
+                MessageBox.Show("Book ISBN cannot be blank");
+                return false;
+            }
+            if (string.IsNullOrEmpty(book.Date))
+            {
+                MessageBox.Show("Book date cannot be blank");
+                return false;
+            }
+            if (string.IsNullOrEmpty(book.Description))
+            {
+                MessageBox.Show("Book description cannot be blank");
+                return false;
+            }
             return true;
         }//Checks the input values, if it's empty will not allow book to be made
-        
+
         public bool Check_Duplicate(Guid UniqueID)
         {
             var bookIDs = Display_Books().Select(book => book.Unique_ID);
@@ -141,18 +183,18 @@ namespace Library_System
             XDocument booksFile;
             booksFile = XDocument.Load("LibraryBooks.xml");
             IEnumerable<SingleBook> getBooks = from book in booksFile.Descendants("SingleBook")
-                        select new SingleBook
-                        {
-                            Unique_ID = (Guid)book.Attribute("UniqueID"),
-                            Title = (string)book.Element("Title"),
-                            Genre = (string)book.Element("Genre"),
-                            Author = (string)book.Element("Author"),
-                            ISBN = (string)book.Element("ISBN"),
-                            Date = (string)book.Element("Date"),
-                            Availability = bool.Parse((string)book.Element("Availability")),
-                            Description = (string)book.Element("Description"),
-                            IsReserved = bool.Parse((string)book.Element("IsReserved"))
-                        };
+                                               select new SingleBook
+                                               {
+                                                   Unique_ID = (Guid)book.Attribute("UniqueID"),
+                                                   Title = (string)book.Element("Title"),
+                                                   Genre = (string)book.Element("Genre"),
+                                                   Author = (string)book.Element("Author"),
+                                                   ISBN = (string)book.Element("ISBN"),
+                                                   Date = (string)book.Element("Date"),
+                                                   Availability = bool.Parse((string)book.Element("Availability")),
+                                                   Description = (string)book.Element("Description"),
+                                                   IsReserved = bool.Parse((string)book.Element("IsReserved"))
+                                               };
             books.AddRange(getBooks);
             return books;
         }//Adds each books to a list, iterates over every singlebook node
@@ -164,7 +206,7 @@ namespace Library_System
             XElement bookToWithdraw = books.Descendants("SingleBook")
                                      .SingleOrDefault(book => (Guid)book.Attribute("UniqueID") == bookBeingWithdrawn.Unique_ID);
 
-            if(bookToWithdraw != null)
+            if (bookToWithdraw != null)
             {
                 if ((bool?)bookToWithdraw.Element("Availability") == true && (bool)bookToWithdraw.Element("IsReserved") == false)
                 {
@@ -183,9 +225,42 @@ namespace Library_System
                     MessageBox.Show("Reserved, Not Available");
                 }
             }
-            }//Updates the xml files when a book is withdrawn
+        }//Updates the xml files when a book is withdrawn
 
+        public void Remove_Book(SingleBook byeByeBook)
+        {
+            if (!byeByeBook.Availability)
+            {
+                MessageBoxResult bookWithdrawn = MessageBox.Show("This book is currently withdrawn. Delete?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (bookWithdrawn == MessageBoxResult.Yes)
+                {
+                    XDocument books;
+                    books = XDocument.Load("LibraryBooks.xml");
+                    XElement bookToRemove = books.Descendants("SingleBook")
+                                             .SingleOrDefault(record => (Guid)record.Attribute("UniqueID") == byeByeBook.Unique_ID);
+                    User_Record.UserRecordInstance.Book_Deleted(byeByeBook);
+                    bookToRemove.Remove();
+                    books.Save("LibraryBooks.xml");
+                }
+            }
+            else
+            {
+                MessageBoxResult check = MessageBox.Show("Are you sure you want to delete this book?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (check == MessageBoxResult.Yes)
+                {
+                    XDocument books;
+                    books = XDocument.Load("LibraryBooks.xml");
+                    XElement bookToRemove = books.Descendants("SingleBook")
+                                             .SingleOrDefault(record => (Guid)record.Attribute("UniqueID") == byeByeBook.Unique_ID);
+                    bookToRemove.Remove();
+                    books.Save("LibraryBooks.xml");
+                }
+            }
         }
 
     }
+}
+
+
+
 

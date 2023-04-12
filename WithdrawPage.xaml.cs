@@ -21,8 +21,12 @@ namespace Library_System
     /// <summary>
     /// Interaction logic for WithdrawPage.xaml
     /// </summary>
+    public delegate void OnRefresh(object sender, EventArgs e);
+
     public partial class WithdrawPage : Page
     {
+        public static OnRefresh OnRefresh;
+
         SingleBook bookBeingWithdrawn = new SingleBook();
 
         public WithdrawPage()
@@ -31,7 +35,7 @@ namespace Library_System
         }
 
 
-        public WithdrawPage(SingleBook bookWithdrawn):this()
+        public WithdrawPage(SingleBook bookWithdrawn) : this()
         {
             bookBeingWithdrawn = bookWithdrawn;
             this.Loaded += new RoutedEventHandler(DisplayInfo);
@@ -39,14 +43,18 @@ namespace Library_System
 
         private void btnCompleteWithdraw_Click(object sender, RoutedEventArgs e)
         {
-          BookHandling.handler.Withdrawn(bookBeingWithdrawn);
+            BookHandling.handler.Withdrawn(bookBeingWithdrawn);
+
+            OnRefresh?.Invoke(this, new EventArgs());
         }
 
         private void DisplayInfo(object sender, RoutedEventArgs e)
         {
+            string bookInfo = $"{bookBeingWithdrawn.Title}\n{bookBeingWithdrawn.Author}\n{bookBeingWithdrawn.Description}\n{bookBeingWithdrawn.ISBN}";
+            txtBlkBookName.Text = bookInfo;
+
             DateTime expected = DateTime.Now.AddMonths(1);
-            txtBlkBookName.Text = bookBeingWithdrawn.Title + "\n" + bookBeingWithdrawn.Author + "\n" + bookBeingWithdrawn.Description + "\n" + bookBeingWithdrawn.ISBN;
-            txtBlkExptReturn.Text = "Maximum Return Date: " + expected.ToString("yyyy-MM-dd");
+            txtBlkExptReturn.Text = $"Maximum Return Date: {expected:yyyy-MM-dd}";
         }
     }
 }

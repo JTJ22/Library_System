@@ -9,35 +9,75 @@
       Title="MemberDetailPage">
 
     <Grid>
-        <StackPanel x:Name="stkPanUserDetails" Visibility="Visible" Orientation="Vertical" Height="360" VerticalAlignment="Top" Margin="352,0">
-            <TextBlock x:Name="txtblkUserID" Height="38" TextWrapping="Wrap" FontSize="16" Text="" Margin="10,0"/>
-            <TextBlock x:Name="txtblkName" Height="46" TextWrapping="Wrap" Text="" FontSize="16" Margin="10,0"/>
-            <TextBlock x:Name="txtblkPhone" Height="46" TextWrapping="Wrap" Text="" FontSize="16" Margin="10,0"/>
-            <TextBlock x:Name="txtblkEmail" Height="46" TextWrapping="Wrap" Text="" FontSize="16" Margin="10,0"/>
-            <TextBlock x:Name="txtblkAddress" Height="46" TextWrapping="Wrap" Text="" FontSize="16" Margin="10,0"/>
-            <Button x:Name="btnEditDetails" Content="Edit" Height="34" Width="136" Click="btnEditDetails_Click" Margin="10,0,10,0"/>
-        </StackPanel>
-        <StackPanel x:Name="stkPanChangeDetails" Visibility="Hidden" Orientation="Vertical" HorizontalAlignment="Center" Height="350" VerticalAlignment="Top" Width="336" Margin="352,0">
-            <Label x:Name="lblPhone" Content="Phone Number" FontSize="16" HorizontalContentAlignment="Center" Height="28" Width="178"/>
-            <TextBox x:Name="txtBoxChangePhone" Height="24" FontSize="16" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangePhone_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
-            <Label x:Name="lblEmail" Content="Email Address" FontSize="16" HorizontalContentAlignment="Center" Height="28" Width="178"/>
-            <TextBox x:Name="txtBoxChangeEmail" Height="24" FontSize="16" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangeEmail_TextChanged"/>
-            <Label x:Name="lblAddress" Content="Address" FontSize="16" HorizontalContentAlignment="Center" Height="28" Width="178"/>
-            <TextBox x:Name="txtBoxChangeAddress" Height="24" FontSize="16" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="" Width="177" TextChanged="txtBoxChangeAddress_TextChanged"/>
-            <Button x:Name="btnChangeDetails" Content="Change" Height="34" Width="136" Margin="10" Click="btnChangeDetails_Click"/>
-            <Button x:Name="btnChangePassword" Content="Change Password" Height="34" VerticalAlignment="Top" Width="136" Click="btnChangePassword_Click"/>
-            <Button x:Name="btnCancel" Content="Cancel" Height="34" Width="136" Margin="0,10,0,0" Click="btnCancel_Click"/>
-        </StackPanel>
-        <StackPanel x:Name="stkPanChangePassword" HorizontalAlignment="Center" Visibility="Hidden" Height="350" VerticalAlignment="Top" Width="336" Margin="352,0">
-            <Label x:Name="lblCurrent" Content="Current Password" FontSize="16" HorizontalContentAlignment="Center" Height="44" Margin="80,0"/>
-            <PasswordBox x:Name="psdBoxCurrent" HorizontalContentAlignment="Center" Height="24" Width="177" Margin="10,0,10,10"/>
-            <Label x:Name="lblNew" HorizontalContentAlignment="Center" FontSize="16" Content="New Password" Height="44" Margin="79,0,80,0"/>
-            <PasswordBox x:Name="psdBoxNew" HorizontalContentAlignment="Center" Height="24" Width="177" Margin="10,0,10,10"/>
-            <Label x:Name="lblConfirm" HorizontalContentAlignment="Center" FontSize="16" Content="Confirm Password" Height="44" Margin="80,0" />
-            <PasswordBox x:Name="psdBoxConfirm" HorizontalContentAlignment="Center" Height="24" Width="177" Margin="10,0,10,10"/>
-            <Button x:Name="btnPasswordChanged" Content="Change" Height="31" Width="132" Click="btnPasswordChanged_Click"/>
-            <Button x:Name="btnCancelPassword" Content="Cancel" Height="31" Width="132" Margin="10" Click="btnCancelPassword_Click"/>
-        </StackPanel>
+        <Grid x:Name="grdUserDetails" Visibility="Visible" Height="340" VerticalAlignment="Top" Margin="16,10,565,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="34"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="txtblkUserID" Grid.Row="0" TextWrapping="Wrap" FontSize="16" Text="" Margin="10,0"/>
+            <TextBlock x:Name="txtblkName" Grid.Row="1" TextWrapping="Wrap" Text="" FontSize="16" Margin="10,0"/>
+            <TextBlock x:Name="txtblkPhone" Grid.Row="2" TextWrapping="Wrap" Text="" FontSize="16" Margin="10,0"/>
+            <TextBlock x:Name="txtblkEmail" Grid.Row="3" TextWrapping="Wrap" Text="" FontSize="16" Margin="10,0"/>
+            <TextBlock x:Name="txtblkAddress" Grid.Row="4" TextWrapping="Wrap" Text="" FontSize="16" Margin="10,0"/>
+            <Button x:Name="btnEditDetails" Grid.Row="5" Content="Edit" Height="34" Width="136" Click="btnEditDetails_Click" Margin="10,0,10,0"/>
+        </Grid>
+        <Grid x:Name="grdChangeDetails" Visibility="Hidden" HorizontalAlignment="Left" Height="350" VerticalAlignment="Top" Width="548" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="lblPhone" Content="Phone Number" FontSize="16" HorizontalContentAlignment="Center" Height="28" Width="178" Grid.Row="0" Grid.Column="0"/>
+            <TextBox x:Name="txtBoxChangePhone" Height="24" FontSize="16" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" TextChanged="txtBoxChangePhone_TextChanged" PreviewTextInput="NumberValidationTextBox" Grid.Row="0" Grid.Column="1" Margin="28,2,10,2"/>
+            <Label x:Name="lblEmail" Content="Email Address" FontSize="16" HorizontalContentAlignment="Center" Height="28" Width="178" Grid.Row="1" Grid.Column="0"/>
+            <TextBox x:Name="txtBoxChangeEmail" Height="24" FontSize="16" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" TextChanged="txtBoxChangeEmail_TextChanged" PreviewTextInput="txtBoxChangeEmail_PreviewTextInput" Grid.Row="1" Grid.Column="1" Margin="28,2,10,2"/>
+            <Label x:Name="lblAddress" Content="Address" FontSize="16" HorizontalContentAlignment="Center" Height="28" Width="178" Grid.Row="2" Grid.Column="0"/>
+            <TextBox x:Name="txtBoxChangeAddress" Height="24" FontSize="16" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" TextChanged="txtBoxChangeAddress_TextChanged" Grid.Row="2" Grid.Column="1" Margin="28,2,10,2"/>
+            <Button x:Name="btnChangeDetails" Content="Change" Height="34" Width="136" Margin="10" Click="btnChangeDetails_Click" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <Button x:Name="btnChangePassword" Content="Change Password" Height="34" VerticalAlignment="Top" Width="136" Click="btnChangePassword_Click" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <Button x:Name="btnCancel" Content="Cancel" Height="34" Width="136" Margin="0,10,0,0" Click="btnCancel_Click" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"/>
+        </Grid>
+        <Grid x:Name="grdPanChangePassword" HorizontalAlignment="Left" Visibility="Hidden" Height="350" VerticalAlignment="Top" Width="465" Margin="10,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
+            <Label x:Name="lblCurrent" Content="Current Password" FontSize="16" HorizontalContentAlignment="Center" Height="44" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <PasswordBox x:Name="psdBoxCurrent" HorizontalContentAlignment="Center" Height="24" Margin="50,0,50,10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+            <Label x:Name="lblNew" HorizontalContentAlignment="Center" FontSize="16" Content="New Password" Height="44" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <PasswordBox x:Name="psdBoxNew" HorizontalContentAlignment="Center" Height="24" Margin="50,0,50,10" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+            <Label x:Name="lblConfirm" HorizontalContentAlignment="Center" FontSize="16" Content="Confirm Password" Height="44" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <PasswordBox x:Name="psdBoxConfirm" HorizontalContentAlignment="Center" Height="24" Margin="50,0,50,10" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+            <Button x:Name="btnPasswordChanged" Content="Change" Height="31" Width="132" Click="btnPasswordChanged_Click" Grid.Row="6" Grid.Column="0" />
+            <Button x:Name="btnCancelPassword" Content="Cancel" Height="31" Width="132" Margin="10" Click="btnCancelPassword_Click" Grid.Row="6" Grid.Column="1" />
+        </Grid>
     </Grid>
+    <!-- https://www.c-sharpcorner.com/UploadFile/1e050f/grid-layout-in-wpf/-->
 </Page>

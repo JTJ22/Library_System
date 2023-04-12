@@ -114,10 +114,24 @@ namespace Library_System
             {
                 if (!(bool?)recordToRenew.Element("IsRenewed") == false && !(bool)recordToRenew.Element("IsBookReturned"))
                 {
-                    recordToRenew.SetElementValue("IsRenewed", "true");
-                    recordToChange.Is_Renewed = true;
-                    recordToRenew.SetElementValue("ReturnExpected", Convert.ToString(Convert.ToDateTime(recordToChange.Return_Expected).AddDays(14)));
-                    records.Save("LibraryHistory.xml");
+                    DateTime returnExpected = Convert.ToDateTime(recordToChange.Return_Expected);
+                    DateTime currentDate = DateTime.Now;
+                    TimeSpan timeCheck = returnExpected.Subtract(currentDate);
+                    if (timeCheck.Days >= 1 && timeCheck.Days <= 7)
+                    {
+                        recordToRenew.SetElementValue("IsRenewed", "true");
+                        recordToChange.Is_Renewed = true;
+                        recordToRenew.SetElementValue("ReturnExpected", Convert.ToString(Convert.ToDateTime(recordToChange.Return_Expected).AddDays(7)));
+                        records.Save("LibraryHistory.xml");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Must be within a week of the return date to renew");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Cannot be renewed, book is returned/renewed already");
                 }
             }
         }
@@ -126,9 +140,9 @@ namespace Library_System
 
         public void Late_Check()
         {
-            double fineCharge = 4.00;
+            double fineCharge = 0.35;
             DateTime timeNow = DateTime.Now.Date; //Creating a varible for the time now. 
-            foreach (var record in DisplayRecord())//Using the list returned by this method for my foreach
+            foreach (User_Record record in DisplayRecord())//Using the list returned by this method for my foreach
             {
                 if (record != null)
                 {
@@ -171,15 +185,13 @@ namespace Library_System
             records.Save("LibraryHistory.xml");
 
         }
-        public User_Record Record_Finder(string UserID, Guid UniqueID, string ReturnExpected)
+        public User_Record Record_Finder(Guid UniqueID)
         {
             XDocument recordFind;
 
             recordFind = XDocument.Load("LibraryHistory.xml");
             XElement recordEl = recordFind.Descendants("Record")
-                               .SingleOrDefault(record => (Guid)record.Attribute("UniqueID") == UniqueID
-                               && (string)record.Element("UserID") == UserID
-                               && (string)record.Element("ReturnExpected") == ReturnExpected);
+                               .SingleOrDefault(record => (Guid)record.Attribute("UniqueID") == UniqueID);
             if (recordEl != null)
             {
                 User_Record recordFound = new User_Record
@@ -239,6 +251,41 @@ namespace Library_System
                 }
             }
 
+        }
+
+        public void Book_Deleted(SingleBook book)
+        {
+            XDocument recordFind;
+            recordFind = XDocument.Load("LibraryHistory.xml");
+            XElement recordEl = recordFind.Descendants("Record")
+                               .SingleOrDefault(record => (Guid)record.Attribute("UniqueID") == book.Unique_ID
+                               && (bool)record.Element("IsBookReturned") == false);
+                               
+            if(recordEl != null)
+            {
+                if (!book.IsReserved)
+                {
+                    recordEl.SetElementValue("IsBookReturned", "true");
+                    recordEl.SetElementValue("Book", "[BOOK DELETED]");
+                    recordFind.Save("LibraryHistory.xml");
+                }
+                else if(book.IsReserved)
+                {
+                    recordEl.SetElementValue("IsBookReturned", "true");
+                    recordEl.SetElementValue("Book", "[BOOK DELETED]");
+                    Reserving.reservingInstance.Book_Deleted(book);
+                    recordFind.Save("LibraryHistory.xml");
+                }
+            }
+        }
+
+        public void User_Deleted(string UserID)
+        {
+            XDocument records = XDocument.Load("LibraryHistory.xml");
+            records.Descendants("Record")
+               .Where(user => (string)user.Element("UserID") == UserID && (bool)user.Element("IsBookReturned") == false)
+               .Remove();
+            records.Save("LibraryHistory.xml");
         }
 
     }

@@ -1,0 +1,55 @@
+﻿<Page x:Class="Library_System.AddMember"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Library_System"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddMember">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Password:" Margin="5"/>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtBoxPassword" Margin="5" TextChanged="txtBoxPassword_TextChanged"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="First Name:" Margin="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtBoxFirstName" Margin="5" TextChanged="txtBoxFirstName_TextChanged"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Surname:" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtBoxSurname" Margin="5" TextChanged="txtBoxSurname_TextChanged"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Phone Number:" Margin="5"/>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtBoxPhoneNumber" Margin="5" TextChanged="txtBoxPhoneNumber_TextChanged" PreviewTextInput="txtBoxPhoneNumber_PreviewTextInput"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Email Address:" Margin="5"/>
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtBoxEmailAddress" Margin="5" TextChanged="txtBoxEmailAddress_TextChanged"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Librarian Permissions:" Margin="5"/>
+        <CheckBox Grid.Row="5" Grid.Column="1" x:Name="chkBoxLibrarianPerms" Margin="5"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Address:" Margin="5"/>
+        <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtBoxAddress" Margin="5" TextChanged="txtBoxAddress_TextChanged"/>
+
+        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" x:Name="btnAddMember" Content="Add Member" Height="34" Width="136" Margin="5" Click="btnAddMember_Click"/>
+        <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" x:Name="btnCancel" Content="Cancel" Height="34" Width="136" Margin="5" Click="btnCancel_Click"/>
+    </Grid>
+</Page>

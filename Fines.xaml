@@ -9,8 +9,20 @@
       Title="Fines">
 
     <Grid>
-        <DataGrid x:Name="dgFineGrid" HorizontalAlignment="Left" CanUserAddRows="False" Height="690" Margin="10,0,0,0" VerticalAlignment="Top" Width="1280" SelectionChanged="dgFineGrid_SelectionChanged">
+        <DataGrid x:Name="dgFineGrid" HorizontalAlignment="Left" CanUserAddRows="False" Height="690" Margin="10,0,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" Width="1280" Language="en-GB" SelectionChanged="dgFineGrid_SelectionChanged">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="User ID" Binding="{Binding User_ID}"/>
+                <DataGridTextColumn Header="Book Name" Binding="{Binding Book_Name}"/>
+                <DataGridTemplateColumn x:Name="txtIDHidden" Header="Unique ID" Width="65" SortMemberPath="...">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Unique_Id}" PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Expiration" Binding="{Binding Expiration}"/>
+                <DataGridTextColumn Header="Fine Value" Binding="{Binding Fine_Value, StringFormat={}{0:C}}"/>
+                <DataGridCheckBoxColumn Header="Fine Paid" Binding="{Binding Fine_Paid}"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

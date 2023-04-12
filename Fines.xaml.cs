@@ -18,8 +18,11 @@ namespace Library_System
     /// <summary>
     /// Interaction logic for Fines.xaml
     /// </summary>
+    /// 
+    public delegate void RefreshFine(object sender, EventArgs e);
     public partial class Fines : Page
     {
+        public static RefreshFine RefreshFine;
         public Fines()
         {
             InitializeComponent();
@@ -48,10 +51,18 @@ namespace Library_System
                 if (fineReturned.Fine_Paid != true)
                 {
                     fineReturned.Fine_Being_Paid(fineReturned);
+                    RefreshFine.Invoke(this, new EventArgs());
                 }
 
             }
 
+        }
+
+        private void TextBlock_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            MessageBox.Show(textBlock.Text, "Unique ID", MessageBoxButton.OK, MessageBoxImage.Information);
+            e.Handled = true;
         }
     }
 }

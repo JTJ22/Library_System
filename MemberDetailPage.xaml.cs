@@ -19,24 +19,37 @@ namespace Library_System
     /// <summary>
     /// Interaction logic for MemberDetailPage.xaml
     /// </summary>
+     public delegate void OnRefreshDetails(object sender, EventArgs e);
     public partial class MemberDetailPage : Page
     {
-
+        public static OnRefreshDetails OnRefreshDetails;
 
         public MemberDetailPage()
         {
             InitializeComponent();
             Show_User_Details();
+
             //After the window has been opened the users details are shown within the stack panel
         }
 
         public void Show_User_Details()
         {
-            txtblkUserID.Text = "User ID: " + User_Data.currentUser.User_id;
-            txtblkName.Text = "Name: " + User_Data.currentUser.First_name + " " + User_Data.currentUser.Last_name;
-            txtblkPhone.Text = "Phone Number: " + User_Data.currentUser.Phone_number;
-            txtblkEmail.Text = "Email Address: " + User_Data.currentUser.Email_address;
-            txtblkAddress.Text = "Address: " + User_Data.currentUser.HomeAddress;
+            if (!User_Data.currentUser.Librarian_Permisions)
+            {
+                txtblkUserID.Text = "User ID: " + User_Data.currentUser.User_id;
+                txtblkName.Text = "Name: " + User_Data.currentUser.First_name + " " + User_Data.currentUser.Last_name;
+                txtblkPhone.Text = "Phone Number: " + User_Data.currentUser.Phone_number;
+                txtblkEmail.Text = "Email Address: " + User_Data.currentUser.Email_address;
+                txtblkAddress.Text = "Address: " + User_Data.currentUser.HomeAddress;
+            }
+            else if(User_Data.currentUser.Librarian_Permisions)
+            {
+                txtblkUserID.Text = "User ID: " + User_Data.impersonateUser.User_id;
+                txtblkName.Text = "Name: " + User_Data.impersonateUser.First_name + " " + User_Data.impersonateUser.Last_name;
+                txtblkPhone.Text = "Phone Number: " + User_Data.impersonateUser.Phone_number;
+                txtblkEmail.Text = "Email Address: " + User_Data.impersonateUser.Email_address;
+                txtblkAddress.Text = "Address: " + User_Data.impersonateUser.HomeAddress;
+            }
             //Assigning the text blocks to contains the users details.
         }
 
@@ -48,16 +61,16 @@ namespace Library_System
 
         private void Allow_Edit()
         {
-            if (stkPanUserDetails.Visibility == Visibility.Visible)
+            if (grdUserDetails.Visibility == Visibility.Visible)
             {
-                stkPanUserDetails.Visibility = Visibility.Hidden;
-                stkPanChangeDetails.Visibility = Visibility.Visible;
+                grdUserDetails.Visibility = Visibility.Hidden;
+                grdChangeDetails.Visibility = Visibility.Visible;
 
             }
             else
             {
-                stkPanUserDetails.Visibility = Visibility.Visible;
-                stkPanChangeDetails.Visibility = Visibility.Hidden;
+                grdUserDetails.Visibility = Visibility.Visible;
+                grdChangeDetails.Visibility = Visibility.Hidden;
             }
 
             //A method that checks the property of visibilty on the stack panels. This was to avoid using lots of pages and windows.
@@ -80,11 +93,21 @@ namespace Library_System
 
         private void btnChangeDetails_Click(object sender, RoutedEventArgs e)
         {
-            Changing_Details.Change_Details(txtBoxChangeAddress.Text, txtBoxChangeEmail.Text, txtBoxChangePhone.Text);
+            if(!User_Data.currentUser.Librarian_Permisions)
+            { 
+                Changing_Details.Change_Details(txtBoxChangeAddress.Text, txtBoxChangeEmail.Text, txtBoxChangePhone.Text);
+                Allow_Edit();
+                NavigationService.Refresh();
+            }
+            else
+            {
+                Changing_Details.Change_Details_Librarian(txtBoxChangeAddress.Text, txtBoxChangeEmail.Text, txtBoxChangePhone.Text);
+                Allow_Edit();
+                OnRefreshDetails?.Invoke(this, new EventArgs());
+                Show_User_Details();
+            }
             //If details are changed the first method passes the data to another class, this is to change the information on the xml file and currentUser
-            Allow_Edit();
             //Takes the user back to the first stack panel after changing the details
-            NavigationService.Refresh();
             //Lastly updates the page so the information displayed reflects what the user input
             
         }
@@ -103,8 +126,8 @@ namespace Library_System
 
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)
         {
-            stkPanChangePassword.Visibility = Visibility.Visible;
-            stkPanChangeDetails.Visibility= Visibility.Hidden;
+            grdPanChangePassword.Visibility = Visibility.Visible;
+            grdChangeDetails.Visibility= Visibility.Hidden;
             //Similar to AllowEdit, hides the previous panel
         }
 
@@ -124,8 +147,12 @@ namespace Library_System
 
         private void btnCancelPassword_Click(object sender, RoutedEventArgs e)
         {
-            stkPanChangePassword.Visibility= Visibility.Hidden;
-            stkPanChangeDetails.Visibility = Visibility.Visible;
+            grdPanChangePassword.Visibility= Visibility.Hidden;
+            grdChangeDetails.Visibility = Visibility.Visible;
+        }
+
+        private void txtBoxChangeEmail_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
         }
     }
 }

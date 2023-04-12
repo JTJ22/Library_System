@@ -117,7 +117,7 @@ namespace Library_System
             List<Reserving> reservations = new List<Reserving>();
             XDocument reservingFile;
             reservingFile = XDocument.Load("LibraryReservations.xml");
-            IEnumerable<Reserving> query = from record in reservingFile.Descendants("Record")
+            IEnumerable<Reserving> reserves = from record in reservingFile.Descendants("Record")
                                            where (string)record.Element("UserID") == User_Data.currentUser.User_id
                                            select new Reserving
                                            {
@@ -128,7 +128,7 @@ namespace Library_System
                                                Expiration = (string)record.Element("Expires"),
                                                Reserve_Complete = (bool)record.Element("ReserveComplete"),
                                            };
-            reservations.AddRange(query);
+            reservations.AddRange(reserves);
             return reservations;
         }
 
@@ -237,6 +237,30 @@ namespace Library_System
             return null;
         }
 
+        public void Book_Deleted(SingleBook book)
+        {
+            XDocument reservations;
+            reservations = XDocument.Load("LibraryReservations.xml");
+            XElement resToChange = reservations.Descendants("Record")
+                                     .SingleOrDefault(reservation => (bool)reservation.Element("ReserveComplete") == false
+                                     && (Guid)reservation.Attribute("UniqueID") == book.Unique_ID);
+
+            if (resToChange != null)
+            {
+                resToChange.SetElementValue("Book", "[BOOK DELETED, CANCELLED]");
+                resToChange.SetElementValue("ReserveComplete", "true");
+                reservations.Save("LibraryReservations.xml");
+            }
+        }
+
+        public void User_Deleted(string UserID)
+        {
+            XDocument records = XDocument.Load("LibraryReservations.xml");
+            records.Descendants("Record")
+               .Where(user => (string)user.Element("UserID") == UserID && (bool)user.Element("ReserveComplete") == false)
+               .Remove();
+            records.Save("LibraryReservations.xml");
+        }
 
     }
 }
