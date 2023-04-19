@@ -43,7 +43,7 @@ namespace Library_System
                 AddMember member = new AddMember();
                 frmMemberFrame.Navigate(member);
             };
-            Fines.RefreshFine += (o, _) =>
+            Fining.RefreshFine += (o, _) =>
             {
                 btnSearchBooks.IsEnabled = true;
                 btnReservations.IsEnabled = true;
@@ -112,6 +112,7 @@ namespace Library_System
             {
                 AddBooks addBook = new AddBooks();
                 addBook.Show();
+               
             }
         }
 

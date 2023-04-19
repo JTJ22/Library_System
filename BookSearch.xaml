@@ -7,11 +7,23 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1400"
       Title="BookSearch">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryLayout.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
-        <DataGrid x:Name="dgSearchDisplay" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="631" VerticalAlignment="Top" Width="916" SelectionChanged="dgSearchDisplay_SelectionChanged" Margin="10,59,0,0" SelectionMode="Extended" SelectionUnit="FullRow">
+        <DataGrid x:Name="dgSearchDisplay" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="925" SelectionChanged="dgSearchDisplay_SelectionChanged" Margin="10,59,0,0" SelectionMode="Extended" SelectionUnit="FullRow">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                <DataGridTemplateColumn Header="Title" Width="155" SortMemberPath="...">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="txtBoxTitleShow" TextTrimming="CharacterEllipsis" Text="{Binding Title}" PreviewMouseLeftButtonDown="txtBoxTitleShow_PreviewMouseLeftButtonDown" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn x:Name="txtShowID" Header="Unique ID" Width="65" SortMemberPath="...">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -19,12 +31,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Genre" Binding="{Binding Genre}"/>
-                <DataGridTextColumn Header="Author" Binding="{Binding Author}"/>
-                <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
-                <DataGridCheckBoxColumn Header="Availability" Binding="{Binding Availability}"/>
-                <DataGridTemplateColumn  Header="Description" Width="150" SortMemberPath="...">
+                <DataGridTextColumn Header="Genre" Width="70" Binding="{Binding Genre}"/>
+                <DataGridTextColumn Header="Author" Width="95" Binding="{Binding Author}"/>
+                <DataGridTextColumn Header="ISBN" Width="100" Binding="{Binding ISBN}"/>
+                <DataGridTextColumn Header="Date" Width="80" Binding="{Binding Date}"/>
+                <DataGridCheckBoxColumn Header="Available?" Width="63" Binding="{Binding Availability}"/>
+                <DataGridTemplateColumn  Header="Description" Width="130" SortMemberPath="...">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Description}" PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown" />
@@ -32,24 +44,24 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridCheckBoxColumn Header="Reserved" Binding="{Binding IsReserved}"/>
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="50">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnWithdraw" Content="Select" Click="btnWithdraw_Click"/>
+                            <Button x:Name="btnWithdraw" Content="Select" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnWithdraw_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnReserve" Content="Reserve" Click="btnReserve_Click"/>
+                            <Button x:Name="btnReserve" Content="Reserve" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnReserve_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBox x:Name="txtBoxSearchBox" HorizontalAlignment="Left" Height="21" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" TextChanged="txtBoxSearchBox_TextChanged"/>
-        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="21" Margin="335,33,0,0" FontSize="14" VerticalAlignment="Top" Width="72" Click="btnSearch_Click"/>
-        <Frame x:Name="frmWithdrawDisplay" Content="" HorizontalAlignment="Left" Height="631" Margin="931,59,0,0" VerticalAlignment="Top" Width="459" Navigated="frmWithdrawDisplay_Navigated"/>
+        <TextBox x:Name="txtBoxSearchBox" HorizontalAlignment="Left" Height="21" Margin="610,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" TextChanged="txtBoxSearchBox_TextChanged"/>
+        <Frame x:Name="frmWithdrawDisplay" Content="" HorizontalAlignment="Left" Height="500" Margin="935,59,0,0" VerticalAlignment="Top" Width="455" Navigated="frmWithdrawDisplay_Navigated"/>
+        <Label Content="Search" HorizontalAlignment="Left" Height="26" Margin="557,30,0,0" VerticalAlignment="Top" Width="48"/>
     </Grid>
 </Page>

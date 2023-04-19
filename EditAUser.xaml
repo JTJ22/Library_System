@@ -7,34 +7,42 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1040"
       Title="EditAUser">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryLayout.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
-        <DataGrid x:Name="dgShowUsers" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Left" Height="528" Margin="10,10,0,0" VerticalAlignment="Top" Width="790" SelectionChanged="dgShowUsers_SelectionChanged">
+        <DataGrid x:Name="dgShowUsers" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Left" Height="500" Margin="10,59,0,0" VerticalAlignment="Top" Width="925" SelectionChanged="dgShowUsers_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="User ID" Binding="{Binding User_id}"/>
-                <DataGridTextColumn Header="First Name" Binding="{Binding First_name}"/>
-                <DataGridTextColumn Header="Last Name" Binding="{Binding Last_name}"/>
-                <DataGridTextColumn Header="Phone Number" Binding="{Binding Phone_number}"/>
-                <DataGridTextColumn Header="Email Address" Binding="{Binding Email_address}"/>
-                <DataGridCheckBoxColumn Header="Librarian Permissions" Binding="{Binding Librarian_Permisions}"/>
-                <DataGridTextColumn Header="Home Address" Binding="{Binding HomeAddress}"/>
+                <DataGridTextColumn Header="User ID" Width="95" Binding="{Binding User_id}"/>
+                <DataGridTextColumn Header="First Name" Width="75" Binding="{Binding First_name}"/>
+                <DataGridTextColumn Header="Last Name" Width="75" Binding="{Binding Last_name}"/>
+                <DataGridTextColumn Header="Phone Number" Width="99" Binding="{Binding Phone_number}"/>
+                <DataGridTextColumn Header="Email Address" Width="180" Binding="{Binding Email_address}"/>
+                <DataGridCheckBoxColumn Header="Librarian?" Width="65" Binding="{Binding Librarian_Permisions}"/>
+                <DataGridTextColumn Header="Home Address" Width="200" Binding="{Binding HomeAddress}"/>
                 <DataGridTextColumn Header="Password" Binding="{Binding password}" Visibility="Collapsed"/>
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="65">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnEdit" Content="Edit" Click="btnEdit_Click"/>
+                            <Button x:Name="btnEdit" Content="Edit" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnEdit_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="65">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnDelete" Content="Delete" Click="btnDelete_Click" />
+                            <Button x:Name="btnDelete" Content="Delete" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnDelete_Click" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnAddMember" Content="Add Member" HorizontalAlignment="Left" Height="54" Margin="10,543,0,0" VerticalAlignment="Top" Width="264" Click="btnAddMember_Click"/>
+        <Button x:Name="btnAddMember" Content="Add Member" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" HorizontalAlignment="Left" Height="54" Margin="10,564,0,0" VerticalAlignment="Top" Width="264" Click="btnAddMember_Click"/>
+        <TextBox x:Name="txtBoxSearchUser" HorizontalAlignment="Left" Height="22" Margin="677,35,0,0" TextWrapping="Wrap" Text="&#xD;&#xA;" VerticalAlignment="Top" Width="258" TextChanged="txtBoxSearchUser_TextChanged"/>
+        <Label Content="Search" HorizontalAlignment="Left" Height="26" Margin="630,33,0,0" VerticalAlignment="Top" Width="47"/>
     </Grid>
 </Page>

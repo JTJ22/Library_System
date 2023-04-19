@@ -7,12 +7,25 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1300"
       Title="Fines">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryLayout.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid>
-        <DataGrid x:Name="dgFineGrid" HorizontalAlignment="Left" CanUserAddRows="False" Height="690" Margin="10,0,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" Width="1280" Language="en-GB" SelectionChanged="dgFineGrid_SelectionChanged">
+        <DataGrid x:Name="dgFineGrid" HorizontalAlignment="Left" CanUserAddRows="False" Height="500" Margin="10,59,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" Width="925" Language="en-GB" SelectionChanged="dgFineGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="User ID" Binding="{Binding User_ID}"/>
-                <DataGridTextColumn Header="Book Name" Binding="{Binding Book_Name}"/>
+                <DataGridTemplateColumn Header="Title" Width="175" SortMemberPath="...">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Book_Name}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn x:Name="txtIDHidden" Header="Unique ID" Width="65" SortMemberPath="...">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -23,15 +36,17 @@
                 <DataGridTextColumn Header="Expiration" Binding="{Binding Expiration}"/>
                 <DataGridTextColumn Header="Fine Value" Binding="{Binding Fine_Value, StringFormat={}{0:C}}"/>
                 <DataGridCheckBoxColumn Header="Fine Paid" Binding="{Binding Fine_Paid}"/>
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnReturnFine" Content="Return" Click="btnReturnFine_Click"/>
+                            <Button x:Name="btnReturnFine" Content="Return" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnReturnFine_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <TextBox x:Name="txtBoxFineSearch" HorizontalAlignment="Left" Height="22" Margin="532,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="403" TextChanged="txtBoxFineSearch_TextChanged"/>
+        <Label Content="Search" HorizontalAlignment="Left" Height="24" Margin="479,31,0,0" VerticalAlignment="Top" Width="48"/>
 
     </Grid>
 </Page>

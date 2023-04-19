@@ -5,19 +5,27 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Library_System"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="450"
       Title="WithdrawPage">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryLayout.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
-        <Grid x:Name="gridWithdrawDets" HorizontalAlignment="Left" Height="430" Margin="10,0,0,0" VerticalAlignment="Center" Width="377">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-            </Grid.RowDefinitions>
-            <TextBlock x:Name="txtBlkBookName" FontSize="16" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="0" />
-            <TextBlock x:Name="txtBlkExptReturn" FontSize="16" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" />
-            <Button x:Name="btnCompleteWithdraw" Content="Withdraw" Height="41" VerticalAlignment="Top" Width="137" Click="btnCompleteWithdraw_Click" Margin="118,0,122,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" />
-        </Grid>
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="10">
+            <Grid x:Name="gridWithdrawDets" HorizontalAlignment="Left" Height="460" VerticalAlignment="Center" Width="400" Margin="9,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="txtBlkBookName" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="0" />
+                <TextBlock x:Name="txtBlkExptReturn" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" />
+                <Button x:Name="btnCompleteWithdraw" Content="Withdraw" Template="{StaticResource roundButton}" Style="{StaticResource LightButtonStyle}" Height="41" VerticalAlignment="Top" Width="137" Click="btnCompleteWithdraw_Click" Margin="118,0,122,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" />
+            </Grid>
+        </Border>
     </Grid>
 </Page>

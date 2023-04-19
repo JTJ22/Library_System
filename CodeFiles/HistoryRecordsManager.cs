@@ -112,7 +112,7 @@ namespace Library_System
                                      (string)record.Element("WithdrawDate") == recordToChange.Withdraw_Date);
             if (recordToRenew != null)
             {
-                if (!(bool?)recordToRenew.Element("IsRenewed") == false && !(bool)recordToRenew.Element("IsBookReturned"))
+                if ((bool?)recordToRenew.Element("IsRenewed") == false && (bool)recordToRenew.Element("IsBookReturned") == false)
                 {
                     DateTime returnExpected = Convert.ToDateTime(recordToChange.Return_Expected);
                     DateTime currentDate = DateTime.Now;
@@ -123,6 +123,7 @@ namespace Library_System
                         recordToChange.Is_Renewed = true;
                         recordToRenew.SetElementValue("ReturnExpected", Convert.ToString(Convert.ToDateTime(recordToChange.Return_Expected).AddDays(7)));
                         records.Save("LibraryHistory.xml");
+                        MessageBox.Show($"Renewed. New returned date is {Convert.ToString(Convert.ToDateTime(recordToChange.Return_Expected).AddDays(7))}");
                     }
                     else
                     {
@@ -154,7 +155,7 @@ namespace Library_System
                         if (daysLate >= 7)
                         {
                             int wholeWeeksLate = daysLate / 7;
-                            int fineAmount = (wholeWeeksLate + 1) * (int)fineCharge;
+                            double fineAmount = (wholeWeeksLate + 1) * (double)fineCharge;
                             Fining.finingInstance.Create_Fine(record.Unique_Id, record.User_Id, record.Book_Name, returnExpectedDate, fineAmount);
                             //I only charge if it has been more than a week, if that is true the cust is informed of the fine. 
                         }

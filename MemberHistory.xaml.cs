@@ -46,6 +46,41 @@ namespace Library_System
         {
             User_Record record = (User_Record)dgMemberHistory.SelectedItem;
             record.Renew_Book(record);
+            gridCreator();
+        }
+
+        private void txtBoxSearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<User_Record> records = User_Record.UserRecordInstance.DisplayRecord();
+            List<User_Record> filteredRecords = Filter_Records(records, txtBoxSearchBar.Text.ToLower());
+            this.dgMemberHistory.ItemsSource = filteredRecords;
+        }
+
+
+        private List<User_Record> Filter_Records(List<User_Record> records, string searchText)
+        {
+
+            List<User_Record> searchRecords = new List<User_Record>();
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                foreach (User_Record record in records)
+                {
+                    if (record.User_Id.ToLower().Contains(searchText) ||
+                        record.Book_Name.ToLower().Contains(searchText) ||
+                        record.Unique_Id.ToString().ToLower().Contains(searchText) ||
+                        record.Withdraw_Date.ToLower().Contains(searchText) ||
+                        record.Return_Expected.ToLower().Contains(searchText) ||
+                        record.Return_Actual.ToLower().Contains(searchText))
+                    {
+                        searchRecords.Add(record);
+                    }
+                }
+                return searchRecords;
+            }
+            else 
+            {
+                return records; 
+            }
         }
 
     }

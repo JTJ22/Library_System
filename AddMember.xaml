@@ -7,8 +7,14 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddMember">
-
-    <Grid>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryLayout.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Background="{StaticResource MyGradient}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -49,7 +55,7 @@
         <TextBlock Grid.Row="6" Grid.Column="0" Text="Address:" Margin="5"/>
         <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtBoxAddress" Margin="5" TextChanged="txtBoxAddress_TextChanged"/>
 
-        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" x:Name="btnAddMember" Content="Add Member" Height="34" Width="136" Margin="5" Click="btnAddMember_Click"/>
-        <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" x:Name="btnCancel" Content="Cancel" Height="34" Width="136" Margin="5" Click="btnCancel_Click"/>
+        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" x:Name="btnAddMember" Content="Add Member" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Height="34" Width="136" Margin="5" Click="btnAddMember_Click"/>
+        <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" x:Name="btnCancel" Content="Cancel" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Height="34" Width="136" Margin="5" Click="btnCancel_Click"/>
     </Grid>
 </Page>

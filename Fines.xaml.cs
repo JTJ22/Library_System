@@ -19,10 +19,10 @@ namespace Library_System
     /// Interaction logic for Fines.xaml
     /// </summary>
     /// 
-    public delegate void RefreshFine(object sender, EventArgs e);
+    
     public partial class Fines : Page
     {
-        public static RefreshFine RefreshFine;
+       
         public Fines()
         {
             InitializeComponent();
@@ -51,7 +51,7 @@ namespace Library_System
                 if (fineReturned.Fine_Paid != true)
                 {
                     fineReturned.Fine_Being_Paid(fineReturned);
-                    RefreshFine.Invoke(this, new EventArgs());
+                    ;
                 }
 
             }
@@ -63,6 +63,13 @@ namespace Library_System
             TextBlock textBlock = (TextBlock)sender;
             MessageBox.Show(textBlock.Text, "Unique ID", MessageBoxButton.OK, MessageBoxImage.Information);
             e.Handled = true;
+        }
+
+        private void txtBoxFineSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<Fining> fines = Fining.finingInstance.Display_Fines();
+            List<Fining> filteredBooks = Fining.finingInstance.Filter_Fines(fines, txtBoxFineSearch.Text.ToLower());
+            this.dgFineGrid.ItemsSource = filteredBooks;
         }
     }
 }

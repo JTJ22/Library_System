@@ -17,8 +17,10 @@ using System.Net.Mail;
 using System.Xml.Linq;
 namespace Library_System
 {
+    public delegate void RefreshFine(object sender, EventArgs e);
     public class Fining
     {
+        public static RefreshFine RefreshFine;
         public string User_ID { get; set; }
         public string Book_Name { get; set; }
         public Guid Unique_Id { get; set; }
@@ -70,7 +72,7 @@ namespace Library_System
 
         }
 
-        public void Create_Fine(Guid UniqueID, string UserID, string bookName, DateTime returnExpected, int fineCost)
+        public void Create_Fine(Guid UniqueID, string UserID, string bookName, DateTime returnExpected, double fineCost)
         {
             XDocument fines;
             fines = XDocument.Load("LibraryFines.xml");
@@ -113,6 +115,22 @@ namespace Library_System
             return false;
         }//A boolean to prevent the user from accessing certain parts whilst a fine is active
 
+        public bool Fine_Notifier()
+        {
+            foreach(Fining fine in Display_Fines())
+            {
+                if(!fine.Fine_Paid)
+                {
+                    MessageBox.Show("There are outstanding overdrawn books");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public void Fine_Being_Paid(Fining finePaid)
         {
             User_Record recordToChange = new User_Record();
@@ -138,6 +156,7 @@ namespace Library_System
                     MessageBox.Show("Fine Paid");
                     User_Record.UserRecordInstance.BookReturned(recordToChange);
                     fines.Save("LibraryFines.xml");
+                    RefreshFine?.Invoke(this, new EventArgs());
                 }
                 else
                 {
@@ -149,5 +168,28 @@ namespace Library_System
                 MessageBox.Show("You have already paid this fine");
             }
         }//A method for when the fine is paid, returns the book and sets the finepaid boolean as true
+
+        public List<Fining> Filter_Fines(List<Fining> fines, string searchText)
+        {
+
+            List<Fining> searchRecords = new List<Fining>();
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                foreach (Fining fine in fines)
+                {
+                    if (fine.User_ID.ToLower().Contains(searchText) ||
+                        fine.Unique_Id.ToString().ToLower().Contains(searchText) ||
+                        fine.Book_Name.ToLower().Contains(searchText))
+                    {
+                        searchRecords.Add(fine);
+                    }
+                }
+                return searchRecords;
+            }
+            else
+            {
+                return fines;
+            }
+        }
     }
 }

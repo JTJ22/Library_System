@@ -6,16 +6,20 @@
         xmlns:local="clr-namespace:Library_System"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        WindowState="Maximized"
+        WindowState="Normal"
         WindowStyle="SingleBorderWindow">
-    <Grid>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryLayout.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="{StaticResource MyGradient}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="469*"/>
             <ColumnDefinition Width="331*"/>
         </Grid.ColumnDefinitions>
-        <Grid.Background>
-            <ImageBrush/>
-        </Grid.Background>
         <StatusBar Name="sbar" Grid.Column="0" Grid.ColumnSpan="2" 
                    VerticalAlignment="Bottom" Background="Beige" >
             <StatusBarItem x:Name="sbarDateTimeUpdate">
@@ -23,12 +27,12 @@
             </StatusBarItem>
         </StatusBar>
         <StackPanel x:Name="stkPanLoginPage" Height="320" VerticalAlignment="Center" Margin="107,0,107,0" Grid.ColumnSpan="2">
-            <Label x:Name="LblLoginWelcome" Content="Welcome to Library Bookings Co." Height="32" HorizontalContentAlignment="Center" FontFamily="Arial Black" FontSize="20" FontWeight="Normal" Width="400" Margin="100,0,100,50"/>
+            <Label x:Name="LblLoginWelcome" Content="Welcome to Library Bookings Co." Height="32" HorizontalContentAlignment="Center" FontFamily="Arial Black" FontSize="20" FontWeight="Normal" Width="418" RenderTransformOrigin="0.608,0.813"/>
             <Label x:Name="LblUsername" Content="UserID" HorizontalContentAlignment="Center" Width="64"/>
             <TextBox x:Name="TxtUsername" ToolTip="Enter your ID" Height="25" TextWrapping="Wrap" HorizontalContentAlignment="Center" Text="" Width="208" PreviewTextInput="TxtUsername_TextInput"/>
             <Label x:Name="LblPassword" Content="Password" RenderTransformOrigin="0.163,0.53" HorizontalContentAlignment="Center" Width="122" Margin="100,5,100,0"/>
             <PasswordBox x:Name="PsdBoxPassword" Height="25" Width="208" Margin="20,0,20,20" HorizontalContentAlignment="Center" />
-            <Button x:Name="BtnLogin" Content="Login" Height="35" Click="BtnLogin_Click" Width="116" Margin="50,20,50,100"/>
+            <Button x:Name="BtnLogin" Template="{StaticResource roundButton}" Style="{StaticResource LightButtonStyle}" Content="Login" Height="35" Click="BtnLogin_Click" Width="116" Margin="50,20,50,100"/>
         </StackPanel>
     </Grid>
 </Window>

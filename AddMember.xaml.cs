@@ -69,7 +69,7 @@ namespace Library_System
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.GoBack();
         }
         private void Refresh()
         {
