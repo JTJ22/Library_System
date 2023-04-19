@@ -103,14 +103,15 @@ namespace Library_System
 
         private void btnAddBookAccess_Click(object sender, RoutedEventArgs e)
         {
+            btnAddBookAccess.Visibility = Visibility.Hidden;
             dgBooksEditRemove.Visibility = Visibility.Collapsed;
             stkPanAdd.Visibility = Visibility.Visible;
-            btnAddBookAccess.Visibility = Visibility.Collapsed;
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             Edit_Display();
+            btnAddBookAccess.Visibility = Visibility.Hidden;
         }
 
         private void Edit_Display()
@@ -124,6 +125,8 @@ namespace Library_System
             txtBoxEditDesciption.Text = currentBook.Description;
             dgBooksEditRemove.Visibility = Visibility.Collapsed;
             stkPanEdit.Visibility = Visibility.Visible;
+            btnAddBook.Visibility = Visibility.Collapsed;
+            btnAddBook.Visibility = Visibility.Hidden;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -165,6 +168,35 @@ namespace Library_System
             TextBlock textBlock = (TextBlock)sender;
             MessageBox.Show(textBlock.Text, "Unique ID", MessageBoxButton.OK, MessageBoxImage.Information);
             e.Handled = true;
+        }
+
+        private void btnCancelAdd_Click(object sender, RoutedEventArgs e)
+        {
+            dgBooksEditRemove.Visibility = Visibility.Visible;
+            stkPanAdd.Visibility = Visibility.Collapsed;
+            btnAddBookAccess.Visibility = Visibility.Visible;
+        }
+
+        private void btnCancelEdit_Click(object sender, RoutedEventArgs e)
+        {
+            dgBooksEditRemove.Visibility = Visibility.Visible;
+            stkPanEdit.Visibility = Visibility.Collapsed;
+            btnAddBook.Visibility = Visibility.Visible;
+            
+        }
+
+        private void TextBlock_PreviewMouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            MessageBox.Show(textBlock.Text, "Title", MessageBoxButton.OK, MessageBoxImage.Information);
+            e.Handled = true;
+        }
+
+        private void txtBoxBookSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<SingleBook> books = BookHandling.handler.Display_Books();
+            List<SingleBook> filteredBooks = BookHandling.handler.Filter_Books(books, txtBoxBookSearch.Text.ToLower());
+            this.dgBooksEditRemove.ItemsSource = filteredBooks;
         }
 
 

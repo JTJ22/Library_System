@@ -45,42 +45,11 @@ namespace Library_System
             //Using my method which returns the list, this sets the datagrids source to the list
         }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            Searching();
-            
-            //Upon clicking search the program will execute this method, allowing a user to search
-        }
-
         private void txtBoxSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-        }
-
-        public void Searching()
-        {
-            if (!string.IsNullOrWhiteSpace(txtBoxSearchBox.Text))//Checking if user input nothing, won't execute if empty
-                {
-                DataSet dataSearch = new DataSet();
-                dataSearch.ReadXml(@"LibraryBooks.xml");
-                DataView dataView = new DataView();
-                dataView = dataSearch.Tables[0].DefaultView;
-                StringBuilder search = new StringBuilder();
-                foreach(DataColumn column in dataView.Table.Columns)
-                    {
-                    search.AppendFormat("[{0}] Like '%{1}%' OR", column.ColumnName, txtBoxSearchBox.Text.ToLower());
-                    }
-                search.Remove(search.Length - 3, 3);
-                dataView.RowFilter = search.ToString();
-                this.dgSearchDisplay.ItemsSource = dataView;
-                //Changes the data grid to be filtered, this is dependant on the users input into the search box
-                }
-            else
-            {
-                GridCreator();
-                //Execute the grid creator (returns to base state)
-            }
-
+            List<SingleBook> books = BookHandling.handler.Display_Books();
+            List<SingleBook> filteredBooks = BookHandling.handler.Filter_Books(books, txtBoxSearchBox.Text.ToLower());
+            this.dgSearchDisplay.ItemsSource = filteredBooks;
         }
 
         private void btnWithdraw_Click(object sender, RoutedEventArgs e)
@@ -147,6 +116,13 @@ namespace Library_System
         {
             TextBlock textBlock = (TextBlock)sender;
             MessageBox.Show(textBlock.Text, "Unique ID", MessageBoxButton.OK, MessageBoxImage.Information);
+            e.Handled = true;
+        }
+
+        private void txtBoxTitleShow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            MessageBox.Show(textBlock.Text, "Title", MessageBoxButton.OK, MessageBoxImage.Information);
             e.Handled = true;
         }
     }

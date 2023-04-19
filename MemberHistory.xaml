@@ -8,12 +8,24 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1040"
       Title="MemberHistory">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryLayout.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
-        <DataGrid x:Name="dgMemberHistory" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="680" Margin="10,10,0,0" VerticalAlignment="Top" Width="1020" SelectionChanged="dgMemberHistory_SelectionChanged" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
+        <DataGrid x:Name="dgMemberHistory" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="500" Margin="10,59,0,0" VerticalAlignment="Top" Width="925" SelectionChanged="dgMemberHistory_SelectionChanged" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="User ID" Binding="{Binding User_Id}"/>
-                <DataGridTextColumn Header="Book" Binding="{Binding Book_Name}"/>
+                <DataGridTextColumn Header="User ID" Width="120" Binding="{Binding User_Id}"/>
+                <DataGridTemplateColumn Header="Title" Width="175" SortMemberPath="...">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Book_Name}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn x:Name="txtIDHist" Header="Unique ID" Width="65" SortMemberPath="...">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -21,26 +33,28 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Withdrawn Date" Binding="{Binding Withdraw_Date}"/>
-                <DataGridTextColumn Header="Return By" Binding="{Binding Return_Expected}"/>
-                <DataGridTextColumn Header="Date Returned" Binding="{Binding Return_Actual}"/>
-                <DataGridCheckBoxColumn Header="Returned?" Binding="{Binding Is_Returned}"/>
-                <DataGridCheckBoxColumn Header="Renewed?" Binding="{Binding Is_Renewed}"/>
-                <DataGridTemplateColumn Header="Return">
+                <DataGridTextColumn Header="Withdrawn Date" Width="100" Binding="{Binding Withdraw_Date}"/>
+                <DataGridTextColumn Header="Return By" Width="100" Binding="{Binding Return_Expected}"/>
+                <DataGridTextColumn Header="Date Returned" Width="95" Binding="{Binding Return_Actual}"/>
+                <DataGridCheckBoxColumn Header="Returned?" Width="65" Binding="{Binding Is_Returned}"/>
+                <DataGridCheckBoxColumn Header="Renewed?" Width="65" Binding="{Binding Is_Renewed}"/>
+                <DataGridTemplateColumn Width="60" Header="Return">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnReturn" Content="Return" Click="btnReturn_Click"/>
+                            <Button x:Name="btnReturn" Content="Return" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnReturn_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Renew">
+                <DataGridTemplateColumn Width="60" Header="Renew">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnRenew" Content="Renew" Click="btnRenew_Click"/>
+                            <Button x:Name="btnRenew" Content="Renew" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnRenew_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <TextBox x:Name="txtBoxSearchBar" HorizontalAlignment="Left" Height="22" Margin="592,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="343" TextChanged="txtBoxSearchBar_TextChanged"/>
+        <Label Content="Search" HorizontalAlignment="Left" Height="26" Margin="539,34,0,0" VerticalAlignment="Top" Width="48"/>
     </Grid>
 </Page>

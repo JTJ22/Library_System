@@ -23,10 +23,10 @@ namespace Library_System
         {
 
         }
-        public string User_id 
-        { 
-            get; 
-            set; 
+        public string User_id
+        {
+            get;
+            set;
         }
         public string password { get; set; }
         public string First_name { get; set; }
@@ -80,6 +80,7 @@ namespace Library_System
                         if (currentUser.Librarian_Permisions)
                         {
                             Login_Action();
+                            Fining.finingInstance.Fine_Notifier();
                             return currentUser;
                         }
                         if (!currentUser.Librarian_Permisions)
@@ -102,6 +103,7 @@ namespace Library_System
         private void Login_Action()
         {
             Reserving.reservingInstance.Expired_Reservation();
+     
             MessageBox.Show("You have logged in!");
             Logging.Logger($"User ID: '{currentUser.User_id}'  Name: '{currentUser.First_name}''{currentUser.Last_name}'");
             MemberLoginWindow memberLoggedIn = new MemberLoginWindow();
@@ -119,17 +121,17 @@ namespace Library_System
             XDocument reservingFile;
             reservingFile = XDocument.Load("LibraryLogins.xml");
             IEnumerable<User_Data> myUsers = from record in reservingFile.Descendants("member")
-                                           select new User_Data
-                                           {
-                                               User_id = (string)record.Element("UserID"),
-                                               password = (string)record.Element("Password"),
-                                               First_name = (string)record.Element("FirstName"),
-                                               Last_name = (string)record.Element("Surname"),
-                                               Phone_number = (string)record.Element("PhoneNumber"),
-                                               Email_address = (string)record.Element("EmailAddress"),
-                                               Librarian_Permisions = (bool)record.Element("LibrarianPerms"),
-                                               HomeAddress = (string)record.Element("Address")
-                                           };
+                                             select new User_Data
+                                             {
+                                                 User_id = (string)record.Element("UserID"),
+                                                 password = (string)record.Element("Password"),
+                                                 First_name = (string)record.Element("FirstName"),
+                                                 Last_name = (string)record.Element("Surname"),
+                                                 Phone_number = (string)record.Element("PhoneNumber"),
+                                                 Email_address = (string)record.Element("EmailAddress"),
+                                                 Librarian_Permisions = (bool)record.Element("LibrarianPerms"),
+                                                 HomeAddress = (string)record.Element("Address")
+                                             };
             users.AddRange(myUsers);
             return users;
         }
@@ -163,13 +165,14 @@ namespace Library_System
                         HomeAddress = address
                     };
                     Add_User(newUser);
+                    MessageBox.Show($"New user created ID is: {newId}");
                 }
                 else
                 {
                     MessageBox.Show("Invalid Email");
                 }
             }
-            
+
         }
         public void Add_User(User_Data newUser)
         {
@@ -194,36 +197,70 @@ namespace Library_System
 
         public void Delete_User(User_Data deletedUser)
         {
-            XDocument users;
-            users = XDocument.Load("LibraryLogins.xml");
-            if (deletedUser != null)
+            if (deletedUser.User_id != currentUser.User_id)
             {
-                foreach (User_Record record in User_Record.UserRecordInstance.DisplayRecord())
+                XDocument users;
+                users = XDocument.Load("LibraryLogins.xml");
+                if (deletedUser != null)
                 {
-                    if (record.User_Id == deletedUser.User_id && record.Is_Returned == false)
+                    foreach (User_Record record in User_Record.UserRecordInstance.DisplayRecord())
                     {
-                        MessageBoxResult userWarn = MessageBox.Show("This user has outstanding books/reservations. Please confirm book location. Continue?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                        if (userWarn == MessageBoxResult.Yes)
+                        if (record.User_Id == deletedUser.User_id && record.Is_Returned == false)
                         {
-                            User_Record.UserRecordInstance.User_Deleted(deletedUser.User_id);
-                            Reserving.reservingInstance.User_Deleted(deletedUser.User_id);
-            
-                            XElement userToRemove = users.Descendants("member")
-                                                     .SingleOrDefault(records => (string)records.Element("UserID") == deletedUser.User_id);
-                            userToRemove.Remove();
-                            users.Save("LibraryLogins.xml");
-                            MessageBox.Show($"Deleted. Please adjust the book record {record.Unique_Id}");
-                            return;
+                            MessageBoxResult userWarn = MessageBox.Show("This user has outstanding books/reservations. Please confirm book location. Continue?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (userWarn == MessageBoxResult.Yes)
+                            {
+                                User_Record.UserRecordInstance.User_Deleted(deletedUser.User_id);
+                                Reserving.reservingInstance.User_Deleted(deletedUser.User_id);
+
+                                XElement userToRemove = users.Descendants("member")
+                                                         .SingleOrDefault(records => (string)records.Element("UserID") == deletedUser.User_id);
+                                userToRemove.Remove();
+                                users.Save("LibraryLogins.xml");
+                                MessageBox.Show($"Deleted. Please adjust the book record {record.Unique_Id}");
+                                return;
+                            }
                         }
                     }
+                    XElement userToRemove2 = users.Descendants("member")
+                                             .SingleOrDefault(records => (string)records.Element("UserID") == deletedUser.User_id);
+                    userToRemove2.Remove();
+                    users.Save("LibraryLogins.xml");
+                    MessageBox.Show("User Deleted");
+
+
+
                 }
-                XElement userToRemove2 = users.Descendants("member")
-                                         .SingleOrDefault(records => (string)records.Element("UserID") == deletedUser.User_id);
-                userToRemove2.Remove();
-                users.Save("LibraryLogins.xml");
-                MessageBox.Show("User Deleted");
+            }
+            else
+            {
+                MessageBox.Show("You cannot delete yourself");
+            }
+        }
 
+        public List<User_Data> Filter_Users(List<User_Data> users, string searchText)
+        {
 
+            List<User_Data> searchRecords = new List<User_Data>();
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                foreach (User_Data user in users)
+                {
+                    if (user.User_id.ToLower().Contains(searchText) ||
+                        user.First_name.ToString().ToLower().Contains(searchText) ||
+                        user.Last_name.ToLower().Contains(searchText) ||
+                        user.Phone_number.ToLower().Contains(searchText) ||
+                        user.Email_address.ToLower().Contains(searchText) ||
+                        user.HomeAddress.ToLower().Contains(searchText))
+                    {
+                        searchRecords.Add(user);
+                    }
+                }
+                return searchRecords;
+            }
+            else
+            {
+                return users;
 
             }
         }

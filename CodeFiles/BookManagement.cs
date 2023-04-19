@@ -258,6 +258,30 @@ namespace Library_System
             }
         }
 
+        public List<SingleBook> Filter_Books(List<SingleBook> books, string searchText)
+        {
+
+            List<SingleBook> searchRecords = new List<SingleBook>();
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                foreach (SingleBook book in books)
+                {
+                    if (book.Title.ToLower().Contains(searchText) ||
+                        book.Genre.ToString().ToLower().Contains(searchText) ||
+                        book.Author.ToLower().Contains(searchText) ||
+                        book.ISBN.ToLower().Contains(searchText))
+                    {
+                        searchRecords.Add(book);
+                    }
+                }
+                return searchRecords;
+            }
+            else
+            {
+                return books;
+            }
+        }
+
     }
 }
 

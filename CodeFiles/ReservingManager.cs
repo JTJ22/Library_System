@@ -36,7 +36,7 @@ namespace Library_System
                 {
                     if (reservedBook.IsReserved == false && Display_Reservations().Count < 3 || User_Data.currentUser.Librarian_Permisions)
                     {
-                        DateTime expiration = DateTime.Now.AddDays(4).Date;
+                        DateTime expiration = DateTime.Now.AddDays(7).Date;
                         XDocument reserves;
                         reserves = XDocument.Load("LibraryReservations.xml");
                         Update_Book_On_Reserve(reservedBook);
@@ -80,7 +80,7 @@ namespace Library_System
         {
             foreach (Reserving reservation in Display_Reservations())
             {
-                if (reservation.User_ID == User_ID && !reservation.Reserve_Complete)
+                if (reservation.User_ID == User_Data.currentUser.User_id && !reservation.Reserve_Complete)
                 {
                     foreach (SingleBook book in BookHandling.handler.Display_Books())
                     {
@@ -167,7 +167,7 @@ namespace Library_System
                                      && (bool)record.Element("ReserveComplete") == false);
             if (resToChange != null)
             {
-                if ((DateTime)resToChange.Element("Expires") < DateTime.Now.Date)
+                if (Convert.ToDateTime((string)resToChange.Element("Expires")).Date < DateTime.Now.Date)
                 {
                     XDocument book;
                     book = XDocument.Load("LibraryBooks.xml");

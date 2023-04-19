@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:Library_System"
         mc:Ignorable="d"
         Title="ChangeMemberDeets" Height="900" Width="1300">
-    <Grid>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryLayout.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="{StaticResource MyGradient}">
         <Frame x:Name="frmMember" Content="" HorizontalAlignment="Center" Height="864" VerticalAlignment="Center" Width="1280" Navigated="frmMember_Navigated"/>
 
     </Grid>

@@ -76,5 +76,12 @@ namespace Library_System
         {
             ChangePage?.Invoke(this, new EventArgs());
         }
+
+        private void txtBoxSearchUser_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<User_Data> users = User_Data.currentUser.Display_Users();
+            List<User_Data> filteredUsers = User_Data.currentUser.Filter_Users(users, txtBoxSearchUser.Text.ToLower());
+            this.dgShowUsers.ItemsSource = filteredUsers;
+        }
     }
 }

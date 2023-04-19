@@ -44,17 +44,26 @@ namespace Library_System
         private void btnCompleteWithdraw_Click(object sender, RoutedEventArgs e)
         {
             BookHandling.handler.Withdrawn(bookBeingWithdrawn);
-
             OnRefresh?.Invoke(this, new EventArgs());
         }
 
         private void DisplayInfo(object sender, RoutedEventArgs e)
         {
-            string bookInfo = $"{bookBeingWithdrawn.Title}\n{bookBeingWithdrawn.Author}\n{bookBeingWithdrawn.Description}\n{bookBeingWithdrawn.ISBN}";
-            txtBlkBookName.Text = bookInfo;
-
-            DateTime expected = DateTime.Now.AddMonths(1);
-            txtBlkExptReturn.Text = $"Maximum Return Date: {expected:yyyy-MM-dd}";
+            if (bookBeingWithdrawn.Availability)
+            {
+                btnCompleteWithdraw.IsEnabled = true;
+                string bookInfo = $"{bookBeingWithdrawn.Title}\n{bookBeingWithdrawn.Author}\n\n{bookBeingWithdrawn.Description}\n{bookBeingWithdrawn.ISBN}";
+                txtBlkBookName.Text = bookInfo;
+                DateTime expected = DateTime.Now.AddMonths(1);
+                txtBlkExptReturn.Text = $"Maximum Return Date: {expected:yyyy-MM-dd}";
+            }
+            else 
+            {
+                string bookInfo = $"{bookBeingWithdrawn.Title}\n{bookBeingWithdrawn.Author}\n\n{bookBeingWithdrawn.Description}\n{bookBeingWithdrawn.ISBN}";
+                txtBlkBookName.Text = bookInfo;
+                txtBlkExptReturn.Text = "This book is currently unavailable";
+                btnCompleteWithdraw.IsEnabled = false;
+            }
         }
     }
 }

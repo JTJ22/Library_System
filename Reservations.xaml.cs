@@ -32,6 +32,7 @@ namespace Library_System
         {
             Reserving reservedBook = (Reserving)dgReserveDisplay.SelectedItem;
             Reserving.reservingInstance.Updating_Res(reservedBook);
+            dgReserveDisplay.ItemsSource = Reserving.reservingInstance.Display_Reservations();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

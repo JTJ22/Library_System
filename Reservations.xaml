@@ -7,9 +7,15 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1040"
       Title="Reservations">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryLayout.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
-        <DataGrid x:Name="dgReserveDisplay" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left"  Height="604" VerticalAlignment="Top" Width="867" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="dgReserveDisplay_SelectionChanged" Margin="10,0,0,0">
+        <DataGrid x:Name="dgReserveDisplay" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left"  Height="500" VerticalAlignment="Top" Width="925" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="dgReserveDisplay_SelectionChanged" Margin="10,59,0,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="User ID" Binding="{Binding User_ID}"/>
                 <DataGridTextColumn Header="Book" Binding="{Binding Book_Name}"/>
@@ -23,17 +29,17 @@
                 <DataGridTextColumn Header="Reserve Date" Binding="{Binding Time_Reserved}"/>
                 <DataGridTextColumn Header="Expires" Binding="{Binding Expiration}"/>
                 <DataGridCheckBoxColumn Header="Complete?" Binding="{Binding Reserve_Complete}"/>
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="75">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnWithdrawBook" Content="Withdraw" Click="btnWithdrawBook_Click" />
+                            <Button x:Name="btnWithdrawBook" Content="Withdraw" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnWithdrawBook_Click" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="50">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnCancel" Content="Cancel" Click="btnCancel_Click"/>
+                            <Button x:Name="btnCancel" Content="Cancel" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnCancel_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
