@@ -59,7 +59,7 @@ namespace Library_System
             }
 
             books.Save("LibraryBooks.xml");
-        }
+        } //updates the book based upon the input information
 
         private bool IsValidBookDetails(BookDetailsUpdate update)
         {
@@ -68,7 +68,7 @@ namespace Library_System
                    !string.IsNullOrWhiteSpace(update.Author) &&
                    !string.IsNullOrWhiteSpace(update.Description);
         }
-
+         //Checking the input text valid 
         private void UpdateBookDetails(XElement bookElement, BookDetailsUpdate update)
         {
             if (!string.IsNullOrWhiteSpace(update.Title))
@@ -108,7 +108,7 @@ namespace Library_System
             {
                 bookElement.Element("Availability").Value = update.Available.ToString();
             }
-        }
+        }//Actually updating the book in xml
     }
 
     public class BookHandling
@@ -133,7 +133,7 @@ namespace Library_System
                 new XElement("IsReserved", book.IsReserved));
                 books.Root.Add(newBook);
                 books.Save("LibraryBooks.xml");
-                MessageBox.Show("Book Added");
+                MessageBox.Show($"{book.Title} added to the system");
             }
         }//A method that create a new element of singlebook with sub-elements defining it's details
 
@@ -256,7 +256,7 @@ namespace Library_System
                     books.Save("LibraryBooks.xml");
                 }
             }
-        }
+        } //Removes a book based upon if it is withdrawn or not, this is to prevent any issues
 
         public List<SingleBook> Filter_Books(List<SingleBook> books, string searchText)
         {
@@ -280,7 +280,7 @@ namespace Library_System
             {
                 return books;
             }
-        }
+        }//Filters the books based on a search term
 
     }
 }

@@ -18,25 +18,25 @@
     <Grid>
         <DataGrid x:Name="dgFineGrid" HorizontalAlignment="Left" CanUserAddRows="False" Height="500" Margin="10,59,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" Width="925" Language="en-GB" SelectionChanged="dgFineGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="User ID" Binding="{Binding User_ID}"/>
-                <DataGridTemplateColumn Header="Title" Width="175" SortMemberPath="...">
+                <DataGridTextColumn Header="User ID" Width="145" Binding="{Binding User_ID}"/>
+                <DataGridTemplateColumn Header="Title" Width="225" SortMemberPath="...">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Book_Name}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="txtIDHidden" Header="Unique ID" Width="65" SortMemberPath="...">
+                <DataGridTemplateColumn x:Name="txtIDHidden" Header="Unique ID" Width="120" SortMemberPath="...">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Unique_Id}" PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Expiration" Binding="{Binding Expiration}"/>
-                <DataGridTextColumn Header="Fine Value" Binding="{Binding Fine_Value, StringFormat={}{0:C}}"/>
-                <DataGridCheckBoxColumn Header="Fine Paid" Binding="{Binding Fine_Paid}"/>
-                <DataGridTemplateColumn Width="60">
+                <DataGridTextColumn Header="Expiration" Width="120" Binding="{Binding Expiration}"/>
+                <DataGridTextColumn Header="Fine Value" Width="120" Binding="{Binding Fine_Value, StringFormat={}{0:C}}"/>
+                <DataGridCheckBoxColumn Header="Fine Paid" Width="100" Binding="{Binding Fine_Paid}"/>
+                <DataGridTemplateColumn Width="80" Header="Return">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btnReturnFine" Content="Return" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnReturnFine_Click"/>
@@ -47,6 +47,7 @@
         </DataGrid>
         <TextBox x:Name="txtBoxFineSearch" HorizontalAlignment="Left" Height="22" Margin="532,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="403" TextChanged="txtBoxFineSearch_TextChanged"/>
         <Label Content="Search" HorizontalAlignment="Left" Height="24" Margin="479,31,0,0" VerticalAlignment="Top" Width="48"/>
+        <Button x:Name="btnShowOutstand" Content="Show Overdrawn" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" HorizontalAlignment="Left" Height="49" Margin="10,564,0,0" VerticalAlignment="Top" Width="162" Click="btnShowOutstand_Click"/>
 
     </Grid>
 </Page>

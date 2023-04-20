@@ -99,6 +99,7 @@ namespace Library_System
                 }
             }
         }
+        //When the book is returned the relevant record is updated
 
 
 
@@ -136,7 +137,7 @@ namespace Library_System
                 }
             }
         }
-
+        //Renewing a book will update the return expected 
 
 
         public void Late_Check()
@@ -185,7 +186,7 @@ namespace Library_System
             records.Root.Add(newRecord);
             records.Save("LibraryHistory.xml");
 
-        }
+        } //Creating a history record in XML
         public User_Record Record_Finder(Guid UniqueID)
         {
             XDocument recordFind;
@@ -211,7 +212,7 @@ namespace Library_System
 
             }
             return null;
-        }
+        }//Find a record based on the GUID, this is used to change a book availability
 
         public void ChangeBookFile(Guid UniqueID)
         {
@@ -225,6 +226,7 @@ namespace Library_System
                 books.Save("LibraryBooks.xml");
             }
         }
+        //Changes the book file when a book is returned
 
         public void BookReturned(User_Record selectItem)
         {
@@ -252,7 +254,7 @@ namespace Library_System
                 }
             }
 
-        }
+        }//Method the calls the other methods for returning a book based on conditions
 
         public void Book_Deleted(SingleBook book)
         {
@@ -267,19 +269,19 @@ namespace Library_System
                 if (!book.IsReserved)
                 {
                     recordEl.SetElementValue("IsBookReturned", "true");
-                    recordEl.SetElementValue("Book", "[BOOK DELETED]");
+                    recordEl.SetElementValue("Book", $"[BOOK DELETED]{book.Title}");
                     recordFind.Save("LibraryHistory.xml");
                 }
                 else if(book.IsReserved)
                 {
                     recordEl.SetElementValue("IsBookReturned", "true");
-                    recordEl.SetElementValue("Book", "[BOOK DELETED]");
+                    recordEl.SetElementValue("Book", $"[BOOK DELETED]{book.Title}");
                     Reserving.reservingInstance.Book_Deleted(book);
                     recordFind.Save("LibraryHistory.xml");
                 }
             }
         }
-
+        //Deleted books will adjust any records to reflect the deleted book
         public void User_Deleted(string UserID)
         {
             XDocument records = XDocument.Load("LibraryHistory.xml");
@@ -288,6 +290,26 @@ namespace Library_System
                .Remove();
             records.Save("LibraryHistory.xml");
         }
-
+        //When a user is deleted their records are also deleted
+        public List<User_Record> Filter_History()
+        {
+            List<User_Record> searchRecords = new List<User_Record>();
+            foreach (User_Record record in DisplayRecord())
+            {
+                if (!record.Is_Returned)
+                {
+                    searchRecords.Add(record);
+                }
+            }
+            if(searchRecords.Count >= 1)
+            {
+                return searchRecords;
+            }
+            else
+            {
+                return DisplayRecord();
+            }
+        }
+        //Filter records based on if they are returned or not
     }
 }

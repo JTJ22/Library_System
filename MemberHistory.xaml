@@ -56,5 +56,6 @@
         </DataGrid>
         <TextBox x:Name="txtBoxSearchBar" HorizontalAlignment="Left" Height="22" Margin="592,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="343" TextChanged="txtBoxSearchBar_TextChanged"/>
         <Label Content="Search" HorizontalAlignment="Left" Height="26" Margin="539,34,0,0" VerticalAlignment="Top" Width="48"/>
+        <Button x:Name="btnFilterWithdrawn" Content="Show Withdrawn" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" HorizontalAlignment="Left" Height="49" Margin="10,564,0,0" VerticalAlignment="Top" Width="111" Click="btnFilterWithdrawn_Click"/>
     </Grid>
 </Page>

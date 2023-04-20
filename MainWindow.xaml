@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library_System"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="650" Width="900"
         WindowState="Normal"
         WindowStyle="SingleBorderWindow">
     <Window.Resources>
@@ -26,7 +26,7 @@
                 <TextBlock x:Name="txtblkDateTime" FontStyle="Italic" Width="358"></TextBlock>
             </StatusBarItem>
         </StatusBar>
-        <StackPanel x:Name="stkPanLoginPage" Height="320" VerticalAlignment="Center" Margin="107,0,107,0" Grid.ColumnSpan="2">
+        <StackPanel x:Name="stkPanLoginPage" Margin="107,150,107,149" Grid.ColumnSpan="2">
             <Label x:Name="LblLoginWelcome" Content="Welcome to Library Bookings Co." Height="32" HorizontalContentAlignment="Center" FontFamily="Arial Black" FontSize="20" FontWeight="Normal" Width="418" RenderTransformOrigin="0.608,0.813"/>
             <Label x:Name="LblUsername" Content="UserID" HorizontalContentAlignment="Center" Width="64"/>
             <TextBox x:Name="TxtUsername" ToolTip="Enter your ID" Height="25" TextWrapping="Wrap" HorizontalContentAlignment="Center" Text="" Width="208" PreviewTextInput="TxtUsername_TextInput"/>

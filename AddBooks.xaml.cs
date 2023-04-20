@@ -106,6 +106,8 @@ namespace Library_System
             btnAddBookAccess.Visibility = Visibility.Hidden;
             dgBooksEditRemove.Visibility = Visibility.Collapsed;
             stkPanAdd.Visibility = Visibility.Visible;
+            txtBoxBookSearch.Visibility = Visibility.Hidden;
+            lblSearch.Visibility = Visibility.Hidden;
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -127,6 +129,8 @@ namespace Library_System
             stkPanEdit.Visibility = Visibility.Visible;
             btnAddBook.Visibility = Visibility.Collapsed;
             btnAddBook.Visibility = Visibility.Hidden;
+            txtBoxBookSearch.Visibility = Visibility.Hidden;
+            lblSearch.Visibility = Visibility.Hidden;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -160,7 +164,7 @@ namespace Library_System
                 Available = checkedBox
             };
             currentBook.Change_Book_Details(currentBook, newInfo);
-            Grid_Creator();
+            
         }
 
         private void TextBlock_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -175,6 +179,9 @@ namespace Library_System
             dgBooksEditRemove.Visibility = Visibility.Visible;
             stkPanAdd.Visibility = Visibility.Collapsed;
             btnAddBookAccess.Visibility = Visibility.Visible;
+            txtBoxBookSearch.Visibility = Visibility.Visible;
+            lblSearch.Visibility = Visibility.Visible;
+            Grid_Creator();
         }
 
         private void btnCancelEdit_Click(object sender, RoutedEventArgs e)
@@ -182,7 +189,9 @@ namespace Library_System
             dgBooksEditRemove.Visibility = Visibility.Visible;
             stkPanEdit.Visibility = Visibility.Collapsed;
             btnAddBook.Visibility = Visibility.Visible;
-            
+            txtBoxBookSearch.Visibility = Visibility.Visible;
+            lblSearch.Visibility = Visibility.Visible;
+            Grid_Creator();
         }
 
         private void TextBlock_PreviewMouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
