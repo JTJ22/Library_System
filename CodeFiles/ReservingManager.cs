@@ -65,7 +65,7 @@ namespace Library_System
             {
                 MessageBox.Show("You already have this book withdrawn");
             }
-        }
+        }//Creates a reservation if conditions are met, won't allow a user to make one if the reservations are over 3
 
         public void Update_Book_On_Reserve(SingleBook bookReserved)
         {
@@ -75,7 +75,7 @@ namespace Library_System
                 .SingleOrDefault(books => (Guid)books.Attribute("UniqueID") == bookReserved.Unique_ID);
             bookToChange.SetElementValue("IsReserved", "true");
             book.Save("LibraryBooks.xml");
-        }
+        }// Updates the book when a book is reserved, to show the boolean
         public bool Notify_Res()
         {
             foreach (Reserving reservation in Display_Reservations())
@@ -99,7 +99,7 @@ namespace Library_System
                 }
             }
             return false;
-        }
+        }//A boolean to tell a user when a reserved book is available
         public bool ResChecker()
         {
             foreach (User_Record record in User_Record.UserRecordInstance.DisplayRecord())
@@ -110,28 +110,48 @@ namespace Library_System
                 }
             }
             return true;
-        }
+        } //Checks if a record has been returned
 
         public List<Reserving> Display_Reservations()
         {
             List<Reserving> reservations = new List<Reserving>();
-            XDocument reservingFile;
-            reservingFile = XDocument.Load("LibraryReservations.xml");
-            IEnumerable<Reserving> reserves = from record in reservingFile.Descendants("Record")
-                                           where (string)record.Element("UserID") == User_Data.currentUser.User_id
-                                           select new Reserving
-                                           {
-                                               User_ID = (string)record.Element("UserID"),
-                                               Book_Name = (string)record.Element("Book"),
-                                               Unique_Id = (Guid)record.Attribute("UniqueID"),
-                                               Time_Reserved = (string)record.Element("TimeReserved"),
-                                               Expiration = (string)record.Element("Expires"),
-                                               Reserve_Complete = (bool)record.Element("ReserveComplete"),
-                                           };
-            reservations.AddRange(reserves);
+            if (!User_Data.currentUser.Librarian_Permisions)
+            {
+                XDocument reservingFile;
+                reservingFile = XDocument.Load("LibraryReservations.xml");
+                IEnumerable<Reserving> reserves = from record in reservingFile.Descendants("Record")
+                                                  where (string)record.Element("UserID") == User_Data.currentUser.User_id
+                                                  select new Reserving
+                                                  {
+                                                      User_ID = (string)record.Element("UserID"),
+                                                      Book_Name = (string)record.Element("Book"),
+                                                      Unique_Id = (Guid)record.Attribute("UniqueID"),
+                                                      Time_Reserved = (string)record.Element("TimeReserved"),
+                                                      Expiration = (string)record.Element("Expires"),
+                                                      Reserve_Complete = (bool)record.Element("ReserveComplete"),
+                                                  };
+                reservations.AddRange(reserves);
+                return reservations;
+            }
+            else if(User_Data.currentUser.Librarian_Permisions)
+            {   
+                XDocument reservingFile;
+                reservingFile = XDocument.Load("LibraryReservations.xml");
+                IEnumerable<Reserving> reserves = from record in reservingFile.Descendants("Record")
+                                                  select new Reserving
+                                                  {
+                                                      User_ID = (string)record.Element("UserID"),
+                                                      Book_Name = (string)record.Element("Book"),
+                                                      Unique_Id = (Guid)record.Attribute("UniqueID"),
+                                                      Time_Reserved = (string)record.Element("TimeReserved"),
+                                                      Expiration = (string)record.Element("Expires"),
+                                                      Reserve_Complete = (bool)record.Element("ReserveComplete"),
+                                                  };
+                reservations.AddRange(reserves);  
+            }
             return reservations;
         }
-
+        //Shows the records based on user permissions
         public void Cancel_Reservation(Reserving cancelled)
         {
 
@@ -156,7 +176,7 @@ namespace Library_System
 
 
 
-        }
+        }//Deletes a reservation from the system
 
         public void Expired_Reservation()
         {
@@ -206,20 +226,27 @@ namespace Library_System
 
         public void Updating_Res(Reserving reservedBook)
         {
+            if(!reservedBook.Reserve_Complete)
+            { 
             SingleBook bookBeingWithdrawn = GettingBook(reservedBook);
-            if (bookBeingWithdrawn.IsReserved)
+                if (bookBeingWithdrawn.IsReserved)
+                {
+                    if ((reservedBook.User_ID == User_Data.currentUser.User_id || User_Data.currentUser.Librarian_Permisions) && bookBeingWithdrawn.Availability)
+                    {
+                        User_Record user_Record = new User_Record();
+                        Complete_Reservation(reservedBook);
+                        user_Record.Update_History(bookBeingWithdrawn);
+                        MessageBox.Show("Reservation Withdrawn");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Book not available yet");
+                    }
+                }
+            }
+            else if (reservedBook.Reserve_Complete)
             {
-                if (reservedBook.User_ID == User_Data.currentUser.User_id && bookBeingWithdrawn.Availability)
-                {
-                    User_Record user_Record = new User_Record();
-                    Complete_Reservation(reservedBook);
-                    user_Record.Update_History(bookBeingWithdrawn);
-                    MessageBox.Show("Reservation Withdrawn");
-                }
-                else
-                {
-                    MessageBox.Show("Book not available yet");
-                }
+                MessageBox.Show("Already completed");
             }
         }
 

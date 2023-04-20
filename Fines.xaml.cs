@@ -48,10 +48,14 @@ namespace Library_System
         {
             if (fineReturned != null)
             {
-                if (fineReturned.Fine_Paid != true)
+                if (!fineReturned.Fine_Paid)
                 {
                     fineReturned.Fine_Being_Paid(fineReturned);
                     ;
+                }
+                else
+                {
+                    MessageBox.Show("Fine has already been paid");
                 }
 
             }
@@ -64,6 +68,7 @@ namespace Library_System
             MessageBox.Show(textBlock.Text, "Unique ID", MessageBoxButton.OK, MessageBoxImage.Information);
             e.Handled = true;
         }
+        //Displays a text block with all the cell information within
 
         private void txtBoxFineSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -71,5 +76,19 @@ namespace Library_System
             List<Fining> filteredBooks = Fining.finingInstance.Filter_Fines(fines, txtBoxFineSearch.Text.ToLower());
             this.dgFineGrid.ItemsSource = filteredBooks;
         }
+        //Search that sets a new filtered list as the source
+        private void btnShowOutstand_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnShowOutstand.Content.ToString() == "Show Overdrawn")
+            {
+                dgFineGrid.ItemsSource = Fining.finingInstance.Filter_Fining();
+                btnShowOutstand.Content = "Show All";
+            }
+            else if (btnShowOutstand.Content.ToString() == "Show All")
+            {
+                dgFineGrid.ItemsSource = Fining.finingInstance.Display_Fines();
+                btnShowOutstand.Content = "Show Overdrawn";
+            }
+        }//A filter that will only display the overdrawn fines
     }
 }

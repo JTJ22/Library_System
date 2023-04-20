@@ -191,5 +191,25 @@ namespace Library_System
                 return fines;
             }
         }
+
+        public List<Fining> Filter_Fining()
+        {
+            List<Fining> searchRecords = new List<Fining>();
+            foreach (Fining fine in Display_Fines())
+            {
+                if (!fine.Fine_Paid)
+                {
+                    searchRecords.Add(fine);
+                }
+            }
+            if (searchRecords.Count >= 1)
+            {
+                return searchRecords;
+            }
+            else
+            {
+                return Display_Fines();
+            }
+        }
     }
 }

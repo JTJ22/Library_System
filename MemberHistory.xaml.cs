@@ -83,5 +83,18 @@ namespace Library_System
             }
         }
 
+        private void btnFilterWithdrawn_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnFilterWithdrawn.Content.ToString() == "Show Withdrawn")
+            {
+                dgMemberHistory.ItemsSource = User_Record.UserRecordInstance.Filter_History();
+                btnFilterWithdrawn.Content = "Show All";
+            }
+            else if(btnFilterWithdrawn.Content.ToString() == "Show All")
+            {
+                dgMemberHistory.ItemsSource = User_Record.UserRecordInstance.DisplayRecord();
+                btnFilterWithdrawn.Content = "Show Withdrawn";
+            }
+        }
     }
 }

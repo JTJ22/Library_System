@@ -17,19 +17,19 @@
     <Grid>
         <DataGrid x:Name="dgReserveDisplay" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalAlignment="Left"  Height="500" VerticalAlignment="Top" Width="925" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="dgReserveDisplay_SelectionChanged" Margin="10,59,0,0">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="User ID" Binding="{Binding User_ID}"/>
-                <DataGridTextColumn Header="Book" Binding="{Binding Book_Name}"/>
-                <DataGridTemplateColumn x:Name="txtIDHiddens" Header="Unique ID" Width="65" SortMemberPath="...">
+                <DataGridTextColumn Header="User ID" Width="200" Binding="{Binding User_ID}"/>
+                <DataGridTextColumn Header="Book" Width="150" Binding="{Binding Book_Name}"/>
+                <DataGridTemplateColumn x:Name="txtIDHiddens" Header="Unique ID" Width="150" SortMemberPath="...">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Unique_Id }" PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Reserve Date" Binding="{Binding Time_Reserved}"/>
-                <DataGridTextColumn Header="Expires" Binding="{Binding Expiration}"/>
-                <DataGridCheckBoxColumn Header="Complete?" Binding="{Binding Reserve_Complete}"/>
-                <DataGridTemplateColumn Width="75">
+                <DataGridTextColumn Header="Reserve Date" Width="120" Binding="{Binding Time_Reserved}"/>
+                <DataGridTextColumn Header="Expires" Width="120" Binding="{Binding Expiration}"/>
+                <DataGridCheckBoxColumn Header="Complete?" Width="105" Binding="{Binding Reserve_Complete}"/>
+                <DataGridTemplateColumn Width="75" Header="Withdraw">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btnWithdrawBook" Content="Withdraw" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" Click="btnWithdrawBook_Click" />

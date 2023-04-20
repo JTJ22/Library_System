@@ -90,8 +90,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnAddBookAccess" Content="Add Book" Style="{StaticResource LightButtonStyle}" Template="{StaticResource roundButton}" HorizontalAlignment="Left" Height="39" Margin="10,669,0,0" VerticalAlignment="Top" Width="187" Click="btnAddBookAccess_Click"/>
-        <TextBox x:Name="txtBoxBookSearch" HorizontalAlignment="Left" Height="22" Margin="555,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" TextChanged="txtBoxBookSearch_TextChanged"/>
-        <Label Content="Search" HorizontalAlignment="Left" Height="26" Margin="504,30,0,0" VerticalAlignment="Top" Width="46"/>
+        <TextBox x:Name="txtBoxBookSearch" HorizontalAlignment="Left" Height="22" Margin="547,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" TextChanged="txtBoxBookSearch_TextChanged"/>
+        <Label x:Name="lblSearch" Content="Search" HorizontalAlignment="Left" Height="26" Margin="501,30,0,0" VerticalAlignment="Top" Width="46"/>
 
     </Grid>
 </Window>
